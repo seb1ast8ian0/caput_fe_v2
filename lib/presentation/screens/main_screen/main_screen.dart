@@ -1,0 +1,243 @@
+
+import 'package:Caput/presentation/screens/filter_screen/filter_screen.dart';
+import 'package:Caput/presentation/screens/main_screen/main_screen_footer.dart';
+import 'package:Caput/presentation/screens/main_screen/main_screen_header.dart';
+import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:flutter/material.dart';
+
+class MainScreen extends StatelessWidget{
+
+  const MainScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    List<String> filters = ["Alle Neuronen", "Alle Tasks", "Test"];
+
+    final searchController = TextEditingController();
+
+    return Scaffold(
+      backgroundColor: CaputColors.colorBackgroundLight,
+      body: CustomScrollView(
+        slivers: [
+
+          const MainAppBar(),
+
+          SliverPersistentHeader(
+            pinned: false,
+            floating: false,
+            delegate: _SliverAppBarDelegate(
+              minHeight: 50.0,
+              maxHeight: 52.0,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white70,
+                          border: Border.all(
+                            color: CaputColors.colorLightGrey.withOpacity(0.6),
+                            width: 1,
+                          ),
+                        ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: searchController,
+                                keyboardType: TextInputType.text,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: CaputColors.colorBlue
+                                ),
+                                decoration: const InputDecoration(
+                                  isDense: true,
+                                  hintText: "Suche...",
+                                  hintStyle: TextStyle(
+                                    color: CaputColors.colorBlue,
+                                    fontSize: 14
+                                  ),
+                                  border: InputBorder.none
+                                ),
+                              ),
+                            ),
+                            const Icon(
+                              Icons.search, 
+                              color: CaputColors.colorBlue
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: (){print("object");},
+                    child: const Text(
+                      "Neuer Filter",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: CaputColors.colorBlue,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                  ),
+                  
+                 
+                ],
+              ),
+            ),
+          ),
+
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+
+                  double opacity;
+                  LinearGradient gradient;
+                  Color color;
+
+          
+                    if(index==0) {
+          
+                      gradient = const LinearGradient(
+                        colors: [Color.fromARGB(183, 77, 98, 232), CaputColors.colorBlue],
+                        stops: [0, 2],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      );
+          
+                      color = Colors.white;
+                      opacity = 0.11;
+          
+          
+                    } else {
+          
+                      gradient = const LinearGradient(
+                        colors: [Color.fromARGB(123, 255, 255, 255), Color.fromARGB(179, 255, 255, 255)],
+                        stops: [0, 1],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      );
+          
+                      color = CaputColors.colorBlue;
+                      opacity = 0;
+          
+                    }
+          
+                    return RawMaterialButton(
+                      highlightElevation: 0,
+                      elevation: 0,
+                      
+                      onPressed: () {
+                        print("navigate");
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => FilterScreen(filters[index])));
+                      },
+          
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)
+                      ),
+                      child: Ink(
+
+                        
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: const AssetImage("assets/images/static_noise.jpeg"),
+                            fit: BoxFit.cover,
+                            opacity: opacity
+                          ),
+                          
+                          gradient: gradient,
+                          borderRadius: BorderRadius.circular(8)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                filters[index],
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                  color: color
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 18,
+                                color: color.withOpacity(0.6)
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                },
+                childCount: filters.length,
+              ),
+            ),
+          ),
+        
+        ]
+      ),
+
+      bottomNavigationBar: MainNavBar()
+    
+    );
+
+  }
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  _SliverAppBarDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
+  });
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return SizedBox.expand(child: child);
+  }
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
+  }
+}
+

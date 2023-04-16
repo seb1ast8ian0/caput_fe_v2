@@ -1,0 +1,39 @@
+name: Caput
+description: A Second Brain.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=2.19.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  confetti: ^0.7.0
+  rxdart: ^0.27.7
+  get_it: ^7.2.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  uuid: ^3.0.6
+  url_launcher: ^6.1.10
+  flutter_launcher_icons: ^0.13.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.3.3
+  hive_generator: ^1.1.1
+  flutter_lints: ^2.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/icon.png"
+  
+
+flutter:
+  uses-material-design: true
+  assets:
+      - assets/images/pb_dummy.jpeg
+      - assets/images/static_noise.jpeg
