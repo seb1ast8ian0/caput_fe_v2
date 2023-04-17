@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:ui';
 
+import 'package:Caput/presentation/screens/settings_screen/settings_screen.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -64,13 +66,19 @@ class _MainAppBarState extends State<MainAppBar> {
                         color: CaputColors.colorBlue
                       ),
                     ),
-                    CircleAvatar(
-                      backgroundColor: CaputColors.colorLightGrey.withOpacity(0.6),
-                      radius: 19,
+                    InkWell(
+                      onTap: () {
+                        log("settings");
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen()));
+                      },
                       child: const CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/logo.png'),
-                        radius: 19,
                         backgroundColor: Colors.transparent,
+                        radius: 16,
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage('assets/images/logo_caput_transparent.png'),
+                          radius: 14,
+                          backgroundColor: Colors.transparent,
+                        ),
                       ),
                     )
                   ],

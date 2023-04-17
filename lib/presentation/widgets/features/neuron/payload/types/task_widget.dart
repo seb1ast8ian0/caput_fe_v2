@@ -18,7 +18,7 @@ class TaskWidget extends StatefulWidget{
 
 class _TaskWidgetState extends State<TaskWidget> {
 
-  Color highlightColor = CaputColors.colorBlueSecundary;
+  Color highlightColor = CaputColors.colorBlue;
 
   @override
   void initState() {

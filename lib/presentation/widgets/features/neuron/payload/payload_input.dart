@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
@@ -152,7 +153,7 @@ class PayloadInputState extends State<PayloadInput>
                       child: PayloadInputButton(
                         Icons.check, 
                         () {
-                          print("tets");
+                          log("select payload type");
                         }
                       )
                     ),
@@ -215,7 +216,7 @@ class PayloadInputButton extends StatelessWidget{
         child: InkWell(
             splashColor: Colors.grey[600],
             highlightColor: Colors.grey[400],
-            onTap: (){print("object");},
+            onTap: onPressed,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Icon(

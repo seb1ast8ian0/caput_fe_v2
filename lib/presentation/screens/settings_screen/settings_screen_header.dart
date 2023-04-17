@@ -1,27 +1,23 @@
-
 import 'dart:developer';
 import 'dart:ui';
 
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/material.dart';
 
-class FilterAppBar extends StatefulWidget implements PreferredSizeWidget{
+class SettingsAppBar extends StatefulWidget implements PreferredSizeWidget{
   
-  final String title;
   
-  const FilterAppBar(this.title, {super.key});
+  const SettingsAppBar({super.key});
 
   
   @override
-  State<FilterAppBar> createState() => _FilterAppBarState();
+  State<SettingsAppBar> createState() => _SettingsAppBarState();
   
   @override
     Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class _FilterAppBarState extends State<FilterAppBar> {
-  
-  _FilterAppBarState();
+class _SettingsAppBarState extends State<SettingsAppBar> {
 
   ScrollNotificationObserverState? _scrollNotificationObserver;
   bool _scrolledUnder = false;
@@ -118,9 +114,9 @@ class _FilterAppBarState extends State<FilterAppBar> {
                       splashColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                     ),
-                    Text(
-                      widget.title.toUpperCase(),
-                      style: const TextStyle(
+                    const Text(
+                      "Einstellungen",
+                      style: TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 20,
                         color: CaputColors.colorBlue

@@ -29,7 +29,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/icons/icon.png"
+  image_path: "assets/icons/icon_caput.jpg"
   
 
 flutter:
@@ -38,3 +38,4 @@ flutter:
       - assets/images/pb_dummy.jpeg
       - assets/images/static_noise.jpeg
       - assets/images/logo.png
+      - assets/images/logo_caput_transparent.png

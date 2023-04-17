@@ -17,9 +17,10 @@ class Caput extends StatelessWidget{
 
     return MaterialApp(
       title: 'Caput',
-      theme: Styles.themeData(false, context),
+      theme: Styles.themeData(true, context),
       home: const MainScreen()
     );
+
   }
   
 }

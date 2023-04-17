@@ -5,16 +5,28 @@ class Styles {
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          overlayColor: MaterialStateProperty.resolveWith((states) {return Colors.transparent;}),
+          padding: MaterialStateProperty.resolveWith((states) {return EdgeInsets.symmetric(vertical: 0, horizontal: 8);}),
+          iconColor: MaterialStateProperty.resolveWith((states) {return states.contains(MaterialState.pressed) ?  CaputColors.colorBlue.withOpacity(0.6) : CaputColors.colorBlue;}),
+        )
+      ),
       textTheme: TextTheme(
         titleSmall: TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: isDarkTheme ? Colors.white : Colors.black
+          fontWeight: FontWeight.w500,
+          color: isDarkTheme ? CaputColors.colorTextPrimaryDark : CaputColors.colorTextPrimaryLight
         ),
         bodyMedium: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w500,
           color: CaputColors.colorTextSecondaryLight
+        ),
+        labelLarge: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: CaputColors.colorBlue
         )
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(

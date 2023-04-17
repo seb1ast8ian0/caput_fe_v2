@@ -87,7 +87,7 @@ class MainScreen extends StatelessWidget{
                   InkWell(
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
-                    onTap: (){print("object");},
+                    onTap: (){log("new filter");},
                     child: const Text(
                       "Neuer Filter",
                       style: TextStyle(
@@ -147,7 +147,7 @@ class MainScreen extends StatelessWidget{
                       elevation: 0,
                       
                       onPressed: () {
-                        log("navigate");
+                        log("navigate to filter screen");
                         Navigator.push(context, MaterialPageRoute(builder: (_) => FilterScreen(filters[index])));
                       },
           
@@ -155,8 +155,6 @@ class MainScreen extends StatelessWidget{
                         borderRadius: BorderRadius.circular(8)
                       ),
                       child: Ink(
-
-                        
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: const AssetImage("assets/images/static_noise.jpeg"),
@@ -199,7 +197,7 @@ class MainScreen extends StatelessWidget{
         ]
       ),
 
-      bottomNavigationBar: MainNavBar()
+      bottomNavigationBar: const MainNavBar()
     
     );
 
