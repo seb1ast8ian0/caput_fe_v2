@@ -24,13 +24,17 @@ class NoteWidget extends StatelessWidget{
   }
 
   String displayTime = neuron.getCreationDateAsString();
+  Color highlightColor = 
+        Theme.of(context).brightness == Brightness.dark 
+            ? CaputColors.colorLightGrey.withOpacity(0.4) 
+            : CaputColors.colorLightGrey;
 
   Widget noteContent = IntrinsicHeight(
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         
-        const StaticStatusWidget(CaputColors.colorLightGrey),
+        StaticStatusWidget(highlightColor),
 
         Expanded(
           child: Padding(

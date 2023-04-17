@@ -12,12 +12,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   confetti: ^0.7.0
   rxdart: ^0.27.7
+  provider: ^6.0.5
   get_it: ^7.2.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   uuid: ^3.0.6
   url_launcher: ^6.1.10
   flutter_launcher_icons: ^0.13.0
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -37,5 +39,4 @@ flutter:
   assets:
       - assets/images/pb_dummy.jpeg
       - assets/images/static_noise.jpeg
-      - assets/images/logo.png
       - assets/images/logo_caput_transparent.png

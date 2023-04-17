@@ -135,7 +135,7 @@ class StaticStatusWidget extends StatelessWidget {
     
     return Material(
       borderRadius: BorderRadius.circular(0),//3
-      color: CaputColors.colorLightGrey,
+      color: color,
       elevation: 0,
       child: Column(
         verticalDirection: VerticalDirection.up,

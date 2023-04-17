@@ -21,6 +21,7 @@ class _MainAppBarState extends State<MainAppBar> {
 
     var appBarBackgroundColor = Theme.of(context).appBarTheme.backgroundColor as Color;
     var borderTheme = Theme.of(context).inputDecorationTheme;
+    
 
     return SliverAppBar(
 

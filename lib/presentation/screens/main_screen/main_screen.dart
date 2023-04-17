@@ -84,21 +84,16 @@ class MainScreen extends StatelessWidget{
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: (){log("new filter");},
-                    child: const Text(
-                      "Neuer Filter",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: CaputColors.colorBlue,
-                        fontWeight: FontWeight.w600
-                      ),
+                  TextButton.icon(
+                    icon: const Icon(Icons.add),
+                    onPressed: (){log("new filter");}, 
+                    label: const Text("Neuer Filter", 
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.zero)
                     ),
                   ),
-                  
-                 
                 ],
               ),
             ),
@@ -114,7 +109,6 @@ class MainScreen extends StatelessWidget{
                   LinearGradient gradient;
                   Color color;
 
-          
                     if(index==0) {
           
                       gradient = const LinearGradient(
@@ -205,6 +199,7 @@ class MainScreen extends StatelessWidget{
 }
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  
   final double minHeight;
   final double maxHeight;
   final Widget child;

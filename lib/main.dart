@@ -6,9 +6,11 @@ import 'package:Caput/domain/entities/payloads/Link.dart';
 import 'package:Caput/domain/entities/payloads/Note.dart';
 import 'package:Caput/domain/entities/payloads/Task.dart';
 import 'package:Caput/presentation/states/neuron_state.dart';
+import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -18,7 +20,14 @@ void main() async {
   _registerAdapters();
   getIt.registerSingleton<NeuronState>(NeuronState(), signalsReady: true);
   
-  runApp(Caput());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeState())
+      ],
+      child: Caput(),
+    )
+  );
   
 }
 
