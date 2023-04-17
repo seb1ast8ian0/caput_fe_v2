@@ -1,4 +1,4 @@
-import 'package:Caput/domain/entities/neuron.dart';
+import 'package:Caput/domain/entities/Neuron.dart';
 import 'package:Caput/presentation/widgets/features/neuron/neuron_widget.dart';
 import 'package:flutter/material.dart';
 

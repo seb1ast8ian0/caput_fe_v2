@@ -1,6 +1,6 @@
-import 'package:Caput/domain/entities/neuron.dart';
+import 'package:Caput/domain/entities/Neuron.dart';
 import 'package:Caput/domain/entities/payloads/Task.dart';
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/features/neuron/neuron_button.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    
     super.initState();
     highlightColor = Colors.transparent;
     
@@ -68,11 +68,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                     padding: const EdgeInsets.only(bottom: 2),
                     child: Text(
                       widget.neuron.payload.caption,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: CaputColors.colorTextPrimaryLight
-                      ),
+                      style: Theme.of(context).textTheme.titleSmall
                   ),
                   ),
                   

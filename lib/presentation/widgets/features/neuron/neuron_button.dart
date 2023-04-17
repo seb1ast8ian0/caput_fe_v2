@@ -1,7 +1,9 @@
 
+import 'dart:developer';
+
 import 'package:Caput/main.dart';
 import 'package:Caput/presentation/states/neuron_state.dart';
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 
@@ -111,7 +113,7 @@ class _NeuronCheckButtonState extends State<NeuronCheckButton> {
 
   void action() {
 
-    print('done');
+    log('done');
 
     setState(() {
         _checked = true;

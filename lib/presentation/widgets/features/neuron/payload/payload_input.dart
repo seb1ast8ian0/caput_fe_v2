@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/material.dart';
 
 class PayloadInput extends StatefulWidget {
@@ -123,20 +123,22 @@ class PayloadInputState extends State<PayloadInput>
       }
     });
 
+    var borderTheme = Theme.of(context).inputDecorationTheme;
+
     return FadeTransition(
       opacity: _opacityAnimation,
       child: SlideTransition(
         position: _offsetAnimation,
         child: ClipRRect(
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+            filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
             child: Container(
               decoration: BoxDecoration(
-                color: CaputColors.colorAppBarBackgroundLight.withOpacity(0.8),
+                color: Theme.of(context).appBarTheme.backgroundColor!.withOpacity(0.6),
                 border: Border(
                   top: BorderSide(
-                    color: CaputColors.colorLightGrey.withOpacity(0.6),
-                    width: 0.4,
+                    color: borderTheme.border!.borderSide.color,
+                    width: borderTheme.border!.borderSide.width,
                   ),
                 ),
               ),
@@ -188,6 +190,8 @@ class PayloadInputButton extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+
+    var borderTheme = Theme.of(context).inputDecorationTheme;
     
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4),
@@ -203,8 +207,8 @@ class PayloadInputButton extends StatelessWidget{
           ),
           
           border: Border.all(
-              color: CaputColors.colorLightGrey.withOpacity(0.6),
-              width: 0.6,
+              color: borderTheme.border!.borderSide.color,
+              width: borderTheme.border!.borderSide.width,
           ),
 
         ),

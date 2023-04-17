@@ -37,3 +37,4 @@ flutter:
   assets:
       - assets/images/pb_dummy.jpeg
       - assets/images/static_noise.jpeg
+      - assets/images/logo.png

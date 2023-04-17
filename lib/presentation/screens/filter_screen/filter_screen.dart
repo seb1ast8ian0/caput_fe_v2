@@ -2,7 +2,6 @@ import 'package:Caput/main.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen_footer.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen_header.dart';
 import 'package:Caput/presentation/states/neuron_state.dart';
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
 import 'package:Caput/presentation/widgets/features/neuron/neuron_list_builder.dart';
 import 'package:Caput/presentation/widgets/features/neuron/payload/payload_input.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +53,6 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: CaputColors.colorBackgroundLight,
       extendBodyBehindAppBar: true,
       appBar: FilterAppBar(widget.title),
       body: _isLoading
@@ -65,7 +63,6 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
               fit: StackFit.loose,
               alignment: Alignment.bottomLeft,
               children: [ 
-                
                 StreamBuilder(
                   stream: neuronState.stream$,
                   initialData: neuronState.current,

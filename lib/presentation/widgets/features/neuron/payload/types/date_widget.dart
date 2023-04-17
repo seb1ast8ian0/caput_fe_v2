@@ -1,6 +1,6 @@
-import 'package:Caput/domain/entities/neuron.dart';
+import 'package:Caput/domain/entities/Neuron.dart';
 import 'package:Caput/domain/entities/payloads/Date.dart';
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -56,11 +56,7 @@ class DateWidget extends StatelessWidget{
                     padding: const EdgeInsets.only(bottom: 2),
                     child: Text(
                       neuron.payload.caption,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: CaputColors.colorTextPrimaryLight
-                      ),
+                      style: Theme.of(context).textTheme.titleSmall
                   ),
                   ),
                   
@@ -69,11 +65,7 @@ class DateWidget extends StatelessWidget{
                       padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                       child: Text(
                         date.body,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: CaputColors.colorTextSecondaryLight
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   Padding(

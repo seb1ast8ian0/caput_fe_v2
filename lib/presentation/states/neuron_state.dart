@@ -1,4 +1,4 @@
-import 'package:Caput/domain/entities/neuron.dart';
+import 'package:Caput/domain/entities/Neuron.dart';
 import 'package:Caput/domain/entities/payloads/Date.dart';
 import 'package:Caput/domain/entities/payloads/Link.dart';
 import 'package:Caput/domain/entities/payloads/Note.dart';

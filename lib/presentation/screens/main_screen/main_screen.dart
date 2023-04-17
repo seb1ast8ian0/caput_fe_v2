@@ -1,8 +1,9 @@
+import 'dart:developer';
 
 import 'package:Caput/presentation/screens/filter_screen/filter_screen.dart';
 import 'package:Caput/presentation/screens/main_screen/main_screen_footer.dart';
 import 'package:Caput/presentation/screens/main_screen/main_screen_header.dart';
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget{
@@ -15,9 +16,9 @@ class MainScreen extends StatelessWidget{
     List<String> filters = ["Alle Neuronen", "Alle Tasks", "Test"];
 
     final searchController = TextEditingController();
+    final theme = Theme.of(context).inputDecorationTheme;
 
     return Scaffold(
-      backgroundColor: CaputColors.colorBackgroundLight,
       body: CustomScrollView(
         slivers: [
 
@@ -38,10 +39,10 @@ class MainScreen extends StatelessWidget{
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: Colors.white70,
+                          color: theme.fillColor,
                           border: Border.all(
-                            color: CaputColors.colorLightGrey.withOpacity(0.6),
-                            width: 1,
+                            color: theme.border!.borderSide.color,
+                            width: theme.border!.borderSide.width,
                           ),
                         ),
                       child: Padding(
@@ -53,24 +54,19 @@ class MainScreen extends StatelessWidget{
                                 controller: searchController,
                                 keyboardType: TextInputType.text,
                                 style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: CaputColors.colorBlue
+                                  fontSize: 14
                                 ),
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   isDense: true,
                                   hintText: "Suche...",
-                                  hintStyle: TextStyle(
-                                    color: CaputColors.colorBlue,
-                                    fontSize: 14
-                                  ),
+                                  hintStyle: theme.hintStyle,
                                   border: InputBorder.none
                                 ),
                               ),
                             ),
-                            const Icon(
+                            Icon(
                               Icons.search, 
-                              color: CaputColors.colorBlue
+                              color: theme.hintStyle!.color
                             )
                           ],
                         ),
@@ -134,14 +130,14 @@ class MainScreen extends StatelessWidget{
           
                     } else {
           
-                      gradient = const LinearGradient(
-                        colors: [Color.fromARGB(123, 255, 255, 255), Color.fromARGB(179, 255, 255, 255)],
-                        stops: [0, 1],
+                      gradient = LinearGradient(
+                        colors: [theme.fillColor!, theme.fillColor!],
+                        stops: const [0, 1],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       );
           
-                      color = CaputColors.colorBlue;
+                      color = Theme.of(context).brightness == Brightness.dark ? Colors.white : CaputColors.colorBlue;
                       opacity = 0;
           
                     }
@@ -151,7 +147,7 @@ class MainScreen extends StatelessWidget{
                       elevation: 0,
                       
                       onPressed: () {
-                        print("navigate");
+                        log("navigate");
                         Navigator.push(context, MaterialPageRoute(builder: (_) => FilterScreen(filters[index])));
                       },
           

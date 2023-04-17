@@ -1,7 +1,8 @@
 
+import 'dart:developer';
 import 'dart:ui';
 
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/material.dart';
 
 class FilterAppBar extends StatefulWidget implements PreferredSizeWidget{
@@ -76,24 +77,27 @@ class _FilterAppBarState extends State<FilterAppBar> {
     Color appBarBackgroundColor;
 
     if(_scrolledUnder){
-        appBarBackgroundColor = CaputColors.colorAppBarBackgroundLight.withOpacity(0.4);
+        appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.4);
     } else {
-        appBarBackgroundColor = CaputColors.colorAppBarBackgroundLight;
+        appBarBackgroundColor = Theme.of(context).appBarTheme.backgroundColor as Color;
     }
+
+
+    var theme = Theme.of(context).inputDecorationTheme;
 
     Widget appBarContent = Container(
       decoration: BoxDecoration(
         color: appBarBackgroundColor,
         border: Border(
           bottom: BorderSide(
-            color: CaputColors.colorLightGrey.withOpacity(0.6),
-            width: 0.4,
+            color: theme.border!.borderSide.color,
+            width: theme.border!.borderSide.width
           ),
         ),
       ),
       child: SafeArea(
         child: Material(
-          color: appBarBackgroundColor,
+          color: Colors.transparent,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -108,7 +112,7 @@ class _FilterAppBarState extends State<FilterAppBar> {
                       icon: const Icon(Icons.arrow_back_ios_new),
                       color: CaputColors.colorBlue, 
                       onPressed: (){
-                        print("navigate");
+                        log("navigate");
                         Navigator.pop(context);
                       },
                       splashColor: Colors.transparent,
@@ -135,7 +139,7 @@ class _FilterAppBarState extends State<FilterAppBar> {
     if(_scrolledUnder){
       appBarContent = ClipRRect(
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
           child: appBarContent,
         ),
       );

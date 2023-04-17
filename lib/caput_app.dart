@@ -1,6 +1,7 @@
 import 'package:Caput/main.dart';
 import 'package:Caput/presentation/screens/main_screen/main_screen.dart';
 import 'package:Caput/presentation/states/neuron_state.dart';
+import 'package:Caput/presentation/util/consts/caput_theme.dart';
 import 'package:flutter/material.dart';
 
 class Caput extends StatelessWidget{
@@ -14,9 +15,10 @@ class Caput extends StatelessWidget{
 
     neuronState.invoke();
 
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Caput',
-      home: MainScreen()
+      theme: Styles.themeData(false, context),
+      home: const MainScreen()
     );
   }
   

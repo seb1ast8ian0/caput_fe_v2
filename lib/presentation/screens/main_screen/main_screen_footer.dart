@@ -1,17 +1,18 @@
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
 import 'package:flutter/material.dart';
 
 class MainNavBar extends StatelessWidget{
 
+  const MainNavBar({super.key});
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
+    var theme = Theme.of(context).inputDecorationTheme;
+    
     return Stack(
         children: [
           Container(
-
             decoration: BoxDecoration(
-
               image: const DecorationImage(
                 image: AssetImage("assets/images/static_noise.jpeg"),
                 fit: BoxFit.cover,
@@ -20,15 +21,15 @@ class MainNavBar extends StatelessWidget{
               
               border: Border(
                 top: BorderSide(
-                  color: CaputColors.colorLightGrey.withOpacity(0.6),
-                  width: 0.4,
+                  color: theme.border!.borderSide.color,
+                  width: theme.border!.borderSide.width,
                 ),
               ),
             ),
             
             child: BottomAppBar(
               elevation: 0,
-              color: CaputColors.colorAppBarBackgroundLight.withOpacity(0.6),
+              color: (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.6),
               child: Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Row(

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/material.dart';
 
 class MainAppBar extends StatefulWidget{
@@ -17,8 +17,9 @@ class _MainAppBarState extends State<MainAppBar> {
   @override
   Widget build(BuildContext context) {
 
-    const appBarBackgroundColor = CaputColors.colorAppBarBackgroundLight;
-    
+    var appBarBackgroundColor = Theme.of(context).appBarTheme.backgroundColor as Color;
+    var borderTheme = Theme.of(context).inputDecorationTheme;
+
     return SliverAppBar(
 
       backgroundColor: Colors.transparent,
@@ -32,8 +33,8 @@ class _MainAppBarState extends State<MainAppBar> {
           color: appBarBackgroundColor.withOpacity(0.6),
           border: Border(
             bottom: BorderSide(
-              color: CaputColors.colorLightGrey.withOpacity(0.6),
-              width: 0.4,
+              color: borderTheme.border!.borderSide.color,
+              width: borderTheme.border!.borderSide.width,
             ),
           ),
         ),
@@ -41,9 +42,9 @@ class _MainAppBarState extends State<MainAppBar> {
           children: [
             ClipRRect(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
                 child: Container(
-                  color: CaputColors.colorAppBarBackgroundLight.withOpacity(0.6),
+                  color: appBarBackgroundColor.withOpacity(0.6),
                 ),
               ),
             ),
@@ -51,7 +52,7 @@ class _MainAppBarState extends State<MainAppBar> {
             FlexibleSpaceBar(
               expandedTitleScale: 1.2,
               title:  Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -67,8 +68,9 @@ class _MainAppBarState extends State<MainAppBar> {
                       backgroundColor: CaputColors.colorLightGrey.withOpacity(0.6),
                       radius: 19,
                       child: const CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/pb_dummy.jpeg'),
-                        radius: 18,
+                        backgroundImage: AssetImage('assets/images/logo.png'),
+                        radius: 19,
+                        backgroundColor: Colors.transparent,
                       ),
                     )
                   ],

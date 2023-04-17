@@ -1,6 +1,6 @@
-import 'package:Caput/domain/entities/neuron.dart';
+import 'package:Caput/domain/entities/Neuron.dart';
 import 'package:Caput/domain/entities/payloads/Note.dart';
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +30,7 @@ class NoteWidget extends StatelessWidget{
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         
-        StaticStatusWidget(CaputColors.colorLightGrey),
+        const StaticStatusWidget(CaputColors.colorLightGrey),
 
         Expanded(
           child: Padding(
@@ -46,11 +46,7 @@ class NoteWidget extends StatelessWidget{
                     children: [
                       Text(
                         note.caption,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: CaputColors.colorTextPrimaryLight
-                        ),
+                        style: Theme.of(context).textTheme.titleSmall
                       ),
                       Text(
                         displayTime,

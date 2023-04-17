@@ -1,4 +1,4 @@
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/material.dart';
 
 class DynamicStatusWidget extends StatefulWidget{
@@ -55,7 +55,7 @@ class _DynamicStatusWidgetState extends State<DynamicStatusWidget> with TickerPr
 
     return Material(
       borderRadius: BorderRadius.circular(0),//3
-      color: CaputColors.colorLightGrey,
+      color: Theme.of(context).progressIndicatorTheme.color,
       elevation: 0,
       child: Column(
         verticalDirection: VerticalDirection.up,

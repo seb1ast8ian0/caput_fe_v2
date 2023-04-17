@@ -1,9 +1,10 @@
+import 'dart:developer';
 
-import 'package:Caput/domain/entities/neuron.dart';
+import 'package:Caput/domain/entities/Neuron.dart';
 import 'package:Caput/domain/entities/payloads/Task.dart';
 import 'package:Caput/main.dart';
 import 'package:Caput/presentation/states/neuron_state.dart';
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/util/buttons/caput_button_secondary.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -36,14 +37,16 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
         parent: widget.animationController)
     );
 
+    final inputTheme = Theme.of(context).inputDecorationTheme;
+
     final Widget buildNeuronInput = Align(
       child: Container(
         decoration: BoxDecoration(
-          color: CaputColors.colorAppBarBackgroundLight,
+          color: Theme.of(context).appBarTheme.backgroundColor as Color,
           border: Border(
             top: BorderSide(
-              color: CaputColors.colorLightGrey.withOpacity(0.6),
-              width: 0.4,
+              color: inputTheme.border!.borderSide.color,
+              width: inputTheme.border!.borderSide.width,
             ),
           ),
         ),
@@ -60,7 +63,7 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                     child: CaputButtonSecondary(
                       icon: Icons.keyboard_arrow_up, 
                       onPressed: (){
-                          print('up');
+                          log('up');
                           var controller = widget.animationController;
                           
                           if(controller.isCompleted){
@@ -78,10 +81,10 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: CaputColors.colorBackgroundLight,
+                        color: inputTheme.fillColor,
                         border: Border.all(
-                          color: CaputColors.colorLightGrey.withOpacity(0.6),
-                          width: 0.6,
+                          color: inputTheme.border!.borderSide.color,
+                          width: inputTheme.border!.borderSide.width,
                         ),
                       ),
                       child: TextField(
@@ -93,14 +96,11 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                         style: const TextStyle(
                           fontSize: 14
                         ),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           isDense: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12), //vertical: 12 on other devices
+                          contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12), //vertical: 12 on other devices
                           hintText: "Neues Neuron",
-                          hintStyle: TextStyle(
-                            color: CaputColors.colorTextSecondaryLight,
-                            fontSize: 14
-                          ),
+                          hintStyle: inputTheme.hintStyle,
                           border: InputBorder.none
                         ),
                       ),
@@ -113,7 +113,7 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                   CaputButtonSecondary(
                     icon: Icons.add, 
                     onPressed: () => {
-                      print('add')
+                      log('add')
                     }
                   ),
 
@@ -135,7 +135,7 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                           ),
                           RawMaterialButton(
                             onPressed: () {
-                              print('go');
+                              log('go');
                               neuronState.add(Neuron(const Uuid().v4(), const Uuid().v4(), Task("", false, DateTime.now().add(const Duration(seconds: 30)), "task", primaryTextInputController.text, 1), DateTime.now()),);
                             },
                             splashColor: Colors.transparent,
@@ -155,7 +155,7 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
     );
 
     return Container(
-      color: CaputColors.colorAppBarBackgroundLight,
+      color: Theme.of(context).bottomAppBarTheme.color,
       child: SafeArea(
         right: false,
         left: false,

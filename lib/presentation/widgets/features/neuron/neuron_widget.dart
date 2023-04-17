@@ -1,9 +1,9 @@
-import 'package:Caput/domain/entities/neuron.dart';
+import 'package:Caput/domain/entities/Neuron.dart';
 import 'package:Caput/domain/entities/payloads/Date.dart';
 import 'package:Caput/domain/entities/payloads/Link.dart';
 import 'package:Caput/domain/entities/payloads/Note.dart';
 import 'package:Caput/domain/entities/payloads/Task.dart';
-import 'package:Caput/presentation/util/colors/caput_colors.dart';
+import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/features/neuron/payload/types/note_widget.dart';
 import 'package:Caput/presentation/widgets/features/neuron/payload/types/date_widget.dart';
 import 'package:Caput/presentation/widgets/features/neuron/payload/types/link_widget.dart';

@@ -24,7 +24,6 @@ class Neuron extends HiveObject{
 
   String getCreationDateAsString(){
 
-    
     String minuteString;
     String hourString;
     int minute = creationTs.minute;
@@ -43,6 +42,7 @@ class Neuron extends HiveObject{
     }
     
     return "$hourString:$minuteString";
+
   }
 
 
