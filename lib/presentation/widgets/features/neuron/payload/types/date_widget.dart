@@ -2,6 +2,7 @@ import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Date.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
+import 'package:Caput/presentation/widgets/features/neuron/tag/tag_list_widget.dart';
 import 'package:flutter/material.dart';
 
 class DateWidget extends StatelessWidget{
@@ -69,16 +70,24 @@ class DateWidget extends StatelessWidget{
                       ),
                     ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 1),
-                    child: Text(
-                      formatedDeadline,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: CaputColors.colorBlue
-                      ),
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          formatedDeadline,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: CaputColors.colorBlue
+                          ),
+                        ),
+                        TagListWidget(tags: neuron.tags)
+                      ],
                     ),
                   ),
+
+                  
                 ],
               )
             ),

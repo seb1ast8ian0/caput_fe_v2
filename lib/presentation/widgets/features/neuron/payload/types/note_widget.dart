@@ -2,6 +2,7 @@ import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Note.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
+import 'package:Caput/presentation/widgets/features/neuron/tag/tag_list_widget.dart';
 import 'package:flutter/material.dart';
 
 class NoteWidget extends StatelessWidget{
@@ -55,7 +56,7 @@ class NoteWidget extends StatelessWidget{
                       Text(
                         displayTime,
                         style: const TextStyle(
-                          fontSize: 10,
+                          fontSize: 11,
                           fontWeight: FontWeight.w400,
                           color: CaputColors.colorTextSecondaryLight
                         ),
@@ -83,6 +84,8 @@ class NoteWidget extends StatelessWidget{
                 //     ),
                 //   ),
                 // ),
+                const SizedBox(height: 2),
+                TagListWidget(tags: neuron.tags)
               ],
             )
           ),

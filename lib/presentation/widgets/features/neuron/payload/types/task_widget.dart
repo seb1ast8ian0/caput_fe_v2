@@ -3,6 +3,7 @@ import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/features/neuron/neuron_button.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
+import 'package:Caput/presentation/widgets/features/neuron/tag/tag_list_widget.dart';
 import 'package:flutter/material.dart';
 
 class TaskWidget extends StatefulWidget{
@@ -81,16 +82,23 @@ class _TaskWidgetState extends State<TaskWidget> {
                       ),
                     ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 1),
-                    child: Text(
-                      formatedDeadline,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: CaputColors.colorTextSecondaryLight
-                      ),
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          formatedDeadline,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: CaputColors.colorTextSecondaryLight
+                          ),
+                        ),
+                        TagListWidget(tags: widget.neuron.tags)
+                      ],
                     ),
                   ),
+                  
                 ],
               )
             ),
@@ -101,7 +109,8 @@ class _TaskWidgetState extends State<TaskWidget> {
               padding: const EdgeInsets.only(right: 12.0),
               child: NeuronCheckButton(index: widget.index),
             )
-          )
+          ),
+
         ],
       ),
     ),

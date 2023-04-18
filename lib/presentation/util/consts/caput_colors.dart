@@ -6,7 +6,7 @@ class CaputColors {
 
       static var colorBackgroundLight = const Color.fromRGBO(230,230,230,1);
       static const colorAppBarBackgroundLight = Color.fromRGBO(221, 221, 221, 1);
-      static const colorTextPrimaryLight =  Color.fromRGBO(34, 34, 34, 1);
+      static const colorTextPrimaryLight =  Color.fromRGBO(63, 63, 63, 1);
       static const colorTextSecondaryLight = Color.fromRGBO(143, 143, 143, 1);
 
       static const colorBackgroundDark =  Color.fromRGBO(34, 34, 34, 1);

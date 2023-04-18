@@ -14,7 +14,6 @@ ThemeData lightTheme = ThemeData(
       
     )
   ),
-  
   textTheme: const TextTheme(
     titleSmall: TextStyle(
       fontSize: 16,
@@ -56,6 +55,16 @@ ThemeData lightTheme = ThemeData(
       ),
     ),
   ),
+
+  //für Tag Widget!
+  chipTheme: ChipThemeData(
+    backgroundColor: CaputColors.colorLightGrey.withOpacity(0.4),
+    labelStyle: const TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
+      color: CaputColors.colorTextSecondaryLight,
+    )
+  )
 );
 
 ThemeData darkTheme = ThemeData(
@@ -69,6 +78,16 @@ ThemeData darkTheme = ThemeData(
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       minimumSize: MaterialStateProperty.all(Size.zero),
       
+    )
+  ),
+
+    //für Tag Widget!
+  chipTheme: ChipThemeData(
+    backgroundColor: Colors.white54.withOpacity(0.6),
+    labelStyle: const TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
+      color: CaputColors.colorTextPrimaryLight,
     )
   ),
   

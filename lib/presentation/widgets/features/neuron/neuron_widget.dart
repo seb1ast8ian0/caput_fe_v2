@@ -31,6 +31,7 @@ class NeuronWidget extends StatelessWidget{
         ),*/
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           
           if(!last)
@@ -52,7 +53,8 @@ class NeuronWidget extends StatelessWidget{
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0), //v: 5 
               child: _getWidgetFromType(neuron)
-            )
+            ),
+
         ],
       ),
     )
