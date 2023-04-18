@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 import 'dart:ui';
 
@@ -119,7 +118,7 @@ class _FilterAppBarState extends State<FilterAppBar> {
                       highlightColor: Colors.transparent,
                     ),
                     Text(
-                      widget.title.toUpperCase(),
+                      widget.title,
                       style: const TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 20,
@@ -135,7 +134,6 @@ class _FilterAppBarState extends State<FilterAppBar> {
       ),
     );
 
-
     if(_scrolledUnder){
       appBarContent = ClipRRect(
         child: BackdropFilter(
@@ -146,6 +144,7 @@ class _FilterAppBarState extends State<FilterAppBar> {
     }
     
     return appBarContent;
+  
   }
 
 }

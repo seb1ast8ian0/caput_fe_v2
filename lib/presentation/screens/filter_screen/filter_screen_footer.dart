@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:Caput/domain/entities/Neuron.dart';
-import 'package:Caput/domain/entities/payloads/Task.dart';
+import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
 import 'package:Caput/main.dart';
 import 'package:Caput/presentation/states/neuron_state.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
@@ -51,7 +51,7 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           child: Column(
             children: [
               Row(
@@ -93,12 +93,10 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                         keyboardType: TextInputType.multiline,
                         minLines: 1,
                         maxLines: 5,
-                        style: const TextStyle(
-                          fontSize: 14
-                        ),
+                        style: Theme.of(context).textTheme.titleSmall,
                         decoration: InputDecoration(
                           isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12), //vertical: 12 on other devices
+                          contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12), //vertical: 12 on other devices
                           hintText: "Neues Neuron",
                           hintStyle: inputTheme.hintStyle,
                           border: InputBorder.none
@@ -113,7 +111,7 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                   CaputButtonSecondary(
                     icon: Icons.add, 
                     onPressed: () => {
-                      log('add')
+                      log('add media')
                     }
                   ),
 
@@ -136,7 +134,8 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                           RawMaterialButton(
                             onPressed: () {
                               log('go');
-                              neuronState.add(Neuron(const Uuid().v4(), const Uuid().v4(), Task("", false, DateTime.now().add(const Duration(seconds: 30)), "task", primaryTextInputController.text, 1), DateTime.now()),);
+                              neuronState.add(Neuron(const Uuid().v4(), const Uuid().v4(), Task("", false, DateTime.now().add(const Duration(seconds: 30)), "task", primaryTextInputController.text, 1), DateTime.now(), [], []));
+                              primaryTextInputController.clear();
                             },
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,

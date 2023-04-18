@@ -1,12 +1,10 @@
-import 'package:Caput/domain/entities/Neuron.dart';
-import 'package:Caput/domain/entities/payloads/Date.dart';
-import 'package:Caput/domain/entities/payloads/Link.dart';
-import 'package:Caput/domain/entities/payloads/Note.dart';
-import 'package:Caput/domain/entities/payloads/Task.dart';
+import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/payload/payloads/Date.dart';
+import 'package:Caput/domain/entities/neuron/payload/payloads/Note.dart';
+import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/features/neuron/payload/types/note_widget.dart';
 import 'package:Caput/presentation/widgets/features/neuron/payload/types/date_widget.dart';
-import 'package:Caput/presentation/widgets/features/neuron/payload/types/link_widget.dart';
 import 'package:Caput/presentation/widgets/features/neuron/payload/types/task_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -71,8 +69,6 @@ class NeuronWidget extends StatelessWidget{
 
     if (payload is Task) {
       return TaskWidget(index: index, neuron: neuron);
-    } else if (payload is Link) {
-      return LinkWidget(index: index, neuron: neuron);
     } else if (payload is Note) {
       return NoteWidget(index: index, neuron: neuron);
     } else if (payload is Date) {

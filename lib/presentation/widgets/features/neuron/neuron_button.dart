@@ -71,7 +71,9 @@ class _NeuronCheckButtonState extends State<NeuronCheckButton> {
                 emissionFrequency: 0.4,
                 numberOfParticles: 1,
                 minBlastForce: 0.2,
-                maxBlastForce: 1.6, 
+                maxBlastForce: 0.4, 
+                gravity: 0.1,
+                particleDrag: 0.1,
               ),
             ),
           ),
@@ -121,9 +123,13 @@ class _NeuronCheckButtonState extends State<NeuronCheckButton> {
 
     controller.play();
 
-    Future.delayed(const Duration(milliseconds: 800), () {
+    Future.delayed(const Duration(milliseconds: 150), () {
 
       controller.stop();
+      
+    });
+
+    Future.delayed(const Duration(milliseconds: 800), () {
 
       if(_checked){
         neuronState.remove(widget.index);
@@ -133,7 +139,7 @@ class _NeuronCheckButtonState extends State<NeuronCheckButton> {
         _checked = false;
       });
       
-    });
+  });
 
   }
 }

@@ -1,41 +1,44 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'Neuron.dart';
+part of 'link.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NeuronAdapter extends TypeAdapter<Neuron> {
+class LinkAdapter extends TypeAdapter<Link> {
   @override
-  final int typeId = 1;
+  final int typeId = 8;
 
   @override
-  Neuron read(BinaryReader reader) {
+  Link read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Neuron(
+    return Link(
+      fields[3] as String,
+      fields[4] as String,
+      fields[5] as String,
       fields[1] as String,
       fields[2] as String,
-      fields[3] as Payload,
-      fields[4] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Neuron obj) {
+  void write(BinaryWriter writer, Link obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(1)
-      ..write(obj.neuronId)
-      ..writeByte(2)
-      ..write(obj.userId)
+      ..writeByte(5)
       ..writeByte(3)
-      ..write(obj.payload)
+      ..write(obj.url)
       ..writeByte(4)
-      ..write(obj.creationTs);
+      ..write(obj.urlCaption)
+      ..writeByte(5)
+      ..write(obj.urlBody)
+      ..writeByte(1)
+      ..write(obj.mediaId)
+      ..writeByte(2)
+      ..write(obj.type);
   }
 
   @override
@@ -44,7 +47,7 @@ class NeuronAdapter extends TypeAdapter<Neuron> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NeuronAdapter &&
+      other is LinkAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

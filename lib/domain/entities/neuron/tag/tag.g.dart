@@ -1,50 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'Link.dart';
+part of 'tag.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class LinkAdapter extends TypeAdapter<Link> {
+class TagAdapter extends TypeAdapter<Tag> {
   @override
   final int typeId = 3;
 
   @override
-  Link read(BinaryReader reader) {
+  Tag read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Link(
-      fields[4] as String,
-      fields[5] as String,
-      fields[7] as String,
-      fields[6] as String,
+    return Tag(
       fields[1] as String,
       fields[2] as String,
-      fields[3] as int,
+      fields[3] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Link obj) {
+  void write(BinaryWriter writer, Tag obj) {
     writer
-      ..writeByte(7)
-      ..writeByte(4)
-      ..write(obj.body)
-      ..writeByte(5)
-      ..write(obj.url)
-      ..writeByte(6)
-      ..write(obj.urlTitle)
-      ..writeByte(7)
-      ..write(obj.urlDescription)
+      ..writeByte(3)
       ..writeByte(1)
-      ..write(obj.type)
+      ..write(obj.tagId)
       ..writeByte(2)
       ..write(obj.caption)
       ..writeByte(3)
-      ..write(obj.priority);
+      ..write(obj.body);
   }
 
   @override
@@ -53,7 +41,7 @@ class LinkAdapter extends TypeAdapter<Link> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is LinkAdapter &&
+      other is TagAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

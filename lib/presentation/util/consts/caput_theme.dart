@@ -17,12 +17,12 @@ ThemeData lightTheme = ThemeData(
   
   textTheme: const TextTheme(
     titleSmall: TextStyle(
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: FontWeight.w500,
       color: CaputColors.colorTextPrimaryLight
     ),
     bodyMedium: TextStyle(
-      fontSize: 12,
+      fontSize: 14,
       fontWeight: FontWeight.w500,
       color: CaputColors.colorTextSecondaryLight
     ),
@@ -74,12 +74,12 @@ ThemeData darkTheme = ThemeData(
   
   textTheme: const TextTheme(
     titleSmall: TextStyle(
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: FontWeight.w500,
       color: CaputColors.colorTextPrimaryDark
     ),
     bodyMedium: TextStyle(
-      fontSize: 12,
+      fontSize: 14,
       fontWeight: FontWeight.w500,
       color: CaputColors.colorTextSecondaryLight
     ),

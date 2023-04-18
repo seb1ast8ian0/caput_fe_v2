@@ -1,5 +1,5 @@
-import 'package:Caput/domain/entities/Neuron.dart';
-import 'package:Caput/domain/entities/payloads/Date.dart';
+import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/payload/payloads/Date.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
 import 'package:flutter/material.dart';

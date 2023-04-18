@@ -1,10 +1,12 @@
 import 'package:Caput/caput_app.dart';
-import 'package:Caput/domain/entities/Neuron.dart';
-import 'package:Caput/domain/entities/Payload.dart';
-import 'package:Caput/domain/entities/payloads/Date.dart';
-import 'package:Caput/domain/entities/payloads/Link.dart';
-import 'package:Caput/domain/entities/payloads/Note.dart';
-import 'package:Caput/domain/entities/payloads/Task.dart';
+import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/media/media.dart';
+import 'package:Caput/domain/entities/neuron/media/medias/link.dart';
+import 'package:Caput/domain/entities/neuron/payload/Payload.dart';
+import 'package:Caput/domain/entities/neuron/payload/payloads/Date.dart';
+import 'package:Caput/domain/entities/neuron/payload/payloads/Note.dart';
+import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
+import 'package:Caput/domain/entities/neuron/tag/tag.dart';
 import 'package:Caput/presentation/states/neuron_state.dart';
 import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +38,10 @@ void _registerAdapters(){
   Hive.registerAdapter(NeuronAdapter());
   Hive.registerAdapter(PayloadAdapter());
   Hive.registerAdapter(TaskAdapter());
-  Hive.registerAdapter(LinkAdapter());
   Hive.registerAdapter(DateAdapter());
   Hive.registerAdapter(NoteAdapter());
+  Hive.registerAdapter(TagAdapter());
+  Hive.registerAdapter(MediaAdapter());
+  Hive.registerAdapter(LinkAdapter());
 
 }

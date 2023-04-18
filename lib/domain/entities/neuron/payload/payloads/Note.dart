@@ -1,4 +1,4 @@
-import 'package:Caput/domain/entities/Payload.dart';
+import 'package:Caput/domain/entities/neuron/payload/Payload.dart';
 import 'package:hive/hive.dart';
 part 'Note.g.dart';
 

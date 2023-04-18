@@ -1,5 +1,5 @@
-import 'package:Caput/domain/entities/Neuron.dart';
-import 'package:Caput/domain/entities/payloads/Task.dart';
+import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/features/neuron/neuron_button.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
@@ -77,11 +77,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                       padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                       child: Text(
                         task.body,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: CaputColors.colorTextSecondaryLight
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   Padding(

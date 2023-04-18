@@ -168,7 +168,6 @@ class MainScreen extends StatelessWidget{
                                 filters[index],
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w800,
                                   color: color
                                 ),
                               ),
