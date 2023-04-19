@@ -1,4 +1,6 @@
+import 'package:Caput/main.dart';
 import 'package:Caput/presentation/screens/settings_screen/settings_screen_header.dart';
+import 'package:Caput/presentation/states/neuron_state.dart';
 import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +9,12 @@ import 'package:provider/provider.dart';
 class SettingsScreen extends StatelessWidget{
   const SettingsScreen({super.key});
 
+  
+
   @override
   Widget build(BuildContext context) {
+
+    var neuronState = getIt.get<NeuronState>();
 
     var highlightColor = MaterialStatePropertyAll(Theme.of(context).brightness == Brightness.dark ? Colors.black12 : CaputColors.colorBlue.withOpacity(0.2));
     var themeMode = context.watch<ThemeState>().themeMode;
@@ -160,7 +166,9 @@ class SettingsScreen extends StatelessWidget{
           TextButton.icon(
             icon: const Icon(Icons.delete),
             label: const Text("Zurücksetzen"),
-            onPressed: () { },
+            onPressed: () {
+              neuronState.cleanUp();
+            },
             style: ButtonStyle(
               iconColor: MaterialStateProperty.resolveWith((states) {return states.contains(MaterialState.pressed) ?  CaputColors.colorRed.withOpacity(0.6) : CaputColors.colorRed;}),
               foregroundColor: MaterialStateProperty.resolveWith((states) {return states.contains(MaterialState.pressed) ?  CaputColors.colorRed.withOpacity(0.6) : CaputColors.colorRed;})

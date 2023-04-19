@@ -4,6 +4,7 @@ import 'package:Caput/presentation/states/neuron_state.dart';
 import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:Caput/presentation/util/consts/caput_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 class Caput extends StatelessWidget{
@@ -19,10 +20,20 @@ class Caput extends StatelessWidget{
 
     return MaterialApp(
       title: 'Caput',
+      locale: const Locale('de'),
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: context.watch<ThemeState>().themeMode,
-      home: const MainScreen()
+      home: const MainScreen(),
+      localizationsDelegates: const [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate
+      ],
+      supportedLocales: const[
+        Locale('en'), // English
+        Locale('de'), // Deutsch
+      ],
     );
 
   }

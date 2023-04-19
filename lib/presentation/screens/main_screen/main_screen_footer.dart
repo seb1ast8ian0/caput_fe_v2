@@ -16,7 +16,7 @@ class MainNavBar extends StatelessWidget{
               image: const DecorationImage(
                 image: AssetImage("assets/images/static_noise.jpeg"),
                 fit: BoxFit.cover,
-                opacity: 0.1
+                opacity: 0.0
               ),
               
               border: Border(

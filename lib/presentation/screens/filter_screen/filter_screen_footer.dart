@@ -80,7 +80,7 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(16),
                         color: inputTheme.fillColor,
                         border: Border.all(
                           color: inputTheme.border!.borderSide.color,
@@ -134,7 +134,7 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                           RawMaterialButton(
                             onPressed: () {
                               log('go');
-                              neuronState.add(Neuron(const Uuid().v4(), const Uuid().v4(), Task("", false, DateTime.now().add(const Duration(seconds: 30)), "task", primaryTextInputController.text, 1), DateTime.now(), [], []));
+                              neuronState.add(Neuron(const Uuid().v4(), const Uuid().v4(), Task("", false, DateTime.now().add(const Duration(seconds: 30)), "task", primaryTextInputController.text.trimRight(), 1), DateTime.now(), [], []));
                               primaryTextInputController.clear();
                             },
                             splashColor: Colors.transparent,

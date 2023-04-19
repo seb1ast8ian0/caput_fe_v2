@@ -111,9 +111,9 @@ class MainScreen extends StatelessWidget{
 
                     if(index==0) {
           
-                      gradient = const LinearGradient(
-                        colors: [Color.fromARGB(183, 77, 98, 232), CaputColors.colorBlue],
-                        stops: [0, 2],
+                      gradient =  LinearGradient(
+                        colors: [const Color.fromARGB(183, 77, 98, 232), CaputColors.colorBlue.withOpacity(0.6)],
+                        stops: const [0, 2],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       );

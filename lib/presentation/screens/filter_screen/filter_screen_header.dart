@@ -73,13 +73,16 @@ class _FilterAppBarState extends State<FilterAppBar> {
   @override
   Widget build(BuildContext context) {
 
-    Color appBarBackgroundColor;
-
+    Color appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.4);
+    appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.4);
+    /*
     if(_scrolledUnder){
         appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.4);
     } else {
-        appBarBackgroundColor = Theme.of(context).appBarTheme.backgroundColor as Color;
+        appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color);
     }
+
+    */
 
 
     var theme = Theme.of(context).inputDecorationTheme;
@@ -134,7 +137,7 @@ class _FilterAppBarState extends State<FilterAppBar> {
       ),
     );
 
-    if(_scrolledUnder){
+    if(true){
       appBarContent = ClipRRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),

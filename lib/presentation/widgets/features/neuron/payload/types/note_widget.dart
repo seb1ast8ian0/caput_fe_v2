@@ -39,30 +39,27 @@ class NoteWidget extends StatelessWidget{
 
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        note.caption,
-                        style: Theme.of(context).textTheme.titleSmall
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      note.caption,
+                      style: Theme.of(context).textTheme.titleSmall
+                    ),
+                    Text(
+                      displayTime,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w400,
+                        color: CaputColors.colorTextSecondaryLight
                       ),
-                      Text(
-                        displayTime,
-                        style: const TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w400,
-                          color: CaputColors.colorTextSecondaryLight
-                        ),
-                        )
-                    ],
-                  ),
+                      )
+                  ],
                 ),
                 
                 if(note.body != "")
@@ -84,8 +81,10 @@ class NoteWidget extends StatelessWidget{
                 //     ),
                 //   ),
                 // ),
-                const SizedBox(height: 2),
-                TagListWidget(tags: neuron.tags)
+                if(neuron.tags.isNotEmpty)
+                  const SizedBox(height: 6),
+                  TagListWidget(tags: neuron.tags)
+                
               ],
             )
           ),

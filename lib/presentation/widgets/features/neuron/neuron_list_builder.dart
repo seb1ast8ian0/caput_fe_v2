@@ -33,13 +33,12 @@ class _NeuronBuilderState extends State<NeuronBuilder> {
       child: Scrollbar(
         controller: widget.scrollController,
         interactive: true,
-        
         child: ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
           controller: widget.scrollController,
           reverse: true,
           itemCount: neurons.length,
-          padding: const EdgeInsets.only(bottom: 8, top: kToolbarHeight * 2, left: 8, right: 8),
+          padding: const EdgeInsets.only(bottom: 8, top: kToolbarHeight * 2, left: 4, right: 0),
           itemBuilder: (context, index){
             bool last = neurons.length - 1  == index;
             int i = neurons.length - index - 1;

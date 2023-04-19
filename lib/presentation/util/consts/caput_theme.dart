@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
+
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
       animationDuration: const Duration(milliseconds: 50),
@@ -40,7 +41,7 @@ ThemeData lightTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     backgroundColor: Color.fromRGBO(221, 221, 221, 1),
   ),
-  scaffoldBackgroundColor: CaputColors.colorBackgroundLight,
+  scaffoldBackgroundColor: const Color.fromARGB(255, 245, 245, 245),
   inputDecorationTheme: InputDecorationTheme(
     fillColor: Colors.white70,
     hintStyle: const TextStyle(
@@ -64,8 +65,20 @@ ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.w600,
       color: CaputColors.colorTextSecondaryLight,
     )
+  ),
+
+  
+
+  timePickerTheme: TimePickerThemeData(
+    backgroundColor: CaputColors.colorBackgroundLight,
+    helpTextStyle: const TextStyle(
+      fontSize: 16
+    ),
   )
 );
+
+
+Color dark = const Color.fromARGB(255, 14, 14, 14);
 
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
@@ -83,11 +96,11 @@ ThemeData darkTheme = ThemeData(
 
     //für Tag Widget!
   chipTheme: ChipThemeData(
-    backgroundColor: Colors.white54.withOpacity(0.6),
-    labelStyle: const TextStyle(
+    backgroundColor: Colors.white10,
+    labelStyle: TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.w600,
-      color: CaputColors.colorTextPrimaryLight,
+      color: CaputColors.colorTextPrimaryDark.withOpacity(0.8),
     )
   ),
   
@@ -111,15 +124,15 @@ ThemeData darkTheme = ThemeData(
   progressIndicatorTheme: ProgressIndicatorThemeData(
     color: CaputColors.colorLightGrey.withOpacity(0.3)
   ),
-  bottomAppBarTheme: const BottomAppBarTheme(
-    color: Color.fromRGBO(34, 34, 34, 1),
+  bottomAppBarTheme: BottomAppBarTheme(
+    color: dark,
   ),
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Color.fromRGBO(34, 34, 34, 1),
+  appBarTheme: AppBarTheme(
+    backgroundColor: dark,
   ),
-  scaffoldBackgroundColor:CaputColors.colorBackgroundDark,
+  scaffoldBackgroundColor:dark,
   inputDecorationTheme: InputDecorationTheme(
-    fillColor:Colors.white24,
+    fillColor:Colors.white10,
     hintStyle: const TextStyle(
       color: Colors.white70,
       fontSize: 14

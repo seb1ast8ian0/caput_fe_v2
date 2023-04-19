@@ -96,7 +96,7 @@ class _NeuronCheckButtonState extends State<NeuronCheckButton> {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
             constraints: BoxConstraints.tight(const Size.square(14)),
             onPressed: () {
-              _checked ? null : action();
+              _checked ? log("already checked") : action();
             },
             enableFeedback: true,
             child: ClipRRect(

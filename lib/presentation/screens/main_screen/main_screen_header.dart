@@ -58,6 +58,7 @@ class _MainAppBarState extends State<MainAppBar> {
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text(
                       "CAPUT",
@@ -74,10 +75,10 @@ class _MainAppBarState extends State<MainAppBar> {
                       },
                       child: const CircleAvatar(
                         backgroundColor: Colors.transparent,
-                        radius: 16,
+                        radius: 18,
                         child: CircleAvatar(
                           backgroundImage: AssetImage('assets/images/logo_caput_transparent.png'),
-                          radius: 14,
+                          radius: 18,
                           backgroundColor: Colors.transparent,
                         ),
                       ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:Caput/main.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen_footer.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen_header.dart';
@@ -64,7 +66,7 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
               alignment: Alignment.bottomLeft,
               children: [ 
                 StreamBuilder(
-                  stream: neuronState.stream$,
+                  stream: neuronState.stream,
                   initialData: neuronState.current,
                   builder:(context, snapshot) {
                     if (snapshot.hasError) {
@@ -76,9 +78,17 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
                     }
                   },
                 ),
-                PayloadInput(
-                  animationController: _animationController,
-                  scrollController: _scrollController,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    PayloadInput(
+                      onPayloadChanged: (payload) {
+                        log(payload.type);
+                      },
+                      animationController: _animationController,
+                      scrollController: _scrollController,
+                    ),
+                  ],
                 ),
               ]
             ),
