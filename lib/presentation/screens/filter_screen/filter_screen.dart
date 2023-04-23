@@ -1,5 +1,5 @@
-import 'dart:developer';
-
+import 'package:Caput/domain/entities/neuron/payload/Payload.dart';
+import 'package:Caput/domain/entities/neuron/payload/payloads/Note.dart';
 import 'package:Caput/main.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen_footer.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen_header.dart';
@@ -23,7 +23,9 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
   late NeuronState neuronState;
   bool _isLoading = true;
   late AnimationController _animationController;
+  late Animation<double> _opacityAnimation;
   late ScrollController _scrollController;
+  Payload payload = Note("", "note", "", 1);
 
   @override
   void initState() {
@@ -34,6 +36,11 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
      _scrollController = ScrollController();
     _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 250));
   
+    _opacityAnimation = CurvedAnimation(
+      parent: _animationController, 
+      curve: Curves.elasticInOut
+    );
+
   }
 
   @override
@@ -45,8 +52,8 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
   Future<void> _fetchData() async {
 
     setState(() {
-      _isLoading = false;
       neuronState = getIt.get<NeuronState>();
+      _isLoading = false;
     });
 
   }
@@ -78,22 +85,36 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
                     }
                   },
                 ),
+                IgnorePointer(
+                  ignoring: true,
+                  child: FadeTransition(
+                    opacity: _opacityAnimation,
+                    child: Expanded(
+                      child: Container(
+                        color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.66),
+                      ),
+                    ),
+                  ),
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     PayloadInput(
-                      onPayloadChanged: (payload) {
-                        log(payload.type);
+                      onPayloadChanged: (pld) {
+                        setState(() {
+                          payload = pld;
+                        });
                       },
                       animationController: _animationController,
                       scrollController: _scrollController,
                     ),
                   ],
                 ),
+                
               ]
             ),
           ),
-          FilterBottomInput(animationController: _animationController)
+          FilterBottomInput(payload, _animationController)
         ]
       )
     );

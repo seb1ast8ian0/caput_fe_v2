@@ -6,18 +6,26 @@ part 'Task.g.dart';
 class Task extends Payload {
 
   @HiveField(4)
-  String body;
+  late String body;
   @HiveField(5)
-  bool completed;
+  late bool completed;
   @HiveField(6)
-  DateTime deadlineTs;
+  late DateTime deadlineTs;
 
+  
 
   Task(this.body, this.completed, this.deadlineTs, super.type, super.caption, super.priority);
 
+  Task.empty() : super.empty();
+  
   @override
   String toString() {
     return completed.toString();
+  }
+
+  @override
+  Payload copy(){
+    return Task(body, completed, deadlineTs, type, caption, priority);
   }
 
 

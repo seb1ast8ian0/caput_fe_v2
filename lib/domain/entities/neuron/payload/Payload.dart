@@ -1,22 +1,24 @@
 import 'package:hive/hive.dart';
-part 'Payload.g.dart';
 
 @HiveType(typeId: 2)
-class Payload extends HiveObject{
+abstract class Payload extends HiveObject{
 
   @HiveField(1)
-  String type;
+  late String type;
   @HiveField(2)
-  String caption;
+  late String caption;
   @HiveField(3)
-  int priority;
+  late int priority;
 
   Payload(this.type, this.caption, this.priority);
+
+  Payload.empty() : super();
 
   @override
   String toString() {
     return type;
   }
 
+  Payload copy();
 
 }

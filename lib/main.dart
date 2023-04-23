@@ -2,7 +2,6 @@ import 'package:Caput/caput_app.dart';
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:Caput/domain/entities/neuron/media/media.dart';
 import 'package:Caput/domain/entities/neuron/media/medias/link.dart';
-import 'package:Caput/domain/entities/neuron/payload/Payload.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Date.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Note.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
@@ -36,7 +35,7 @@ void main() async {
 void _registerAdapters(){
 
   Hive.registerAdapter(NeuronAdapter());
-  Hive.registerAdapter(PayloadAdapter());
+  //Hive.registerAdapter(PayloadAdapter());
   Hive.registerAdapter(TaskAdapter());
   Hive.registerAdapter(DateAdapter());
   Hive.registerAdapter(NoteAdapter());

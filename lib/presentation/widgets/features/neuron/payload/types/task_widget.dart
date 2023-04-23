@@ -1,6 +1,7 @@
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
+import 'package:Caput/presentation/util/time/time_formats.dart';
 import 'package:Caput/presentation/widgets/features/neuron/neuron_button.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
 import 'package:Caput/presentation/widgets/features/neuron/tag/tag_list_widget.dart';
@@ -41,11 +42,11 @@ class _TaskWidgetState extends State<TaskWidget> {
     return const Text("error");
   }
 
-  String formatedDeadline = "${task.deadlineTs.day}.${task.deadlineTs.month}.${task.deadlineTs.year}";
+  String formatedDeadline = TimeFormats.getNeuronDate(task.deadlineTs);
 
   Widget taskContent = IntrinsicHeight(
     child: Container(
-      color: highlightColor.withOpacity(0.05),
+      //color: highlightColor.withOpacity(0.05),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

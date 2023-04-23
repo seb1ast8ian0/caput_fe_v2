@@ -55,7 +55,8 @@ class _DynamicStatusWidgetState extends State<DynamicStatusWidget> with TickerPr
 
     return Material(
       borderRadius: BorderRadius.circular(0),//3
-      color: Theme.of(context).progressIndicatorTheme.color,
+      //color: Theme.of(context).progressIndicatorTheme.color,
+      color: highlightColor.withOpacity(0.2),
       elevation: 0,
       child: Column(
         verticalDirection: VerticalDirection.up,

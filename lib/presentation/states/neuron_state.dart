@@ -53,7 +53,7 @@ class NeuronState {
     dummy.add(Neuron(const Uuid().v4(), const Uuid().v4(), Task("", false, DateTime.utc(2023, 10, 15), "task", "Saugen", 1), DateTime.now(), [], []));
     dummy.add(Neuron(const Uuid().v4(), const Uuid().v4(), Task("mit body", false, DateTime.now().add(const Duration(seconds: 10)), "task", "Saugen", 1), DateTime.now(), [], []));
     dummy.add(Neuron(const Uuid().v4(), const Uuid().v4(), Note("Ein etwas längerer Body einer Notiz, der auch gerne über mehrere Zeilen gehen darf, um zu testen, wie das ausschaut :)", "note", "Neue Notiz", 3), DateTime.now(), [], [tagWichtig]));
-    dummy.add(Neuron(const Uuid().v4(), const Uuid().v4(), Date("Neuer Termin", DateTime.utc(2023, 07, 15), "date", "Prüfungsdatum Mathe", 4), DateTime.now(), [], [tagUni, tagWichtig, tagUni, tagWichtig]));
+    dummy.add(Neuron(const Uuid().v4(), const Uuid().v4(), Date("Neuer Termin", DateTime.utc(2023, 07, 15), "date", "Prüfungsdatum Mathe", 4), DateTime.now(), [], [tagUni, tagWichtig]));
     dummy.add(Neuron(const Uuid().v4(), const Uuid().v4(), Task("", false, DateTime.now().add(const Duration(seconds: 30)), "task", "Geschirr", 1), DateTime.now(), [], [tagHaushalt]));
     dummy.add(Neuron(const Uuid().v4(), const Uuid().v4(), Note("Ein Body einer Notiz:)", "note", "Neue Notiz", 3), DateTime.now(), [], [tagArbeit]));
     dummy.add(Neuron(const Uuid().v4(), const Uuid().v4(), Note("", "note", "Neue Notiz ohne Body", 3), DateTime.now(), [], []));
@@ -69,18 +69,18 @@ class NeuronState {
       }
     });
 
+    
+
 
   }
 
   add(Neuron neuron) async {
-
     NeuronRepository.addNeuron(neuron).then((success) {
       if(success){
         _neurons.add(neuron);
         _listSubject.add(_neurons);
       }
     });
-
   }
 
   remove(int index) async {

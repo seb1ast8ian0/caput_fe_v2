@@ -6,13 +6,20 @@ part 'Note.g.dart';
 class Note extends Payload {
 
   @HiveField(4)
-  String body;
+  late String body;
 
   Note(this.body, super.type, super.caption, super.priority);
+
+  Note.empty():super.empty();
 
   @override
   String toString() {
     return body.toString();
+  }
+
+  @override
+  Payload copy(){
+    return Note(body, type, caption, priority);
   }
 
 

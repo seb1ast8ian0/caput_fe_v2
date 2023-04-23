@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
-import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
+import 'package:Caput/domain/entities/neuron/payload/Payload.dart';
 import 'package:Caput/main.dart';
 import 'package:Caput/presentation/states/neuron_state.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
@@ -12,7 +12,9 @@ import 'package:uuid/uuid.dart';
 class FilterBottomInput extends StatefulWidget{
 
   final AnimationController animationController;
-  const FilterBottomInput({super.key, required this.animationController});
+  final Payload payload;
+
+  const FilterBottomInput(this.payload, this.animationController, {super.key});
 
   @override
   State<FilterBottomInput> createState() => _FilterBottomInputState();
@@ -24,6 +26,14 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
   final primaryTextInputController = TextEditingController();
 
   late Animation<double> _rotationAnimation;
+
+
+  @override
+  void initState() {
+
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +75,6 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                       onPressed: (){
                           log('up');
                           var controller = widget.animationController;
-                          
                           if(controller.isCompleted){
                             controller.reverse();
                           } else {
@@ -133,9 +142,17 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
                           ),
                           RawMaterialButton(
                             onPressed: () {
+
                               log('go');
-                              neuronState.add(Neuron(const Uuid().v4(), const Uuid().v4(), Task("", false, DateTime.now().add(const Duration(seconds: 30)), "task", primaryTextInputController.text.trimRight(), 1), DateTime.now(), [], []));
+
+                              Neuron neuron = Neuron(const Uuid().v4(), const Uuid().v4(), widget.payload.copy(), DateTime.now(), [], []);
+                              neuron.payload.caption = primaryTextInputController.text;
+                              log(neuron.payload.caption);
+                              neuronState.add(neuron);
+
                               primaryTextInputController.clear();
+                              widget.animationController.reverse();
+
                             },
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,

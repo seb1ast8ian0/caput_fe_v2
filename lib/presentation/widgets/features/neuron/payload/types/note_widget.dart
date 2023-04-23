@@ -1,6 +1,7 @@
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Note.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
+import 'package:Caput/presentation/util/time/time_formats.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
 import 'package:Caput/presentation/widgets/features/neuron/tag/tag_list_widget.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class NoteWidget extends StatelessWidget{
     return const Text("error");
   }
 
-  String displayTime = neuron.getCreationDateAsString();
+  String displayTime = TimeFormats.getNeuronDate(neuron.creationTs);
   Color highlightColor = 
         Theme.of(context).brightness == Brightness.dark 
             ? CaputColors.colorLightGrey.withOpacity(0.4) 
@@ -47,9 +48,12 @@ class NoteWidget extends StatelessWidget{
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      note.caption,
-                      style: Theme.of(context).textTheme.titleSmall
+                    Expanded(
+                      child: Text(
+                        note.caption,
+                        style: Theme.of(context).textTheme.titleSmall,
+                        overflow: TextOverflow.clip,
+                      ),
                     ),
                     Text(
                       displayTime,
@@ -58,9 +62,11 @@ class NoteWidget extends StatelessWidget{
                         fontWeight: FontWeight.w400,
                         color: CaputColors.colorTextSecondaryLight
                       ),
-                      )
+                    ),
+                    
                   ],
                 ),
+                
                 
                 if(note.body != "")
                   Padding(

@@ -1,17 +1,11 @@
-import 'package:Caput/main.dart';
-import 'package:Caput/presentation/screens/filter_screen/filter_screen_footer.dart';
-import 'package:Caput/presentation/screens/filter_screen/filter_screen_header.dart';
 import 'package:Caput/presentation/states/neuron_state.dart';
-import 'package:Caput/presentation/widgets/features/neuron/neuron_list_builder.dart';
-import 'package:Caput/presentation/widgets/features/neuron/payload/payload_input.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
 class TestScreen extends StatefulWidget {
 
-  final String title;
-
-  const TestScreen(this.title, {super.key});
+  const TestScreen({super.key});
 
   @override
   State<TestScreen> createState() => _FilterScreenState();
@@ -20,78 +14,54 @@ class TestScreen extends StatefulWidget {
 class _FilterScreenState extends State<TestScreen> with SingleTickerProviderStateMixin {
 
   late NeuronState neuronState;
-  bool _isLoading = true;
   late AnimationController _animationController;
   late ScrollController _scrollController;
 
-  @override
-  void initState() {
+  int _num = 1;
 
-    super.initState();
-    _fetchData();
-
-     _scrollController = ScrollController();
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 250));
-  
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _fetchData() async {
-
-    setState(() {
-      _isLoading = false;
-      neuronState = getIt.get<NeuronState>();
-    });
-
-  }
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: FilterAppBar(widget.title),
-      body: _isLoading
-      ? const CircularProgressIndicator()
-      : Column(children: [
-          Expanded(
-            child: Stack(
-              fit: StackFit.loose,
-              alignment: Alignment.bottomLeft,
-              children: [ 
-                StreamBuilder(
-                  stream: neuronState.stream,
-                  initialData: neuronState.current,
-                  builder:(context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Center(child: Text('Error'));
-                    } else if (!snapshot.hasData || snapshot.data == null) {
-                      return const Center(child: Text('No Data'));
-                    } else {
-                      return NeuronBuilder(neurons: snapshot.data, scrollController: _scrollController);
-                    }
-                  },
-                ),
-                Column(
-                  children: [
-                    const Spacer(flex: 1,),
-                    PayloadInput(
-                      animationController: _animationController,
-                      scrollController: _scrollController,
-                    ),
-                  ],
-                ),
-              ]
+
+      body: Column(
+        children: [
+          SizedBox(height: 100,),
+          RawMaterialButton(
+            child: Text("hi"),
+            onPressed: (){setState(() {
+            if(_num == 0){
+              _num = 1;
+            } else {
+              _num = 0;
+            }
+          });}),
+          AnimatedCrossFade(
+            duration:  const Duration(milliseconds: 200),
+            firstChild: Container(
+              height: 150,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.time,
+                initialDateTime: DateTime.now(),
+                use24hFormat: true,
+                onDateTimeChanged: (time){}
+              ),
             ),
+            secondChild: Container(
+              height: 150,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                initialDateTime: DateTime.now(),
+                use24hFormat: true,
+                onDateTimeChanged: (time){}
+              ),
+            ),
+    
+            crossFadeState: _num == 1 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
           ),
-          FilterBottomInput(animationController: _animationController)
-        ]
-      )
+        ],
+      ),
     );
   
   }

@@ -1,6 +1,7 @@
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Date.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
+import 'package:Caput/presentation/util/time/time_formats.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
 import 'package:Caput/presentation/widgets/features/neuron/tag/tag_list_widget.dart';
 import 'package:flutter/material.dart';
@@ -36,12 +37,12 @@ class DateWidget extends StatelessWidget{
 
 
 
-  String formatedDeadline = "${date.dateTs.day}.${date.dateTs.month}.${date.dateTs.year}";
+  String formatedDeadline = TimeFormats.getNeuronDate(date.dateTs);
   
   Widget dateContent = IntrinsicHeight(
 
     child: Container(
-      color: highlightColor.withOpacity(0.05),
+      //color: highlightColor.withOpacity(0.05),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -86,8 +87,6 @@ class DateWidget extends StatelessWidget{
                       ],
                     ),
                   ),
-
-                  
                 ],
               )
             ),

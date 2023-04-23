@@ -35,8 +35,9 @@ class NeuronRepository{
 
       var box = await Hive.openBox(_boxName);
 
-      for(int i = 0; i < neurons.length - 1; i++){
-        box.add(neurons[i]);
+      for(Neuron neuron in neurons){
+        log("add all: ${neuron.payload.caption}");
+        box.add(neuron);
       }
 
       return true;
@@ -58,6 +59,7 @@ class NeuronRepository{
     try{
 
       var box = await Hive.openBox(_boxName);
+      log("added: ${neuron.payload.caption}");
       box.add(neuron);
       return true;
 

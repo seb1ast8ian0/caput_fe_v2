@@ -27,28 +27,7 @@ class Neuron extends HiveObject{
     return neuronId;
   }
 
-  String getCreationDateAsString(){
-
-    String minuteString;
-    String hourString;
-    int minute = creationTs.minute;
-    int hour = creationTs.hour;
-
-    if (minute > 9){
-      minuteString = minute.toString();
-    } else {
-      minuteString = "0$minute";
-    }
-
-    if (hour > 9){
-      hourString = hour.toString();
-    } else {
-      hourString = "0$hour";
-    }
-    
-    return "$hourString:$minuteString";
-
-  }
+  
 
 
 }
