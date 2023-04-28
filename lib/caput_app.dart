@@ -1,5 +1,6 @@
 import 'package:Caput/main.dart';
 import 'package:Caput/presentation/screens/main_screen/main_screen.dart';
+import 'package:Caput/presentation/screens/test_screen.dart';
 import 'package:Caput/presentation/states/neuron_state.dart';
 import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:Caput/presentation/util/consts/caput_theme.dart';
@@ -21,8 +22,8 @@ class Caput extends StatelessWidget{
     return MaterialApp(
       title: 'Caput',
       locale: const Locale('de'),
-      theme: lightTheme,
-      darkTheme: darkTheme,
+      theme: CaputTheme.lightTheme,
+      darkTheme: CaputTheme.darkTheme,
       themeMode: context.watch<ThemeState>().themeMode,
       home: const MainScreen(),
       localizationsDelegates: const [

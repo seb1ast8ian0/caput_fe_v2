@@ -18,7 +18,7 @@ class DateAdapter extends TypeAdapter<Date> {
     };
     return Date(
       fields[4] as String,
-      fields[5] as DateTime,
+      fields[5] as DateTime?,
       fields[1] as String,
       fields[2] as String,
       fields[3] as int,

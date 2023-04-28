@@ -30,45 +30,48 @@ class MainScreen extends StatelessWidget{
             delegate: _SliverAppBarDelegate(
               minHeight: 50.0,
               maxHeight: 52.0,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 4),
+              child: Container(
+                color: Theme.of(context).appBarTheme.backgroundColor!.withOpacity(0.6),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: theme.fillColor,
-                          border: Border.all(
-                            color: theme.border!.borderSide.color,
-                            width: theme.border!.borderSide.width,
+                  padding: const EdgeInsets.symmetric(vertical: 2),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: theme.fillColor,
+                            border: Border.all(
+                              color: theme.border!.borderSide.color,
+                              width: theme.border!.borderSide.width,
+                            ),
                           ),
-                        ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                controller: searchController,
-                                keyboardType: TextInputType.text,
-                                style: const TextStyle(
-                                  fontSize: 14
-                                ),
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  hintText: "Suche...",
-                                  hintStyle: theme.hintStyle,
-                                  border: InputBorder.none
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: searchController,
+                                  keyboardType: TextInputType.text,
+                                  style: const TextStyle(
+                                    fontSize: 14
+                                  ),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: "Suche...",
+                                    hintStyle: theme.hintStyle,
+                                    border: InputBorder.none
+                                  ),
                                 ),
                               ),
-                            ),
-                            Icon(
-                              Icons.search, 
-                              color: theme.hintStyle!.color
-                            )
-                          ],
+                              Icon(
+                                Icons.search, 
+                                color: theme.hintStyle!.color
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -108,11 +111,12 @@ class MainScreen extends StatelessWidget{
                   double opacity;
                   LinearGradient gradient;
                   Color color;
+                  BoxBorder border;
 
                     if(index==0) {
           
                       gradient =  LinearGradient(
-                        colors: [const Color.fromARGB(183, 77, 98, 232), CaputColors.colorBlue.withOpacity(0.6)],
+                        colors: [Color.fromARGB(183, 77, 98, 232), CaputColors.colorBlue],
                         stops: const [0, 2],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -120,12 +124,16 @@ class MainScreen extends StatelessWidget{
           
                       color = Colors.white;
                       opacity = 0.11;
+                      border = Border.all(
+                        color: Colors.transparent,
+                        width: theme.border!.borderSide.width,
+                      );
           
           
                     } else {
           
                       gradient = LinearGradient(
-                        colors: [theme.fillColor!, theme.fillColor!],
+                        colors: [Theme.of(context).dialogBackgroundColor, Theme.of(context).dialogBackgroundColor],
                         stops: const [0, 1],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -133,6 +141,10 @@ class MainScreen extends StatelessWidget{
           
                       color = Theme.of(context).brightness == Brightness.dark ? Colors.white : CaputColors.colorBlue;
                       opacity = 0;
+                      border = Border.all(
+                        color: theme.border!.borderSide.color,
+                        width: theme.border!.borderSide.width,
+                      );
           
                     }
           
@@ -157,7 +169,8 @@ class MainScreen extends StatelessWidget{
                           ),
                           
                           gradient: gradient,
-                          borderRadius: BorderRadius.circular(8)
+                          borderRadius: BorderRadius.circular(8),
+                          border: border
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
@@ -174,7 +187,7 @@ class MainScreen extends StatelessWidget{
                               Icon(
                                 Icons.arrow_forward_ios,
                                 size: 18,
-                                color: color.withOpacity(0.6)
+                                color: color
                               )
                             ],
                           ),

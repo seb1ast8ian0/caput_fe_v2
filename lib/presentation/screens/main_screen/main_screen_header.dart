@@ -33,7 +33,7 @@ class _MainAppBarState extends State<MainAppBar> {
       
       flexibleSpace: Container(
         decoration: BoxDecoration(
-          color: appBarBackgroundColor.withOpacity(0.6),
+          //color: appBarBackgroundColor.withOpacity(0.6),
           border: Border(
             bottom: BorderSide(
               color: borderTheme.border!.borderSide.color,

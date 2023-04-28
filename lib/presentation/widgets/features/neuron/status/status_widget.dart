@@ -1,15 +1,18 @@
+import 'dart:developer';
+
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/material.dart';
 
 class DynamicStatusWidget extends StatefulWidget{
 
   final DateTime start;
-  final DateTime end;
+  final DateTime? end;
   final Color? color;
+  final Color defaultColor;
   final Function(Color) onHighlightColorChanged;
   
 
-  const DynamicStatusWidget({super.key, required this.start, required this.end, this.color, required this.onHighlightColorChanged});
+  const DynamicStatusWidget({super.key, required this.defaultColor, required this.start, required this.end, this.color, required this.onHighlightColorChanged});
 
   @override
   State<DynamicStatusWidget> createState() => _DynamicStatusWidgetState();
@@ -21,7 +24,7 @@ class _DynamicStatusWidgetState extends State<DynamicStatusWidget> with TickerPr
   late Color highlightColor;
   late Duration _distanceWhole;
   late Duration _distanceLeft;
-  late double _timeRatio;
+  late double _timeRatio = 1;
 
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -90,15 +93,27 @@ class _DynamicStatusWidgetState extends State<DynamicStatusWidget> with TickerPr
 
   setState(() {
 
-    _distanceWhole = widget.end.difference(widget.start);
-    _distanceLeft = widget.end.difference(DateTime.now());
+    if(widget.end == null){
+
+      _timeRatio = 1;
+      highlightColor = widget.defaultColor;
+
+    } else {
+
+    _distanceWhole = widget.end!.difference(widget.start);
+    _distanceLeft = widget.end!.difference(DateTime.now());
     
     _timeRatio =  (_distanceWhole - _distanceLeft).inSeconds / _distanceWhole.inSeconds;
-    
     
     if(_timeRatio <= 0.1){
       _timeRatio = 0.1;
     }
+
+    if( _distanceLeft.inMinutes < 0){
+      _timeRatio = 1;
+    }
+
+
 
     if(widget.color == null){
 
@@ -115,6 +130,10 @@ class _DynamicStatusWidgetState extends State<DynamicStatusWidget> with TickerPr
       highlightColor = widget.color as Color;
 
     }
+
+    }
+
+    
 
   } 
   );

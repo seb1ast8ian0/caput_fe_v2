@@ -37,6 +37,7 @@ class SettingsScreen extends StatelessWidget{
     }
 
     Widget userTile = SettingsTile(
+      isCustom: true,
       padding: const EdgeInsets.all(0),
       child: Ink(
         decoration: BoxDecoration(
@@ -83,6 +84,7 @@ class SettingsScreen extends StatelessWidget{
     );
     
     Widget languageTile = SettingsTile(
+      isCustom: false,
       color: Theme.of(context).inputDecorationTheme.fillColor,
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -108,6 +110,7 @@ class SettingsScreen extends StatelessWidget{
     );
 
     Widget brightnessTile = SettingsTile(
+      isCustom: false,
       color: Theme.of(context).inputDecorationTheme.fillColor,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
@@ -157,6 +160,7 @@ class SettingsScreen extends StatelessWidget{
     );
     
     Widget resetTile = SettingsTile(
+      isCustom: false,
       color: Theme.of(context).inputDecorationTheme.fillColor,
       padding: const EdgeInsets.all(0),
       child: Row(
@@ -214,14 +218,44 @@ class SettingsTile extends StatelessWidget {
 final Widget? child;
 final Color? color;
 final EdgeInsetsGeometry padding;
+final bool isCustom;
 
-const SettingsTile({ this.child, this.color, required this.padding, key }) : super(key: key);
+const SettingsTile({ this.child, this.color, required this.padding, required this.isCustom, key }) : super(key: key);
 
   @override
   Widget build(BuildContext context){
-    return Material(
-      elevation: 0,
-      borderRadius: BorderRadius.circular(8),
+
+    
+
+    var theme = Theme.of(context).inputDecorationTheme;
+    var decoration;
+
+    if(isCustom){
+
+      decoration = BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        
+      );
+
+
+    } else {
+
+      decoration = BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Theme.of(context).dialogBackgroundColor,
+        border: Border.all(
+          color: theme.border!.borderSide.color,
+          width: theme.border!.borderSide.width,
+        )
+      );
+
+    }
+
+    
+
+    
+    return Container(
+      decoration: decoration,
       child: Padding(
         padding: padding,
         child: child

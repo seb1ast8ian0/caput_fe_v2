@@ -27,6 +27,7 @@ class DateWidget extends StatelessWidget{
 
 
   DynamicStatusWidget statusWidget = DynamicStatusWidget(
+    defaultColor: CaputColors.colorBlue,
     start: neuron.creationTs, 
     end: date.dateTs, 
     color: CaputColors.colorBlue, 
@@ -36,8 +37,7 @@ class DateWidget extends StatelessWidget{
   );
 
 
-
-  String formatedDeadline = TimeFormats.getNeuronDate(date.dateTs);
+  String formatedDeadline = date.dateTs == null ? "" : TimeFormats.getNeuronDate(date.dateTs!);
   
   Widget dateContent = IntrinsicHeight(
 
@@ -70,23 +70,24 @@ class DateWidget extends StatelessWidget{
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          formatedDeadline,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: CaputColors.colorBlue
+                  if(neuron.tags.isNotEmpty || !(formatedDeadline == ""))
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            formatedDeadline,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: CaputColors.colorTextSecondaryLight
+                            ),
                           ),
-                        ),
-                        TagListWidget(tags: neuron.tags)
-                      ],
+                          TagListWidget(tags: neuron.tags)
+                        ],
+                      ),
                     ),
-                  ),
                 ],
               )
             ),

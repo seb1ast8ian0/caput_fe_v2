@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 class FilterAppBar extends StatefulWidget implements PreferredSizeWidget{
   
   final String title;
+  final AnimationController animationController;
   
-  const FilterAppBar(this.title, {super.key});
+  const FilterAppBar(this.title, this.animationController, {super.key});
 
   
   @override
@@ -24,6 +25,13 @@ class _FilterAppBarState extends State<FilterAppBar> {
 
   ScrollNotificationObserverState? _scrollNotificationObserver;
   bool _scrolledUnder = false;
+  late Animation<Color?> _colorAnimation;
+
+  @override
+  void initState() {
+    
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
@@ -73,8 +81,14 @@ class _FilterAppBarState extends State<FilterAppBar> {
   @override
   Widget build(BuildContext context) {
 
+    _colorAnimation = ColorTween(
+      begin: Theme.of(context).appBarTheme.backgroundColor!.withOpacity(0.4),
+      end: Theme.of(context).appBarTheme.backgroundColor,
+    ).animate(widget.animationController);
+
     Color appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.4);
     appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.4);
+    
     /*
     if(_scrolledUnder){
         appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.4);
@@ -86,67 +100,69 @@ class _FilterAppBarState extends State<FilterAppBar> {
 
 
     var theme = Theme.of(context).inputDecorationTheme;
+    
+    return AnimatedBuilder(
+      animation: _colorAnimation,
+      builder: (context, child) {
 
-    Widget appBarContent = Container(
-      decoration: BoxDecoration(
-        color: appBarBackgroundColor,
-        border: Border(
-          bottom: BorderSide(
-            color: theme.border!.borderSide.color,
-            width: theme.border!.borderSide.width
-          ),
-        ),
-      ),
-      child: SafeArea(
-        child: Material(
-          color: Colors.transparent,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children:  [
-                    IconButton(
-                      constraints: BoxConstraints.tight(const Size.square(38)),
-                      iconSize: 24,
-                      icon: const Icon(Icons.arrow_back_ios_new),
-                      color: CaputColors.colorBlue, 
-                      onPressed: (){
-                        log("navigate back");
-                        Navigator.pop(context);
-                      },
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                    ),
-                    Text(
-                      widget.title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 20,
-                        color: CaputColors.colorBlue
-                      ),
-                    ),
-                  ],
+        return ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+            child: Container(
+              decoration: BoxDecoration(
+                color: _colorAnimation.value,
+                border: Border(
+                  bottom: BorderSide(
+                    color: theme.border!.borderSide.color,
+                    width: theme.border!.borderSide.width
+                  ),
                 ),
               ),
-            ],
-          )
-        ),
-      ),
+              child: SafeArea(
+                child: Material(
+                  color: Colors.transparent,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children:  [
+                            IconButton(
+                              constraints: BoxConstraints.tight(const Size.square(38)),
+                              iconSize: 24,
+                              icon: const Icon(Icons.arrow_back_ios_new),
+                              color: CaputColors.colorBlue, 
+                              onPressed: (){
+                                log("navigate back");
+                                Navigator.pop(context);
+                              },
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                            ),
+                            Text(
+                              widget.title,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20,
+                                color: CaputColors.colorBlue
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                ),
+              ),
+            ),
+          ),
+        );
+        
+      },
+      
     );
-
-    if(true){
-      appBarContent = ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-          child: appBarContent,
-        ),
-      );
-    }
-    
-    return appBarContent;
   
   }
 

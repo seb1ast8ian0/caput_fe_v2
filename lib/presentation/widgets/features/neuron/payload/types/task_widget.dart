@@ -42,7 +42,12 @@ class _TaskWidgetState extends State<TaskWidget> {
     return const Text("error");
   }
 
-  String formatedDeadline = TimeFormats.getNeuronDate(task.deadlineTs);
+  String formatedDeadline = task.deadlineTs == null ? "" : TimeFormats.getNeuronDate(task.deadlineTs!);
+
+  Color defaultColor = 
+        Theme.of(context).brightness == Brightness.dark 
+            ? CaputColors.colorLightGrey.withOpacity(0.4) 
+            : CaputColors.colorLightGrey;
 
   Widget taskContent = IntrinsicHeight(
     child: Container(
@@ -51,6 +56,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           DynamicStatusWidget(
+            defaultColor: defaultColor,
             start: widget.neuron.creationTs, 
             end: task.deadlineTs, 
             onHighlightColorChanged: (color) {
@@ -59,6 +65,7 @@ class _TaskWidgetState extends State<TaskWidget> {
               });
             }
           ),
+            
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
@@ -82,23 +89,24 @@ class _TaskWidgetState extends State<TaskWidget> {
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          formatedDeadline,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: CaputColors.colorTextSecondaryLight
+                  if(widget.neuron.tags.isNotEmpty || !(formatedDeadline == ""))
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            formatedDeadline,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: CaputColors.colorTextSecondaryLight
+                            ),
                           ),
-                        ),
-                        TagListWidget(tags: widget.neuron.tags)
-                      ],
+                          TagListWidget(tags: widget.neuron.tags)
+                        ],
+                      ),
                     ),
-                  ),
                   
                 ],
               )

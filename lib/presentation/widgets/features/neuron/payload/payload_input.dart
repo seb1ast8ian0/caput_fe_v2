@@ -5,6 +5,7 @@ import 'package:Caput/domain/entities/neuron/payload/Payload.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Date.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Note.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
+import 'package:Caput/presentation/screens/test_screen.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -83,59 +84,81 @@ class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixi
   @override
   Widget build(BuildContext context) {
 
+    final inputTheme = Theme.of(context).inputDecorationTheme;
+
     return FadeTransition(
       opacity: _opacityAnimation,
       child: SlideTransition(
         position: _offsetAnimation,
         child: IgnorePointer(
           ignoring: _inputIsHidden,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-              child: Container(
-                color: Color.fromARGB(67, 179, 179, 179),
+          child: Container(
+            decoration: const BoxDecoration(
+              boxShadow:  [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10.0,
+                  offset: Offset(0, 0),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).appBarTheme.backgroundColor!.withOpacity(0.6),
+                    
+                    //color: Theme.of(context).appBarTheme.backgroundColor,
+                    borderRadius: BorderRadius.vertical(top: Radius.elliptical(8, 8)),
+                    color: Theme.of(context).appBarTheme.backgroundColor!.withOpacity(1),
+                    // border: Border(
+                    //   top: BorderSide(
+                    //     width: inputTheme.border!.borderSide.width,
+                    //     color: inputTheme.border!.borderSide.color
+                    //   )
+                    // )
                   ),
+                  
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                       
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              PayloadInputButton(
-                                _col == 1,
-                                Icons.check, 
-                                () {
-                                  _payload = Task("", false, DateTime.now().add(const Duration(minutes: 1)), "task", "", 1);
-                                  _save();
-                                  _toogle(1);
-                                  setState(() {
-                                    _payloadBody = _buildTaskInput();
-                                  });
-                                }
-                              ),
-                              const SizedBox(width: 8),
-                              PayloadInputButton(
-                                _col == 2,
-                                Icons.calendar_today_rounded, 
-                                () {
-                                  _payload = Date("", DateTime.now().add(const Duration(days: 2)), "date", "", 1);
-                                  _save();
-                                  _toogle(2);
-                                  setState(() {
-                                    _payloadBody = _buildDateInput();
-                                  });
-                                }
-                              ),
-                            ],
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CaputSecondaryButton(
+                              icon: Icons.check, 
+                              onPressed: () {
+                                _payload = Task("", false, null, "task", "", 1);
+                                _save();
+                                _toogle(1);
+                                setState(() {
+                                  _payloadBody = _buildTaskInput();
+                                });
+                              }, 
+                              isHighlighted: _col == 1, 
+                              highlightColor: CaputColors.colorBlue,
+                              //showLabelWhenNotHighlighted: false,
+                              //label: "Task",
+                            ),
+                            const SizedBox(width: 8),
+                            CaputSecondaryButton(
+                              icon: Icons.calendar_today_rounded, 
+                              onPressed: () {
+                                _payload = Date("", null, "date", "", 1);
+                                _save();
+                                _toogle(2);
+                                setState(() {
+                                  _payloadBody = _buildDateInput();
+                                });
+                              },
+                              isHighlighted: _col == 2, 
+                              highlightColor: CaputColors.colorBlue,
+                              //showLabelWhenNotHighlighted: false,
+                              //label: "Date",
+                            ),
+                          ],
                         ),
                       ),
                       const Divider(
@@ -171,6 +194,7 @@ class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixi
   _toogle(int col){
 
     setState(() {
+
       if(_col == 0){
         _height = 300;
         _col = col;
@@ -198,18 +222,7 @@ class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixi
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 4),
-          const Padding(
-            padding: EdgeInsets.all(0.0),
-            child: Text(
-              "Deadline:",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: CaputColors.colorBlue
-              ),
-            ),
-          ),
+        const SizedBox(height: 8),
           
           PayloadDateTimeInput(
             onTimeChanged:(time) {
@@ -223,6 +236,7 @@ class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixi
             },
           ),
           
+          /*
           const Divider(),
           const Padding(
             padding: EdgeInsets.all(0.0),
@@ -259,7 +273,9 @@ class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixi
               ),
             ),
           ),
+          */
           const SizedBox(height: 4)
+          
       ],
     );
   }
@@ -272,18 +288,7 @@ class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixi
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 4),
-          const Padding(
-            padding: EdgeInsets.all(0.0),
-            child: Text(
-              "Termin:",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: CaputColors.colorBlue
-              ),
-            ),
-          ),
+        const SizedBox(height: 8),
           
           PayloadDateTimeInput(
             onTimeChanged:(time) {
@@ -297,6 +302,7 @@ class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixi
             },
           ),
           
+          /*
           const Divider(),
           const Padding(
             padding: EdgeInsets.all(0.0),
@@ -334,7 +340,8 @@ class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixi
               ),
             ),
           ),
-          const SizedBox(height: 4),
+          */
+          const SizedBox(height: 4)
       ],
     );
   }
@@ -359,6 +366,7 @@ class PayloadInputButton extends StatelessWidget{
       
       child: Container(
         decoration: BoxDecoration(
+          
           borderRadius: BorderRadius.circular(12),
 
           image: const DecorationImage(
@@ -394,7 +402,7 @@ class PayloadInputButton extends StatelessWidget{
 
 class PayloadDateTimeInput extends StatefulWidget {
 
-  final Function(DateTime) onTimeChanged;
+  final Function(DateTime?) onTimeChanged;
 
   const PayloadDateTimeInput({ required this.onTimeChanged, Key? key }) : super(key: key);
 
@@ -404,63 +412,76 @@ class PayloadDateTimeInput extends StatefulWidget {
 
 class _PayloadDateTimeInputState extends State<PayloadDateTimeInput> {
 
-  int _num = 0;
+  final List<int> _num = [];
   double _height = 0;
-  DateTime _time = DateTime.now();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+  DateTime? _time;
 
   _toggle(int num){
+
+    int last = _num.isEmpty ? 0 : _num.last;
+
     setState(() {
-      if(_num == num){
+      if(_num.contains(num)){
         if(_height == 0){
-          _num = num;
           _height = 150;
         } else {
-          _height = 0;
-          _num = 0;
+          if(num == last){
+            _num.remove(num);
+          }else{
+            _num.remove(num);
+            _num.add(num);
+          }
+          if(_num.isEmpty){
+            _time = null;
+            widget.onTimeChanged(_time);
+            _height = 0;
+          }
         }
       } else {
         if(_height == 0){
           _height = 150;
-          _num = num;
-        } else {
-          _num = num;
         }
+        _num.add(num);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
+    int showNum = _num.isEmpty ? 1 : _num.last;
+
+    DateTime initialDateTime = DateTime.now().add(Duration(minutes: 5 - (DateTime.now().minute % 5)));
+
     return Column(
       children: [
         Row(
           children: [
-            PayloadDateTimeSelector(
-              "Datum", 
-              Icons.calendar_month, 
-              (label) {
-                log(label);
-                _toggle(1);
-              },
-              _num == 1
-            ),
-            const SizedBox(width: 8,),
             
-            PayloadDateTimeSelector(
-              "Uhrzeit", 
-              Icons.timer, 
-              (label) {
-                log(label);
-                _toggle(2);
-              },
-              _num == 2
-            )
+            Expanded(
+              child: CaputSecondaryButton(
+                label: "Datum",
+                icon: Icons.calendar_month, 
+                onPressed: (){
+                  _toggle(1);
+                }, 
+                isHighlighted: _num.contains(1), 
+                highlightColor: CaputColors.colorBlue
+              ),
+            ),
+            const SizedBox(width: 8),
+            
+            Expanded(
+              child: CaputSecondaryButton(
+                label: "Uhrzeit",
+                icon: Icons.timer, 
+                onPressed: (){
+                  _toggle(2);
+                }, 
+                isHighlighted: _num.contains(2), 
+                highlightColor: CaputColors.colorBlue
+              ),
+            ),
           ],
         ),
         AnimatedContainer(
@@ -472,31 +493,34 @@ class _PayloadDateTimeInputState extends State<PayloadDateTimeInput> {
               children: [
                 AnimatedCrossFade(
                   duration:  const Duration(milliseconds: 200),
-                  firstChild: Container(
+                  firstChild: SizedBox(
                     height: 150,
                     child: CupertinoDatePicker(
                       mode: CupertinoDatePickerMode.date,
                       initialDateTime: DateTime.now(),
                       use24hFormat: true,
                       onDateTimeChanged: (time){
-                        _time = DateTime.utc(time.year, time.month, time.day, _time.hour, _time.minute);
-                        widget.onTimeChanged(_time);
+                        _time ??= DateTime.now();
+                        _time = DateTime.utc(time.year, time.month, time.day, _time!.hour, _time!.minute);
+                        widget.onTimeChanged(_time!);
                       }
                     ),
                   ),
-                  secondChild: Container(
+                  secondChild: SizedBox(
                     height: 150,
                     child: CupertinoDatePicker(
                       mode: CupertinoDatePickerMode.time,
                       minuteInterval: 5,
+                      initialDateTime: initialDateTime,
                       use24hFormat: true,
                       onDateTimeChanged: (time){
-                        _time = DateTime.utc(_time.year, _time.month, _time.day, time.hour, time.minute);
-                        widget.onTimeChanged(_time);
+                        _time ??= DateTime.now();
+                        _time = DateTime.utc(_time!.year, _time!.month, _time!.day, time.hour, time.minute);
+                        widget.onTimeChanged(_time!);
                       }
                     ),
                   ),
-                  crossFadeState: _num == 1 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                  crossFadeState: showNum == 1 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                 ),
               ],
             ),
@@ -505,6 +529,7 @@ class _PayloadDateTimeInputState extends State<PayloadDateTimeInput> {
       ],
     );   
   }
+
 }
 
 class PayloadDateTimeSelector extends StatelessWidget{

@@ -37,8 +37,8 @@ class NeuronWidget extends StatelessWidget{
           if(!last)
             Divider(
               height: 1,
-              thickness: 0.4,
-              color: CaputColors.colorLightGrey.withOpacity(0.4)
+              thickness: 1,
+              color: Theme.of(context).inputDecorationTheme.border!.borderSide.color
             ),
           
           if(last)

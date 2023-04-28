@@ -10,7 +10,7 @@ class Task extends Payload {
   @HiveField(5)
   late bool completed;
   @HiveField(6)
-  late DateTime deadlineTs;
+  late DateTime? deadlineTs;
 
   
 
