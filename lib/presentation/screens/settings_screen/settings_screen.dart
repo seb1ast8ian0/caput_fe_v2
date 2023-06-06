@@ -225,35 +225,22 @@ const SettingsTile({ this.child, this.color, required this.padding, required thi
   @override
   Widget build(BuildContext context){
 
-    
-
     var theme = Theme.of(context).inputDecorationTheme;
-    var decoration;
+    var decoration = BoxDecoration(
+      borderRadius: BorderRadius.circular(8),
+      color: Theme.of(context).dialogBackgroundColor,
+      border: Border.all(
+        color: theme.border!.borderSide.color,
+        width: theme.border!.borderSide.width,
+      )
+    );
 
     if(isCustom){
-
       decoration = BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        
       );
-
-
-    } else {
-
-      decoration = BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Theme.of(context).dialogBackgroundColor,
-        border: Border.all(
-          color: theme.border!.borderSide.color,
-          width: theme.border!.borderSide.width,
-        )
-      );
-
     }
 
-    
-
-    
     return Container(
       decoration: decoration,
       child: Padding(

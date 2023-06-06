@@ -84,7 +84,7 @@ class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixi
   @override
   Widget build(BuildContext context) {
 
-    final inputTheme = Theme.of(context).inputDecorationTheme;
+    //final inputTheme = Theme.of(context).inputDecorationTheme;
 
     return FadeTransition(
       opacity: _opacityAnimation,
@@ -109,7 +109,7 @@ class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixi
                   decoration: BoxDecoration(
                     
                     //color: Theme.of(context).appBarTheme.backgroundColor,
-                    borderRadius: BorderRadius.vertical(top: Radius.elliptical(8, 8)),
+                    borderRadius: const BorderRadius.vertical(top: Radius.elliptical(8, 8)),
                     color: Theme.of(context).appBarTheme.backgroundColor!.withOpacity(1),
                     // border: Border(
                     //   top: BorderSide(

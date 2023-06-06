@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
+import 'package:Caput/presentation/widgets/util/buttons/caput_button_secondary.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,14 +11,107 @@ class TestScreen extends StatefulWidget {
   const TestScreen({ Key? key }) : super(key: key);
 
   @override
-  _TestScreenState createState() => _TestScreenState();
+  TestScreenState createState() => TestScreenState();
 }
 
-class _TestScreenState extends State<TestScreen> {
+class TestScreenState extends State<TestScreen> {
 
 
   @override
   Widget build(BuildContext context) {
+
+    final Widget buildInput = Container(
+    decoration: BoxDecoration(
+    color: Theme.of(context).appBarTheme.backgroundColor as Color
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children:[
+                CaputButtonSecondary(
+                  icon: Icons.keyboard_arrow_up, 
+                  onPressed: (){
+                      log('up');
+                    }
+                ),
+                
+                const SizedBox(width: 4),
+                
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1,
+                      ),
+                    ),
+                    child: TextField(
+                      enableInteractiveSelection: true,
+                      textCapitalization: TextCapitalization.sentences,
+                      keyboardType: TextInputType.multiline,
+                      minLines: 1,
+                      maxLines: 5,
+                      style: Theme.of(context).textTheme.titleSmall,
+                      decoration: const InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 12), //vertical: 12 on other devices
+                        hintText: "Neues Neuron...",
+                        border: InputBorder.none
+                      ),
+                    ),
+                  ),
+                  
+                ),
+          
+                const SizedBox(width: 4),
+                
+                CaputButtonSecondary(
+                  icon: Icons.add, 
+                  onPressed: () => {
+                    log('add media')
+                  }
+                ),
+          
+                const SizedBox(width: 4),
+          
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    color: CaputColors.colorBlue,
+                    width: 32,
+                    height: 32,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        const Icon(
+                          Icons.keyboard_double_arrow_right,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                        RawMaterialButton(
+                          onPressed: () {
+          
+                            log('go');
+        
+                          },
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
+    ),
+  );
+
     return Scaffold(
       body: SafeArea(
 
@@ -28,8 +122,8 @@ class _TestScreenState extends State<TestScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     CaputSecondaryButton(
                       highlightColor: CaputColors.colorBlue,
@@ -55,44 +149,8 @@ class _TestScreenState extends State<TestScreen> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  children: [
-                    CaputSecondaryButton(
-                      highlightColor: CaputColors.colorBlue,
-                      icon: Icons.check,
-                      isHighlighted: true,
-                      onPressed: () {
-                        log("hi");
-                      },
-                    ),
-                    const SizedBox(width: 4),
-                    CaputSecondaryButton(
-                      highlightColor: CaputColors.colorBlue,
-                      icon: Icons.check,
-                      isHighlighted: false,
-                      onPressed: () {
-                        log("hi");
-                      },
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: (){
-                        context.read<ThemeState>().setTheme(ThemeMode.light);
-                      }, 
-                      child: const Text("Light")
-                    ),
-                    ElevatedButton(
-                      onPressed: (){
-                        context.read<ThemeState>().setTheme(ThemeMode.dark);
-                      }, 
-                      child: const Text("Dark")
-                    ),
-                  ],
-                )
-                
+                const Spacer(flex: 1,),
+                buildInput
                 
               ],
             ),
@@ -101,6 +159,10 @@ class _TestScreenState extends State<TestScreen> {
       ),
     );
   }
+
+                
+
+
 }
 
 class CaputSecondaryButton extends StatelessWidget {

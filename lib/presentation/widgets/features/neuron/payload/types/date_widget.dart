@@ -41,59 +41,56 @@ class DateWidget extends StatelessWidget{
   
   Widget dateContent = IntrinsicHeight(
 
-    child: Container(
-      //color: highlightColor.withOpacity(0.05),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          statusWidget,
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        statusWidget,
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  child: Text(
+                    neuron.payload.caption,
+                    style: Theme.of(context).textTheme.titleSmall
+                ),
+                ),
+                
+                if(date.body != "")
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 2),
+                    padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                     child: Text(
-                      neuron.payload.caption,
-                      style: Theme.of(context).textTheme.titleSmall
-                  ),
-                  ),
-                  
-                  if(date.body != "")
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                      child: Text(
-                        date.body,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                      date.body,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                  if(neuron.tags.isNotEmpty || !(formatedDeadline == ""))
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            formatedDeadline,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: CaputColors.colorTextSecondaryLight
-                            ),
+                  ),
+                if(neuron.tags.isNotEmpty || !(formatedDeadline == ""))
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          formatedDeadline,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: CaputColors.colorTextSecondaryLight
                           ),
-                          TagListWidget(tags: neuron.tags)
-                        ],
-                      ),
+                        ),
+                        TagListWidget(tags: neuron.tags)
+                      ],
                     ),
-                ],
-              )
-            ),
-          )
-        ],
-      ),
+                  ),
+              ],
+            )
+          ),
+        )
+      ],
     ),
   );
 

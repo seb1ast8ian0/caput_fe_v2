@@ -50,78 +50,75 @@ class _TaskWidgetState extends State<TaskWidget> {
             : CaputColors.colorLightGrey;
 
   Widget taskContent = IntrinsicHeight(
-    child: Container(
-      //color: highlightColor.withOpacity(0.05),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          DynamicStatusWidget(
-            defaultColor: defaultColor,
-            start: widget.neuron.creationTs, 
-            end: task.deadlineTs, 
-            onHighlightColorChanged: (color) {
-              setState(() {
-                highlightColor = color;
-              });
-            }
-          ),
-            
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        DynamicStatusWidget(
+          defaultColor: defaultColor,
+          start: widget.neuron.creationTs, 
+          end: task.deadlineTs, 
+          onHighlightColorChanged: (color) {
+            setState(() {
+              highlightColor = color;
+            });
+          }
+        ),
+          
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  child: Text(
+                    widget.neuron.payload.caption,
+                    style: Theme.of(context).textTheme.titleSmall
+                ),
+                ),
+                
+                if(task.body != "")
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 2),
+                    padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                     child: Text(
-                      widget.neuron.payload.caption,
-                      style: Theme.of(context).textTheme.titleSmall
-                  ),
-                  ),
-                  
-                  if(task.body != "")
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                      child: Text(
-                        task.body,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                      task.body,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                  if(widget.neuron.tags.isNotEmpty || !(formatedDeadline == ""))
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            formatedDeadline,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: CaputColors.colorTextSecondaryLight
-                            ),
+                  ),
+                if(widget.neuron.tags.isNotEmpty || !(formatedDeadline == ""))
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          formatedDeadline,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: CaputColors.colorTextSecondaryLight
                           ),
-                          TagListWidget(tags: widget.neuron.tags)
-                        ],
-                      ),
+                        ),
+                        TagListWidget(tags: widget.neuron.tags)
+                      ],
                     ),
-                  
-                ],
-              )
-            ),
-          ),
-          Center(
-
-            child: Padding(
-              padding: const EdgeInsets.only(right: 12.0),
-              child: NeuronCheckButton(index: widget.index),
+                  ),
+                
+              ],
             )
           ),
+        ),
+        Center(
 
-        ],
-      ),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: NeuronCheckButton(index: widget.index),
+          )
+        ),
+
+      ],
     ),
   );
 

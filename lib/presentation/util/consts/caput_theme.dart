@@ -26,17 +26,17 @@ class CaputTheme{
   textTheme: const TextTheme(
     titleSmall: TextStyle(
       fontSize: 16,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w400,
       color: CaputColors.colorTextPrimaryLight
     ),
     bodyMedium: TextStyle(
       fontSize: 14,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w400,
       color: CaputColors.colorTextSecondaryLight
     ),
     labelLarge: TextStyle(
       fontSize: 14,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w400,
       color: CaputColors.colorBlue
     )
   ),
@@ -116,17 +116,17 @@ class CaputTheme{
     textTheme: const TextTheme(
       titleSmall: TextStyle(
         fontSize: 16,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w400,
         color: CaputColors.colorTextPrimaryDark
       ),
       bodyMedium: TextStyle(
         fontSize: 14,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w400,
         color: CaputColors.colorTextSecondaryLight
       ),
       labelLarge: TextStyle(
         fontSize: 14,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w400,
         color: CaputColors.colorBlue
       )
     ),

@@ -5,7 +5,7 @@ class TimeFormats{
 
     DateTime now = DateTime.now();
 
-    Duration difference = time.difference(now);
+    //Duration difference = time.difference(now);
 
     if(now.day == time.day && now.month == time.month && now.year == time.year){
       //time ist heute
