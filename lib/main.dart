@@ -17,6 +17,8 @@ GetIt getIt = GetIt.instance;
 
 void main() async {
 
+  //dev branch
+
   await Hive.initFlutter();
   _registerAdapters();
   getIt.registerSingleton<NeuronState>(NeuronState(), signalsReady: true);
