@@ -47,7 +47,7 @@ class DateWidget extends StatelessWidget{
         statusWidget,
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -60,6 +60,7 @@ class DateWidget extends StatelessWidget{
                 ),
                 ),
                 
+                /*
                 if(date.body != "")
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -68,6 +69,8 @@ class DateWidget extends StatelessWidget{
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
+
+                  */
                 if(neuron.tags.isNotEmpty || !(formatedDeadline == ""))
                   Padding(
                     padding: const EdgeInsets.only(top: 2),
@@ -76,13 +79,13 @@ class DateWidget extends StatelessWidget{
                       children: [
                         Text(
                           formatedDeadline,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: CaputColors.colorTextSecondaryLight
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).chipTheme.labelStyle?.color
                           ),
                         ),
-                        TagListWidget(tags: neuron.tags)
+                        //TagListWidget(tags: neuron.tags)
                       ],
                     ),
                   ),

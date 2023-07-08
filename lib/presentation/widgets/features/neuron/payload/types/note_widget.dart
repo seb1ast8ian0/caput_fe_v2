@@ -40,7 +40,7 @@ class NoteWidget extends StatelessWidget{
 
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -58,8 +58,8 @@ class NoteWidget extends StatelessWidget{
                     Text(
                       displayTime,
                       style: const TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
                         color: CaputColors.colorTextSecondaryLight
                       ),
                     ),
@@ -67,7 +67,7 @@ class NoteWidget extends StatelessWidget{
                   ],
                 ),
                 
-                
+                /*
                 if(note.body != "")
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -76,6 +76,7 @@ class NoteWidget extends StatelessWidget{
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
+                  */
                 // Padding(
                 //   padding: const EdgeInsets.only(top: 1),
                 //   child: Text(
@@ -89,7 +90,7 @@ class NoteWidget extends StatelessWidget{
                 // ),
                 if(neuron.tags.isNotEmpty)
                   const SizedBox(height: 6),
-                  TagListWidget(tags: neuron.tags)
+                  //TagListWidget(tags: neuron.tags)
                 
               ],
             )

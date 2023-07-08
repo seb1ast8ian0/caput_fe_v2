@@ -2,13 +2,18 @@ import 'dart:developer';
 
 import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
+import 'package:Caput/presentation/widgets/features/textfield/caput_text_field.dart';
 import 'package:Caput/presentation/widgets/util/buttons/caput_button_secondary.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 
 class TestScreen extends StatefulWidget {
+
+  
+
   const TestScreen({ Key? key }) : super(key: key);
+
 
   @override
   TestScreenState createState() => TestScreenState();
@@ -16,9 +21,12 @@ class TestScreen extends StatefulWidget {
 
 class TestScreenState extends State<TestScreen> {
 
+  
 
   @override
   Widget build(BuildContext context) {
+
+    final controller = RichTextFieldController();
 
     final Widget buildInput = Container(
     decoration: BoxDecoration(
@@ -49,20 +57,9 @@ class TestScreenState extends State<TestScreen> {
                         width: 1,
                       ),
                     ),
-                    child: TextField(
-                      enableInteractiveSelection: true,
-                      textCapitalization: TextCapitalization.sentences,
-                      keyboardType: TextInputType.multiline,
-                      minLines: 1,
-                      maxLines: 5,
-                      style: Theme.of(context).textTheme.titleSmall,
-                      decoration: const InputDecoration(
-                        isDense: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 12), //vertical: 12 on other devices
-                        hintText: "Neues Neuron...",
-                        border: InputBorder.none
-                      ),
-                    ),
+                    child: CaputTextField(
+                      controller: controller,
+                    )
                   ),
                   
                 ),

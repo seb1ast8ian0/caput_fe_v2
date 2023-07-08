@@ -8,80 +8,79 @@ class CaputTheme{
 
   static ThemeData lightTheme = ThemeData(
 
-  brightness: Brightness.light,
+    brightness: Brightness.light,
 
-  dialogBackgroundColor: const Color.fromARGB(179, 240, 240, 240),
+    dialogBackgroundColor: const Color.fromARGB(179, 240, 240, 240),
 
-  textButtonTheme: TextButtonThemeData(
-    style: ButtonStyle(
-      animationDuration: const Duration(milliseconds: 50),
-      overlayColor: MaterialStateProperty.resolveWith((states) {return Colors.transparent;}),
-      iconColor: MaterialStateProperty.resolveWith((states) {return states.contains(MaterialState.pressed) ?  CaputColors.colorBlue.withOpacity(0.6) : CaputColors.colorBlue;}),
-      foregroundColor: MaterialStateProperty.resolveWith((states) {return states.contains(MaterialState.pressed) ?  CaputColors.colorBlue.withOpacity(0.6) : CaputColors.colorBlue;}),
-      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      minimumSize: MaterialStateProperty.all(Size.zero),
-    )
-  ),
-
-  textTheme: const TextTheme(
-    titleSmall: TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      color: CaputColors.colorTextPrimaryLight
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        animationDuration: const Duration(milliseconds: 50),
+        overlayColor: MaterialStateProperty.resolveWith((states) {return Colors.transparent;}),
+        iconColor: MaterialStateProperty.resolveWith((states) {return states.contains(MaterialState.pressed) ?  CaputColors.colorBlue.withOpacity(0.6) : CaputColors.colorBlue;}),
+        foregroundColor: MaterialStateProperty.resolveWith((states) {return states.contains(MaterialState.pressed) ?  CaputColors.colorBlue.withOpacity(0.6) : CaputColors.colorBlue;}),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        minimumSize: MaterialStateProperty.all(Size.zero),
+      )
     ),
-    bodyMedium: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      color: CaputColors.colorTextSecondaryLight
+    textTheme: const TextTheme(
+      titleSmall: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: CaputColors.colorTextPrimaryLight
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: CaputColors.colorTextSecondaryLight
+      ),
+      labelLarge: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: CaputColors.colorBlue
+      )
     ),
-    labelLarge: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      color: CaputColors.colorBlue
-    )
-  ),
-  progressIndicatorTheme: ProgressIndicatorThemeData(
-    color: CaputColors.colorLightGrey.withOpacity(0.6)
-  ),
-  bottomAppBarTheme: BottomAppBarTheme(
-    color: bright,
-  ),
-  appBarTheme: AppBarTheme(
-    backgroundColor: bright,
-  ),
-  scaffoldBackgroundColor: bright,
-  inputDecorationTheme: InputDecorationTheme(
-    fillColor: const Color.fromARGB(179, 240, 240, 240),
-    hintStyle: const TextStyle(
-      color:Colors.black45,
-      fontSize: 14
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: CaputColors.colorLightGrey.withOpacity(0.6)
     ),
-    border: OutlineInputBorder(
-      borderSide:  BorderSide(
-        color: CaputColors.colorLightGrey.withOpacity(0.4),
-        width: 1.0,
-        style: BorderStyle.solid,
+    bottomAppBarTheme: BottomAppBarTheme(
+      color: bright,
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: bright,
+    ),
+    scaffoldBackgroundColor: bright,
+    inputDecorationTheme: InputDecorationTheme(
+      fillColor: const Color.fromARGB(179, 240, 240, 240),
+      hintStyle: const TextStyle(
+        color:Colors.black45,
+        fontSize: 16
+      ),
+      border: OutlineInputBorder(
+        borderSide:  BorderSide(
+          color: CaputColors.colorLightGrey.withOpacity(0.4),
+          width: 1.0,
+          style: BorderStyle.solid,
+        ),
       ),
     ),
-  ),
 
-  //für Tag Widget!
-  chipTheme: ChipThemeData(
-    backgroundColor: CaputColors.colorLightGrey.withOpacity(0.4),
-    labelStyle: const TextStyle(
-      fontSize: 12,
-      fontWeight: FontWeight.w600,
-      color: CaputColors.colorTextSecondaryLight,
-    )
-  ),
-
-  timePickerTheme: TimePickerThemeData(
-    backgroundColor: CaputColors.colorBackgroundLight,
-    helpTextStyle: const TextStyle(
-      fontSize: 16
+    //für Tag Widget!
+    chipTheme: ChipThemeData(
+      backgroundColor: CaputColors.colorLightGrey.withOpacity(0.2),
+      labelStyle: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        color: Colors.black45,
+      )
     ),
-  )
-);
+
+    timePickerTheme: TimePickerThemeData(
+      backgroundColor: CaputColors.colorBackgroundLight,
+      helpTextStyle: const TextStyle(
+        fontSize: 16
+      ),
+    )
+  );
 
   static Color dark = const Color.fromARGB(255, 14, 14, 14);
 
@@ -108,8 +107,8 @@ class CaputTheme{
       backgroundColor: Colors.white10,
       labelStyle: TextStyle(
         fontSize: 12,
-        fontWeight: FontWeight.w600,
-        color: CaputColors.colorTextPrimaryDark.withOpacity(0.8),
+        fontWeight: FontWeight.w400,
+        color: Colors.white70,
       )
     ),
     
@@ -144,7 +143,7 @@ class CaputTheme{
       fillColor:Colors.white10,
       hintStyle: const TextStyle(
         color: Colors.white70,
-        fontSize: 14
+        fontSize: 16
       ),
       border: OutlineInputBorder(
         borderSide:  BorderSide(

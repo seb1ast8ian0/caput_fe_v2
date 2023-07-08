@@ -20,75 +20,61 @@ class _MainAppBarState extends State<MainAppBar> {
   Widget build(BuildContext context) {
 
     var appBarBackgroundColor = Theme.of(context).appBarTheme.backgroundColor as Color;
-    var borderTheme = Theme.of(context).inputDecorationTheme;
     
 
     return SliverAppBar(
-
       backgroundColor: Colors.transparent,
       centerTitle: false,
       pinned: true,
       expandedHeight: 100,
       elevation: 0,
-      
-      flexibleSpace: Container(
-        decoration: BoxDecoration(
-          //color: appBarBackgroundColor.withOpacity(0.6),
-          border: Border(
-            bottom: BorderSide(
-              color: borderTheme.border!.borderSide.color,
-              width: borderTheme.border!.borderSide.width,
+      flexibleSpace: Stack(
+        children: [
+          ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+              child: Container(
+                color: appBarBackgroundColor.withOpacity(0.6),
+              ),
             ),
           ),
-        ),
-        child: Stack(
-          children: [
-            ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                child: Container(
-                  color: appBarBackgroundColor.withOpacity(0.6),
-                ),
-              ),
-            ),
       
-            FlexibleSpaceBar(
-              expandedTitleScale: 1.2,
-              title:  Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "CAPUT",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 30,
-                        color: CaputColors.colorBlue
+          FlexibleSpaceBar(
+            expandedTitleScale: 1.2,
+            title:  Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    "CAPUT",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 30,
+                      color: CaputColors.colorBlue
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      log("settings");
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen()));
+                    },
+                    child: const CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      radius: 18,
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('assets/images/logo_caput_transparent.png'),
+                        radius: 18,
+                        backgroundColor: Colors.transparent,
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        log("settings");
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen()));
-                      },
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 18,
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/logo_caput_transparent.png'),
-                          radius: 18,
-                          backgroundColor: Colors.transparent,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
-          ]
-        ),
+          ),
+        ]
       ),
     );
 

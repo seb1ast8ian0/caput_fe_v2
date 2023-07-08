@@ -6,12 +6,15 @@ import 'package:Caput/domain/entities/neuron/payload/payloads/Date.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Note.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
 import 'package:Caput/domain/entities/neuron/tag/tag.dart';
+import 'package:Caput/infrastructure/v1%20(hive)/entities/tag_box_model.dart';
 import 'package:Caput/presentation/states/neuron_state.dart';
 import 'package:Caput/presentation/states/theme_state.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+
 
 GetIt getIt = GetIt.instance;
 
@@ -20,13 +23,17 @@ void main() async {
   //dev branch
 
   await Hive.initFlutter();
+
   _registerAdapters();
   getIt.registerSingleton<NeuronState>(NeuronState(), signalsReady: true);
-  
+
+  final eventBus = EventBus();
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeState())
+        ChangeNotifierProvider(create: (_) => ThemeState()),
+        Provider<EventBus>.value(value: eventBus)
       ],
       child: Caput(),
     )
@@ -37,7 +44,7 @@ void main() async {
 void _registerAdapters(){
 
   Hive.registerAdapter(NeuronAdapter());
-  //Hive.registerAdapter(PayloadAdapter());
+  Hive.registerAdapter(TagBoxAdapter());
   Hive.registerAdapter(TaskAdapter());
   Hive.registerAdapter(DateAdapter());
   Hive.registerAdapter(NoteAdapter());
@@ -45,4 +52,8 @@ void _registerAdapters(){
   Hive.registerAdapter(MediaAdapter());
   Hive.registerAdapter(LinkAdapter());
 
+}
+
+EventBus useEventBus(BuildContext context) {
+  return Provider.of<EventBus>(context, listen: false);
 }

@@ -66,7 +66,7 @@ class _TaskWidgetState extends State<TaskWidget> {
           
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -78,7 +78,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                     style: Theme.of(context).textTheme.titleSmall
                 ),
                 ),
-                
+                /*
                 if(task.body != "")
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -87,6 +87,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
+                  */
                 if(widget.neuron.tags.isNotEmpty || !(formatedDeadline == ""))
                   Padding(
                     padding: const EdgeInsets.only(top: 2),
@@ -95,13 +96,13 @@ class _TaskWidgetState extends State<TaskWidget> {
                       children: [
                         Text(
                           formatedDeadline,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: CaputColors.colorTextSecondaryLight
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).chipTheme.labelStyle?.color
                           ),
                         ),
-                        TagListWidget(tags: widget.neuron.tags)
+                        //TagListWidget(tags: widget.neuron.tags)
                       ],
                     ),
                   ),
@@ -111,13 +112,11 @@ class _TaskWidgetState extends State<TaskWidget> {
           ),
         ),
         Center(
-
           child: Padding(
             padding: const EdgeInsets.only(right: 12.0),
             child: NeuronCheckButton(index: widget.index),
           )
         ),
-
       ],
     ),
   );

@@ -89,7 +89,9 @@ class MainScreen extends StatelessWidget{
                 children: [
                   TextButton.icon(
                     icon: const Icon(Icons.add),
-                    onPressed: (){log("new filter");}, 
+                    onPressed: (){
+                      //log("new filter");
+                    }, 
                     label: const Text("Neuer Filter", 
                       style: TextStyle(fontSize: 16),
                     ),
@@ -153,7 +155,7 @@ class MainScreen extends StatelessWidget{
                       elevation: 0,
                       
                       onPressed: () {
-                        log("navigate to filter screen");
+                        //log("navigate to filter screen");
                         Navigator.push(context, MaterialPageRoute(builder: (_) => FilterScreen(filters[index])));
                       },
           

@@ -34,12 +34,7 @@ class NeuronWidget extends StatelessWidget{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           
-          if(!last)
-            Divider(
-              height: 1,
-              thickness: 1,
-              color: Theme.of(context).inputDecorationTheme.border!.borderSide.color
-            ),
+          
           
           if(last)
             const Center(

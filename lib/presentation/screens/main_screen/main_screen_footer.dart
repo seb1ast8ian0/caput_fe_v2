@@ -6,39 +6,19 @@ class MainNavBar extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-
-    var theme = Theme.of(context).inputDecorationTheme;
     
     return Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              image: const DecorationImage(
-                image: AssetImage("assets/images/static_noise.jpeg"),
-                fit: BoxFit.cover,
-                opacity: 0.0
-              ),
-              
-              border: Border(
-                top: BorderSide(
-                  color: theme.border!.borderSide.color,
-                  width: theme.border!.borderSide.width,
-                ),
-              ),
-            ),
-            
-            child: BottomAppBar(
-              elevation: 0,
-              color: (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.6),
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                     SizedBox(height: 30,),
-                   
-                  ],
-                ),
+          BottomAppBar(
+            elevation: 0,
+            color: (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.6),
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+                   SizedBox(height: 30)
+                ],
               ),
             ),
           ),

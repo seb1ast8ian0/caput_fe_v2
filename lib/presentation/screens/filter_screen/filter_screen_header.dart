@@ -11,7 +11,6 @@ class FilterAppBar extends StatefulWidget implements PreferredSizeWidget{
   
   const FilterAppBar(this.title, this.animationController, {super.key});
 
-  
   @override
   State<FilterAppBar> createState() => _FilterAppBarState();
   
@@ -23,83 +22,31 @@ class _FilterAppBarState extends State<FilterAppBar> {
   
   _FilterAppBarState();
 
-  ScrollNotificationObserverState? _scrollNotificationObserver;
-  bool _scrolledUnder = false;
   late Animation<Color?> _colorAnimation;
 
   @override
   void initState() {
     
     super.initState();
+
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _scrollNotificationObserver?.removeListener(_handleScrollNotification);
-    _scrollNotificationObserver = ScrollNotificationObserver.maybeOf(context);
-    _scrollNotificationObserver?.addListener(_handleScrollNotification);
-  }
+  void onButtonBack(){
 
-  @override
-  void dispose() {
-    if (_scrollNotificationObserver != null) {
-      _scrollNotificationObserver!.removeListener(_handleScrollNotification);
-      _scrollNotificationObserver = null;
-    }
-    super.dispose();
-  }
-
-  void _handleScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollUpdateNotification) {
-      final bool oldScrolledUnder = _scrolledUnder;
-      final ScrollMetrics metrics = notification.metrics;
-      switch (metrics.axisDirection) {
-        case AxisDirection.up:
-          // Scroll view is reversed
-          _scrolledUnder = metrics.extentAfter > 0;
-          break;
-        case AxisDirection.down:
-          _scrolledUnder = metrics.extentBefore > 0;
-          break;
-        case AxisDirection.right:
-        case AxisDirection.left:
-          // Scrolled under is only supported in the vertical axis.
-          _scrolledUnder = false;
-          break;
-      }
-
-      if (_scrolledUnder != oldScrolledUnder) {
-        setState(() {
-          // React to a change in MaterialState.scrolledUnder
-        });
-      }
-    }
+    log("navigate back");
+    Navigator.pop(context);
 
   }
 
   @override
   Widget build(BuildContext context) {
 
+    var color = Theme.of(context).appBarTheme.backgroundColor;
+
     _colorAnimation = ColorTween(
-      begin: Theme.of(context).appBarTheme.backgroundColor!.withOpacity(0.4),
-      end: Theme.of(context).appBarTheme.backgroundColor,
+      begin: color!.withOpacity(0.4),
+      end: color,
     ).animate(widget.animationController);
-
-    Color appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.4);
-    appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.4);
-    
-    /*
-    if(_scrolledUnder){
-        appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color).withOpacity(0.4);
-    } else {
-        appBarBackgroundColor = (Theme.of(context).appBarTheme.backgroundColor as Color);
-    }
-
-    */
-
-
-    var theme = Theme.of(context).inputDecorationTheme;
     
     return AnimatedBuilder(
       animation: _colorAnimation,
@@ -111,12 +58,6 @@ class _FilterAppBarState extends State<FilterAppBar> {
             child: Container(
               decoration: BoxDecoration(
                 color: _colorAnimation.value,
-                border: Border(
-                  bottom: BorderSide(
-                    color: theme.border!.borderSide.color,
-                    width: theme.border!.borderSide.width
-                  ),
-                ),
               ),
               child: SafeArea(
                 child: Material(
@@ -134,10 +75,7 @@ class _FilterAppBarState extends State<FilterAppBar> {
                               iconSize: 24,
                               icon: const Icon(Icons.arrow_back_ios_new),
                               color: CaputColors.colorBlue, 
-                              onPressed: (){
-                                log("navigate back");
-                                Navigator.pop(context);
-                              },
+                              onPressed: () => onButtonBack(),
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                             ),

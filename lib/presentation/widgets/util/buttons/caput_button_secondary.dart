@@ -15,8 +15,8 @@ class CaputButtonSecondary extends StatelessWidget{
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: SizedBox(
-        width: 32,
-        height: 32,
+        width: 34,
+        height: 34,
         child: Stack(
           alignment: Alignment.center,
           children: [

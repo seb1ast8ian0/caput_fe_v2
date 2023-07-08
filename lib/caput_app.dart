@@ -8,16 +8,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-class Caput extends StatelessWidget{
+class Caput extends StatefulWidget{
 
   Caput({super.key});
+
+  @override
+  State<Caput> createState() => _CaputState();
+}
+
+class _CaputState extends State<Caput> {
 
   final neuronState = getIt.get<NeuronState>();
 
   @override
+  void initState() {
+    neuronState.invoke();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    neuronState.cleanUp();
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context){
 
-    neuronState.invoke();
 
     return MaterialApp(
       title: 'Caput',
@@ -38,5 +56,4 @@ class Caput extends StatelessWidget{
     );
 
   }
-  
 }

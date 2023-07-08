@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 
 class NeuronRepository{
 
@@ -15,7 +15,7 @@ class NeuronRepository{
 
       var box = await Hive.openBox(_boxName);
 
-      for(int i = 0; i < box.length - 1; i++){
+      for(int i = 0; i < box.length; i++){
         result.add(box.getAt(i));
       }
 
@@ -36,12 +36,11 @@ class NeuronRepository{
       var box = await Hive.openBox(_boxName);
 
       for(Neuron neuron in neurons){
-        log("add all: ${neuron.payload.caption}");
+        //log("add all: ${neuron.payload.caption}");
         box.add(neuron);
       }
 
       return true;
-
 
     } catch (e){
 
@@ -50,8 +49,6 @@ class NeuronRepository{
 
     }
 
-    
-
   }
 
   static Future<bool> addNeuron(Neuron neuron) async {
@@ -59,7 +56,6 @@ class NeuronRepository{
     try{
 
       var box = await Hive.openBox(_boxName);
-      log("added: ${neuron.payload.caption}");
       box.add(neuron);
       return true;
 
@@ -94,7 +90,7 @@ class NeuronRepository{
     try{
 
       var box = await Hive.openBox(_boxName);
-      box.deleteFromDisk();
+      box.deleteAll(box.keys);
       return true;
 
     } catch (e){

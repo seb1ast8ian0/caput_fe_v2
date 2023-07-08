@@ -5,7 +5,10 @@ import 'package:Caput/domain/entities/neuron/payload/payloads/Date.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Note.dart';
 import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
 import 'package:Caput/domain/entities/neuron/tag/tag.dart';
-import 'package:Caput/infrastructure/neuron_repository_hive.dart';
+import 'package:Caput/infrastructure/v1%20(hive)/entities/tag_box_model.dart';
+import 'package:Caput/infrastructure/v1%20(hive)/neuron_repository_hive.dart';
+import 'package:Caput/infrastructure/v1%20(hive)/tag_repository_hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:uuid/uuid.dart';
@@ -18,8 +21,6 @@ class NeuronState {
   Stream get stream => _listSubject.stream;
   List<Neuron> get current => _neurons;
   int get length  => _neurons.length;
-
-  
 
   cleanUp() async{
     NeuronRepository.deleteNeurons().then((success) {
@@ -42,6 +43,9 @@ class NeuronState {
 
     //TODO: löschen, wenn nicht mehr in Entwicklung 
     //>>
+    
+
+    NeuronRepository.deleteNeurons().then((value) => log("deleted"));
 
     List<Neuron> dummy = [];
 
@@ -49,6 +53,23 @@ class NeuronState {
     var tagArbeit = Tag(const Uuid().v4(), "Arbeit", "Alle Neuronen für die Arbeit");
     var tagUni = Tag(const Uuid().v4(), "Uni", "Alle Neuronen für die Uni");
     var tagWichtig = Tag(const Uuid().v4(), "Wichtig", "Alle wichtigen Neuronen");
+
+    Hive.openBox('tagBox').then((box) {
+      
+      box.deleteAll(box.keys);
+      box.add(TagBox());
+      
+      TagRepository.addTags([tagHaushalt, tagArbeit, tagArbeit, tagArbeit]).then((value) {
+        TagRepository.getAllTags().then((tags) {
+          log(tags.length.toString());
+          for(Tag tag in tags){
+            log(tag.caption);
+          }
+        });
+      });
+
+    });
+    
 
     dummy.add(Neuron(const Uuid().v4(), const Uuid().v4(), Task("", false, DateTime.utc(2023, 10, 15), "task", "Saugen", 1), DateTime.now(), [], []));
     dummy.add(Neuron(const Uuid().v4(), const Uuid().v4(), Task("mit body", false, DateTime.now().add(const Duration(seconds: 10)), "task", "Saugen", 1), DateTime.now(), [], []));
@@ -68,9 +89,6 @@ class NeuronState {
         _listSubject.add(_neurons);
       }
     });
-
-    
-
 
   }
 
