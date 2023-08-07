@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:Caput/domain/entities/neuron/tag/tag.dart';
+import 'package:Caput/domain/entities/neuron/tag.dart';
 import 'package:flutter/material.dart';
 
 class TagWidget extends StatelessWidget {
@@ -30,28 +30,5 @@ const TagWidget({ Key? key, required this.tag}) : super(key: key);
       ),
     );
 
-    /*
-    return ClipRRect(
-      child: ActionChip(
-        label: Text('#${tag.caption.toLowerCase()} ', style: TextStyle(),), 
-        onPressed: (){log("na");},
-        labelPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-        padding: EdgeInsets.zero,
-      ),
-    );
-
-    */
-    
-    /*Material(
-      color: CaputColors.colorLightGrey.withOpacity(0.6),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8)
-      ),
-      child: TextButton(
-        onPressed: (){}, 
-        style: const ButtonStyle(padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 0, horizontal: 4))),
-        child: Text('#${tag.caption.toLowerCase()} ', style: TextStyle(fontSize: 12, color: Theme.of(context).textTheme.titleSmall?.color),),
-      )
-    );*/
   }
 }

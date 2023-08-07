@@ -1,59 +1,26 @@
 import 'package:Caput/caput_app.dart';
-import 'package:Caput/domain/entities/neuron/Neuron.dart';
-import 'package:Caput/domain/entities/neuron/media/media.dart';
-import 'package:Caput/domain/entities/neuron/media/medias/link.dart';
-import 'package:Caput/domain/entities/neuron/payload/payloads/Date.dart';
-import 'package:Caput/domain/entities/neuron/payload/payloads/Note.dart';
-import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
-import 'package:Caput/domain/entities/neuron/tag/tag.dart';
-import 'package:Caput/infrastructure/v1%20(hive)/entities/tag_box_model.dart';
-import 'package:Caput/presentation/states/neuron_state.dart';
+import 'package:Caput/domain/bloc/tags/tags_bloc.dart';
+import 'package:Caput/domain/get/database_controller.dart';
 import 'package:Caput/presentation/states/theme_state.dart';
-import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-
-GetIt getIt = GetIt.instance;
 
 void main() async {
 
   //dev branch
 
-  await Hive.initFlutter();
-
-  _registerAdapters();
-  getIt.registerSingleton<NeuronState>(NeuronState(), signalsReady: true);
-
-  final eventBus = EventBus();
+  Get.put(TagsList([]));
+  Get.put(DatabaseController());
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeState()),
-        Provider<EventBus>.value(value: eventBus)
+        ChangeNotifierProvider(create: (_) => ThemeState())
       ],
-      child: Caput(),
+      child: const Caput(),
     )
   );
   
-}
-
-void _registerAdapters(){
-
-  Hive.registerAdapter(NeuronAdapter());
-  Hive.registerAdapter(TagBoxAdapter());
-  Hive.registerAdapter(TaskAdapter());
-  Hive.registerAdapter(DateAdapter());
-  Hive.registerAdapter(NoteAdapter());
-  Hive.registerAdapter(TagAdapter());
-  Hive.registerAdapter(MediaAdapter());
-  Hive.registerAdapter(LinkAdapter());
-
-}
-
-EventBus useEventBus(BuildContext context) {
-  return Provider.of<EventBus>(context, listen: false);
 }

@@ -1,16 +1,18 @@
-import 'package:Caput/main.dart';
+import 'package:Caput/domain/bloc/neuron_input/neuron_input_bloc.dart';
+import 'package:Caput/domain/bloc/neurons/neurons_bloc.dart';
+import 'package:Caput/domain/bloc/tags/tags_bloc.dart';
+import 'package:Caput/domain/bloc/tags_search/tags_search_bloc.dart';
 import 'package:Caput/presentation/screens/main_screen/main_screen.dart';
 import 'package:Caput/presentation/screens/test_screen.dart';
-import 'package:Caput/presentation/states/neuron_state.dart';
 import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:Caput/presentation/util/consts/caput_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
 
 class Caput extends StatefulWidget{
 
-  Caput({super.key});
+  const Caput({super.key});
 
   @override
   State<Caput> createState() => _CaputState();
@@ -18,17 +20,36 @@ class Caput extends StatefulWidget{
 
 class _CaputState extends State<Caput> {
 
-  final neuronState = getIt.get<NeuronState>();
+  late NeuronsBloc neuronsBloc;
+  late TagsBloc tagsBloc;
+  late TagsSearchBloc tagsSearchBloc;
+  late NeuronInputBloc neuronsInputBloc;
+
 
   @override
   void initState() {
-    neuronState.invoke();
+
+    neuronsBloc = NeuronsBloc();
+
+    tagsBloc = TagsBloc();
+    tagsBloc.add(InitTagsEvent());
+
+    tagsSearchBloc = TagsSearchBloc();
+    neuronsInputBloc = NeuronInputBloc(
+      neuronsBloc: neuronsBloc
+    );
+    
     super.initState();
+
   }
 
   @override
   void dispose() {
-    neuronState.cleanUp();
+    
+    neuronsBloc.close();
+    tagsBloc.close();
+    neuronsBloc.close();
+
     super.dispose();
   }
 
@@ -37,23 +58,35 @@ class _CaputState extends State<Caput> {
   Widget build(BuildContext context){
 
 
-    return MaterialApp(
-      title: 'Caput',
-      locale: const Locale('de'),
-      theme: CaputTheme.lightTheme,
-      darkTheme: CaputTheme.darkTheme,
-      themeMode: context.watch<ThemeState>().themeMode,
-      home: const MainScreen(),
-      localizationsDelegates: const [
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<NeuronsBloc>.value(value: neuronsBloc),
+        BlocProvider<TagsBloc>.value(value: tagsBloc),
+        BlocProvider<TagsSearchBloc>.value(value: tagsSearchBloc),
+        BlocProvider<NeuronInputBloc>.value(value: neuronsInputBloc),
       ],
-      supportedLocales: const[
-        Locale('en'), // English
-        Locale('de'), // Deutsch
-      ],
+      child: MaterialApp(
+        title: 'Caput',
+        locale: const Locale('de'),
+        theme: CaputTheme.lightTheme,
+        darkTheme: CaputTheme.darkTheme,
+        themeMode: context.watch<ThemeState>().themeMode,
+        home: const MainScreen(),
+        localizationsDelegates: const [
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate
+        ],
+        supportedLocales: const[
+          Locale('en'), // English
+          Locale('de'), // Deutsch
+        ],
+      )
+
     );
+    
+    
+    
 
   }
 }

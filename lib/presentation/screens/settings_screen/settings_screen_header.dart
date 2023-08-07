@@ -78,17 +78,16 @@ class _SettingsAppBarState extends State<SettingsAppBar> {
         appBarBackgroundColor = Theme.of(context).appBarTheme.backgroundColor as Color;
     }
 
-
-    var theme = Theme.of(context).inputDecorationTheme;
-
     Widget appBarContent = Container(
       decoration: BoxDecoration(
         color: appBarBackgroundColor,
         border: Border(
+          /*
           bottom: BorderSide(
             color: theme.border!.borderSide.color,
             width: theme.border!.borderSide.width
           ),
+          */
         ),
       ),
       child: SafeArea(

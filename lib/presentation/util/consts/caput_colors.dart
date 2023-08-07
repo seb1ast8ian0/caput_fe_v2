@@ -20,7 +20,7 @@ class CaputColors {
       static const colorBlue = Color.fromRGBO(90, 145, 255, 1);
 
       static const colorRed = Color.fromRGBO(250, 120, 100, 1);
-      static const colorOrange = Color.fromRGBO(250, 180, 100, 1);
+      static const colorOrange = Color.fromRGBO(248, 175, 91, 1);
       static const colorGreen = Color.fromRGBO(52, 209, 78, 1);
       
 }

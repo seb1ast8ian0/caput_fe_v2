@@ -71,11 +71,11 @@ class _FilterAppBarState extends State<FilterAppBar> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children:  [
                             IconButton(
-                              constraints: BoxConstraints.tight(const Size.square(38)),
                               iconSize: 24,
                               icon: const Icon(Icons.arrow_back_ios_new),
                               color: CaputColors.colorBlue, 
                               onPressed: () => onButtonBack(),
+                              constraints: BoxConstraints.tight(const Size.square(38)),
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                             ),

@@ -1,8 +1,6 @@
+import 'package:Caput/domain/entities/neuron/tag.dart';
 import 'package:Caput/presentation/widgets/features/neuron/tag/tag_widget.dart';
 import 'package:flutter/material.dart';
-
-
-import 'package:Caput/domain/entities/neuron/tag/tag.dart';
 
 class TagListWidget extends StatelessWidget {
 

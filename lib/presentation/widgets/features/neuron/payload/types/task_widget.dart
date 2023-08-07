@@ -1,8 +1,9 @@
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
-import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
+import 'package:Caput/domain/entities/neuron/payloads/task.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/util/time/time_formats.dart';
 import 'package:Caput/presentation/widgets/features/neuron/neuron_button.dart';
+import 'package:Caput/presentation/widgets/features/neuron/neuron_text.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
 import 'package:Caput/presentation/widgets/features/neuron/tag/tag_list_widget.dart';
 import 'package:flutter/material.dart';
@@ -73,22 +74,13 @@ class _TaskWidgetState extends State<TaskWidget> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 2),
-                  child: Text(
-                    widget.neuron.payload.caption,
-                    style: Theme.of(context).textTheme.titleSmall
-                ),
-                ),
-                /*
-                if(task.body != "")
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                    child: Text(
-                      task.body,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
+                  child: NeuronText(
+                    text: task.caption,
+                    style: Theme.of(context).textTheme.titleSmall,
+                    overflow: TextOverflow.clip,
                   ),
-                  */
-                if(widget.neuron.tags.isNotEmpty || !(formatedDeadline == ""))
+                ),
+                if(formatedDeadline != "")
                   Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: Row(

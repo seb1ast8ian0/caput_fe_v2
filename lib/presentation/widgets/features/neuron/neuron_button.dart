@@ -2,7 +2,6 @@
 import 'dart:developer';
 
 import 'package:Caput/main.dart';
-import 'package:Caput/presentation/states/neuron_state.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:flutter/material.dart';
 class NeuronCheckButton extends StatefulWidget{
 
   final int index;
-
   const NeuronCheckButton({required this.index, super.key});
 
   @override
@@ -19,22 +17,21 @@ class NeuronCheckButton extends StatefulWidget{
 }
 
 class _NeuronCheckButtonState extends State<NeuronCheckButton> {
-
-  final neuronState = getIt.get<NeuronState>();
   
   bool _checked = false;
 
   bool isPlaying = false;
-  final controller = ConfettiController(duration: const Duration(milliseconds: 400));
+  late ConfettiController confettiController;
 
   @override
   void initState(){
+    confettiController = ConfettiController(duration: const Duration(milliseconds: 400));
     super.initState();
   }
 
   @override
   void dispose(){
-    controller.dispose(); 
+    confettiController.dispose(); 
     super.dispose();
   }
 
@@ -65,7 +62,7 @@ class _NeuronCheckButtonState extends State<NeuronCheckButton> {
             child: Container(
               transform: Matrix4.diagonal3Values(0.18, 0.18, 0.18),
               child: ConfettiWidget(
-                confettiController: controller, 
+                confettiController: confettiController, 
                 shouldLoop: false,
                 blastDirectionality: BlastDirectionality.explosive,
                 emissionFrequency: 0.4,
@@ -115,27 +112,26 @@ class _NeuronCheckButtonState extends State<NeuronCheckButton> {
 
   void action() {
 
-    log('done');
-
     setState(() {
         _checked = true;
     });
 
-    controller.play();
+    confettiController.play();
 
     Future.delayed(const Duration(milliseconds: 150), () {
 
-      controller.stop();
+      confettiController.stop();
       
     });
 
     Future.delayed(const Duration(milliseconds: 800), () {
 
       if(_checked){
-        neuronState.remove(widget.index);
+        //TODO Check Task
       }
 
       setState(() {
+        
         _checked = false;
       });
       

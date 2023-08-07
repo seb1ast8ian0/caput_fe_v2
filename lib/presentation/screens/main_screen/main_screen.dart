@@ -1,9 +1,12 @@
 import 'dart:developer';
 
+import 'package:Caput/domain/entities/filter/filter.dart';
+import 'package:Caput/presentation/screens/filter_input_screen/filter_input_screen.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen.dart';
 import 'package:Caput/presentation/screens/main_screen/main_screen_footer.dart';
 import 'package:Caput/presentation/screens/main_screen/main_screen_header.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget{
@@ -13,7 +16,9 @@ class MainScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    List<String> filters = ["Alle Neuronen", "Alle Tasks", "Test"];
+    List<String> filters = ["Alle Tasks", "Test", "Inbox",
+              "Wichtig", "Erledigt", "Projekte", "Einkaufsliste", "Notizen",
+              "Fotos", "Archiv", "Entwürfe", "Kalender", "Kontakte"];
 
     final searchController = TextEditingController();
     final theme = Theme.of(context).inputDecorationTheme;
@@ -21,9 +26,7 @@ class MainScreen extends StatelessWidget{
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-
           const MainAppBar(),
-
           SliverPersistentHeader(
             pinned: false,
             floating: false,
@@ -80,7 +83,6 @@ class MainScreen extends StatelessWidget{
               ),
             ),
           ),
-
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -91,6 +93,7 @@ class MainScreen extends StatelessWidget{
                     icon: const Icon(Icons.add),
                     onPressed: (){
                       //log("new filter");
+                      showFilterInput(context);
                     }, 
                     label: const Text("Neuer Filter", 
                       style: TextStyle(fontSize: 16),
@@ -107,95 +110,96 @@ class MainScreen extends StatelessWidget{
           SliverPadding(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
             sliver: SliverList(
+              
               delegate: SliverChildBuilderDelegate(
+
                 (BuildContext context, int index) {
 
-                  double opacity;
-                  LinearGradient gradient;
-                  Color color;
-                  BoxBorder border;
-
-                    if(index==0) {
-          
-                      gradient =  const LinearGradient(
-                        colors: [Color.fromARGB(183, 77, 98, 232), CaputColors.colorBlue],
-                        stops: [0, 2],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      );
-          
-                      color = Colors.white;
-                      opacity = 0.11;
-                      border = Border.all(
-                        color: Colors.transparent,
-                        width: theme.border!.borderSide.width,
-                      );
-          
-          
-                    } else {
-          
-                      gradient = LinearGradient(
-                        colors: [Theme.of(context).dialogBackgroundColor, Theme.of(context).dialogBackgroundColor],
-                        stops: const [0, 1],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      );
-          
-                      color = Theme.of(context).brightness == Brightness.dark ? Colors.white : CaputColors.colorBlue;
-                      opacity = 0;
-                      border = Border.all(
-                        color: theme.border!.borderSide.color,
-                        width: theme.border!.borderSide.width,
-                      );
-          
-                    }
-          
-                    return RawMaterialButton(
-                      highlightElevation: 0,
-                      elevation: 0,
-                      
-                      onPressed: () {
-                        //log("navigate to filter screen");
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => FilterScreen(filters[index])));
-                      },
-          
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)
-                      ),
-                      child: Ink(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: const AssetImage("assets/images/static_noise.jpeg"),
-                            fit: BoxFit.cover,
-                            opacity: opacity
-                          ),
-                          
-                          gradient: gradient,
-                          borderRadius: BorderRadius.circular(8),
-                          border: border
-                        ),
+                  Color color = Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87;
+                
+                  return Column(
+                    children: [
+                      InkWell(
+                        borderRadius: BorderRadius.circular(30),
+                        splashFactory: InkSplash.splashFactory,
+                        /*onLongPress: () {
+                          log("long");
+                        },*/
+                        onTap: (){
+                          Filter filter = Filter(
+                            filterId: "filterId", 
+                            userId: "userId", 
+                            caption: filters[index], 
+                            creationTs: DateTime.now(), 
+                            updateTs: DateTime.now(), 
+                            tags: [], 
+                            tagsOperator: LogicalOperator.or,
+                            neuronTypes: [], 
+                            dateOption: DateOption.all
+                          );
+                          log("navigate to filter: ${filter.caption}");
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => FilterScreen(filter)));
+                        },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                filters[index],
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: color
+                              Container(
+                                width: 36,
+                                height: 36,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: CaputColors.colorBlue,
+                                    width: 2
+                                  ),
+                                  borderRadius: BorderRadius.circular(36),
                                 ),
+                              ),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      textAlign: TextAlign.left,
+                                      filters[index],
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: color,
+                                        fontWeight: FontWeight.w600
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    const Text(
+                                      "Inhalt (Cation of latest Neuron) bla bla bla ich werde jetzt mehr schreiben als das Teil lang ist und noch vieeel mehr",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 12,
                               ),
                               Icon(
                                 Icons.arrow_forward_ios,
                                 size: 18,
                                 color: color
+                              ),
+                              const SizedBox(
+                                width: 12,
                               )
                             ],
                           ),
                         ),
                       ),
-                    );
+                    ],
+                  );
                 },
                 childCount: filters.length,
               ),
@@ -204,7 +208,6 @@ class MainScreen extends StatelessWidget{
         
         ]
       ),
-
       bottomNavigationBar: const MainNavBar()
     
     );

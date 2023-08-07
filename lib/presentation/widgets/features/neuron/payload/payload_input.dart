@@ -1,21 +1,17 @@
 import 'dart:developer';
 import 'dart:ui';
 
-import 'package:Caput/domain/entities/neuron/payload/Payload.dart';
-import 'package:Caput/domain/entities/neuron/payload/payloads/Date.dart';
-import 'package:Caput/domain/entities/neuron/payload/payloads/Note.dart';
-import 'package:Caput/domain/entities/neuron/payload/payloads/Task.dart';
+import 'package:Caput/domain/bloc/neuron_input/neuron_input_bloc.dart';
 import 'package:Caput/presentation/screens/test_screen.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
+import 'package:Caput/presentation/widgets/util/input/buttons/caput_secondary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PayloadInput extends StatefulWidget {
-
   final AnimationController animationController;
   final ScrollController scrollController;
-
-  final Function(Payload) onPayloadChanged;
 
   /*
 
@@ -23,160 +19,160 @@ class PayloadInput extends StatefulWidget {
 
   */
 
-  const PayloadInput({Key? key, required this.onPayloadChanged, required this.animationController, required this.scrollController}) : super(key: key);
+  const PayloadInput(
+      {Key? key,
+      required this.animationController,
+      required this.scrollController})
+      : super(key: key);
 
   @override
   PayloadInputState createState() => PayloadInputState();
-
 }
 
-class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixin {
-
+class PayloadInputState extends State<PayloadInput>
+    with TickerProviderStateMixin {
   late Animation<Offset> _offsetAnimation;
   late Animation<double> _opacityAnimation;
-  
-  late Payload _payload;
-  Widget _payloadBody = Container();
+
+  Widget payloadBody = Container();
 
   double _height = 0;
   int _col = 0;
-  bool _inputIsHidden = true;
+  bool inputIsHidden = true;
 
   @override
   void initState() {
 
     super.initState();
 
-    _offsetAnimation =
-      Tween<Offset>(
-        begin: const Offset(0.0, 0.6), 
-        end: Offset.zero
-      ).animate(
-          CurvedAnimation(
-            parent: widget.animationController, 
-            curve: Curves.easeInOutSine
-          )
-      );
+    Tween<Offset> offsetTween =
+        Tween<Offset>(begin: const Offset(0.0, 0.6), end: Offset.zero);
+    _offsetAnimation = offsetTween.animate(CurvedAnimation(
+        parent: widget.animationController, curve: Curves.easeInOutSine));
 
     _opacityAnimation = CurvedAnimation(
-      parent: widget.animationController, 
-      curve: Curves.elasticInOut
-    );
+        parent: widget.animationController, curve: Curves.elasticInOut);
 
     widget.animationController.addListener(() {
 
       var status = widget.animationController.status;
-      
-      if(status == AnimationStatus.forward || status == AnimationStatus.completed){
-        setState(() {
-          _inputIsHidden = false;
-        });
-      }
+      setState(() {
+        inputIsHidden = hideInputFromControllerStatus(status);
+      });
 
-      if(status == AnimationStatus.reverse || status == AnimationStatus.dismissed){
-        setState(() {
-          _inputIsHidden = true;
-        });
-      }
     });
+  }
+
+  bool hideInputFromControllerStatus(AnimationStatus status) {
+    if (status == AnimationStatus.forward ||
+        status == AnimationStatus.completed) {
+      return false;
+    }
+
+    if (status == AnimationStatus.reverse ||
+        status == AnimationStatus.dismissed) {
+      return true;
+    }
+
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
+    NeuronInputBloc neuronInputBloc = context.read<NeuronInputBloc>();
 
-    //final inputTheme = Theme.of(context).inputDecorationTheme;
-
-    return FadeTransition(
-      opacity: _opacityAnimation,
-      child: SlideTransition(
-        position: _offsetAnimation,
-        child: IgnorePointer(
-          ignoring: _inputIsHidden,
-          child: Container(
-            decoration: const BoxDecoration(
-              boxShadow:  [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 0),
+    return BlocListener<NeuronInputBloc, NeuronInputState>(
+      listener: (context, state) {
+        if (state is NeuronInputClean) {
+          setState(() {
+            _col = 0;
+            _height = 0;
+          });
+        }
+      },
+      child: FadeTransition(
+        opacity: _opacityAnimation,
+        child: SlideTransition(
+          position: _offsetAnimation,
+          child: IgnorePointer(
+            ignoring: inputIsHidden,
+            child: Container(
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 0),
+                  ),
+                ],
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.vertical(
+                      top: Radius.elliptical(8, 8)),
+                  color: Theme.of(context)
+                      .appBarTheme
+                      .backgroundColor
+                      //!.withOpacity(0.5)
                 ),
-              ],
-            ),
-            child: ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                child: Container(
-                  decoration: BoxDecoration(
-                    
-                    //color: Theme.of(context).appBarTheme.backgroundColor,
-                    borderRadius: const BorderRadius.vertical(top: Radius.elliptical(8, 8)),
-                    color: Theme.of(context).appBarTheme.backgroundColor!.withOpacity(1),
-                    // border: Border(
-                    //   top: BorderSide(
-                    //     width: inputTheme.border!.borderSide.width,
-                    //     color: inputTheme.border!.borderSide.color
-                    //   )
-                    // )
-                  ),
-                  
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            CaputSecondaryButton(
-                              icon: Icons.check, 
-                              onPressed: () {
-                                _payload = Task("", false, null, "task", "", 1);
-                                _save();
-                                _toogle(1);
-                                setState(() {
-                                  _payloadBody = _buildTaskInput();
-                                });
-                              }, 
-                              isHighlighted: _col == 1, 
-                              highlightColor: CaputColors.colorBlue,
-                              //showLabelWhenNotHighlighted: false,
-                              //label: "Task",
-                            ),
-                            const SizedBox(width: 8),
-                            CaputSecondaryButton(
-                              icon: Icons.calendar_today_rounded, 
-                              onPressed: () {
-                                _payload = Date("", null, "date", "", 1);
-                                _save();
-                                _toogle(2);
-                                setState(() {
-                                  _payloadBody = _buildDateInput();
-                                });
-                              },
-                              isHighlighted: _col == 2, 
-                              highlightColor: CaputColors.colorBlue,
-                              //showLabelWhenNotHighlighted: false,
-                              //label: "Date",
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        height: 1,
-                      ),
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeInOutSine,
-                        constraints: BoxConstraints(maxHeight: _height),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: SingleChildScrollView(
-                            child:  _payloadBody
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CaputSecondaryButton(
+                            isSelected: _col == 1,
+                            buttonKey: "task",
+                            icon: Icons.check,
+                            onPressed: () {
+                              neuronInputBloc.add(
+                                  const NeuronInputSetTypeEvent("task"));
+                              toggle(1);
+                              setState(() {
+                                payloadBody = buildTaskInput();
+                              });
+                            },
+                            highlightColor: CaputColors.colorBlue,
+                            //showLabelWhenNotHighlighted: false,
+                            //label: "Task",
                           ),
-                        ),
+                          const SizedBox(width: 8),
+                          CaputSecondaryButton(
+                            isSelected: _col == 2,
+                            buttonKey: "date",
+                            icon: Icons.calendar_today_rounded,
+                            onPressed: () {
+                              neuronInputBloc.add(
+                                  const NeuronInputSetTypeEvent("date"));
+                              toggle(2);
+                              setState(() {
+                                payloadBody = buildDateInput();
+                              });
+                            },
+                            highlightColor: CaputColors.colorBlue,
+                            //showLabelWhenNotHighlighted: false,
+                            //label: "Date",
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    const Divider(
+                      height: 1,
+                    ),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeInOutSine,
+                      constraints: BoxConstraints(maxHeight: _height),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: SingleChildScrollView(child: payloadBody),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -184,207 +180,108 @@ class PayloadInputState extends State<PayloadInput> with TickerProviderStateMixi
         ),
       ),
     );
-  
   }
 
-  _save(){
-    widget.onPayloadChanged(_payload);
-  }
+  void toggle(int column) {
+    NeuronInputBloc neuronInputBloc = context.read<NeuronInputBloc>();
 
-  _toogle(int col){
+    double newHeight = 0;
+    int newColumn = 0;
+
+    if (_col == 0) {
+      newHeight = 300;
+      newColumn = column;
+    } else {
+      if (_col == column) {
+        neuronInputBloc.add(const NeuronInputSetTypeEvent("note"));
+
+        if (_height == 0) {
+          newHeight = 300;
+        } else {
+          newHeight = 0;
+          newColumn = 0;
+        }
+      } else {
+        newHeight = 300;
+        newColumn = column;
+      }
+    }
 
     setState(() {
-
-      if(_col == 0){
-        _height = 300;
-        _col = col;
-      } else if(_col == col){
-          _payload = Note("", "note", "", 1);
-          _save();
-        if(_height == 0){
-          _height = 300;
-        } else {
-          _height = 0;
-          _col = 0;
-        } 
-      } else {
-        _col = col;
-      }
+      _height = newHeight;
+      _col = newColumn;
     });
-
   }
 
-  bool _isTask(Payload payload){
-    return payload is Task;
-  }
+  Widget buildTaskInput() {
+    NeuronInputBloc neuronInputBloc = context.read<NeuronInputBloc>();
 
-  Widget _buildTaskInput(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 8),
-          
-          PayloadDateTimeInput(
-            onTimeChanged:(time) {
-              log(time.toString());
-              if(_isTask(_payload)){
-                var task = _payload as Task;
-                task.deadlineTs = time;
-                _payload = task;
-                _save();
-              }
-            },
-          ),
-          
-          /*
-          const Divider(),
-          const Padding(
-            padding: EdgeInsets.all(0.0),
-            child: Text(
-              "Body: ",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: CaputColors.colorBlue
-              ),
-            ),
-          ),
-          const Divider(),
-          const Padding(
-            padding: EdgeInsets.all(0.0),
-            child: Text(
-              "Tags: ",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: CaputColors.colorBlue
-              ),
-            ),
-          ),
-          const Divider(),
-          const Padding(
-            padding: EdgeInsets.all(0.0),
-            child: Text(
-              "Priorität: ",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: CaputColors.colorBlue
-              ),
-            ),
-          ),
-          */
-          const SizedBox(height: 4)
-          
+        PayloadDateTimeInput(
+          onTimeChanged: (time) {
+            log(time.toString());
+            neuronInputBloc.add(NeuronInputSetDateEvent(time));
+          },
+        ),
+        const SizedBox(height: 4)
       ],
     );
   }
 
-  bool _isDate(Payload payload){
-    return payload is Date;
-  }
+  Widget buildDateInput() {
+    NeuronInputBloc neuronInputBloc = context.read<NeuronInputBloc>();
 
-  Widget _buildDateInput(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 8),
-          
-          PayloadDateTimeInput(
-            onTimeChanged:(time) {
-              log(time.toString());
-              if(_isDate(_payload)){
-                var date = _payload as Date;
-                date.dateTs = time;
-                _payload = date;
-                _save();
-              }
-            },
-          ),
-          
-          /*
-          const Divider(),
-          const Padding(
-            padding: EdgeInsets.all(0.0),
-            child: Text(
-              "Body: ",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: CaputColors.colorBlue
-              ),
-            ),
-          ),
-          
-          const Divider(),
-          const Padding(
-            padding: EdgeInsets.all(0.0),
-            child: Text(
-              "Tags: ",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: CaputColors.colorBlue
-              ),
-            ),
-          ),
-          const Divider(),
-          const Padding(
-            padding: EdgeInsets.all(0.0),
-            child: Text(
-              "Priorität: ",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: CaputColors.colorBlue
-              ),
-            ),
-          ),
-          */
-          const SizedBox(height: 4)
+        PayloadDateTimeInput(
+          onTimeChanged: (time) {
+            log(time.toString());
+            neuronInputBloc.add(NeuronInputSetDateEvent(time));
+          },
+        ),
+        const SizedBox(height: 4)
       ],
     );
   }
-
 }
 
-class PayloadInputButton extends StatelessWidget{
-
+class PayloadInputButton extends StatelessWidget {
   final IconData icon;
   final Function()? onPressed;
   final bool isHighlighted;
 
-  const PayloadInputButton(this.isHighlighted, this.icon, this.onPressed, {super.key});
+  const PayloadInputButton(this.isHighlighted, this.icon, this.onPressed,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
-
     var borderTheme = Theme.of(context).inputDecorationTheme;
-    
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-      
       child: Container(
         decoration: BoxDecoration(
-          
           borderRadius: BorderRadius.circular(12),
-
           image: const DecorationImage(
-            image: AssetImage("assets/images/static_noise.jpeg"),
-            fit: BoxFit.cover,
-            opacity: 0.1
-          ),
-          
+              image: AssetImage("assets/images/static_noise.jpeg"),
+              fit: BoxFit.cover,
+              opacity: 0.1),
           border: Border.all(
-              color: isHighlighted ? CaputColors.colorBlue : borderTheme.border!.borderSide.color,
-              width: borderTheme.border!.borderSide.width,
+            color: isHighlighted
+                ? CaputColors.colorBlue
+                : borderTheme.border!.borderSide.color,
+            width: borderTheme.border!.borderSide.width,
           ),
-
         ),
         child: InkWell(
-            splashColor: Colors.grey[600],
-            highlightColor: Colors.grey[400],
-            onTap: onPressed,
+          splashColor: Colors.grey[600],
+          highlightColor: Colors.grey[400],
+          onTap: onPressed,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Icon(
@@ -397,199 +294,199 @@ class PayloadInputButton extends StatelessWidget{
       ),
     );
   }
-
 }
 
-class PayloadDateTimeInput extends StatefulWidget {
+enum Toggle { none, date, time }
 
+class PayloadDateTimeInput extends StatefulWidget {
   final Function(DateTime?) onTimeChanged;
 
-  const PayloadDateTimeInput({ required this.onTimeChanged, Key? key }) : super(key: key);
+  const PayloadDateTimeInput({required this.onTimeChanged, Key? key})
+      : super(key: key);
 
   @override
   _PayloadDateTimeInputState createState() => _PayloadDateTimeInputState();
 }
 
 class _PayloadDateTimeInputState extends State<PayloadDateTimeInput> {
-
-  final List<int> _num = [];
+  final List<Toggle> _toggles = [];
   double _height = 0;
+
   DateTime? _time;
+  DateTime? _previousTime;
 
-  _toggle(int num){
-
-    int last = _num.isEmpty ? 0 : _num.last;
+  toggle(Toggle toggle) {
+    //Bestimmung des zuletzt angewählten Elementes
+    Toggle last = _toggles.isEmpty ? Toggle.none : _toggles.last;
 
     setState(() {
-      if(_num.contains(num)){
-        if(_height == 0){
+      if (_toggles.contains(toggle)) {
+        //wenn item schon ausgewählt ist
+        if (_height == 0) {
+          //exande, falls noch nicht
           _height = 150;
         } else {
-          if(num == last){
-            _num.remove(num);
-          }else{
-            _num.remove(num);
-            _num.add(num);
+          if (toggle == last) {
+            //wenn aktueller Toggle letzter ist (doppel Tap), dann entferne ihn und setze Datum zurück
+            _toggles.remove(toggle);
+            if (toggle == Toggle.date) {
+              updateDate(DateTime.now());
+            } else if (toggle == Toggle.time) {
+              DateTime currentDate = DateTime.now()
+                  .add(Duration(minutes: 5 - (DateTime.now().minute % 5)));
+              updateTime(currentDate);
+            }
+          } else {
+            //wenn nicht letzter, setze ihn auf letzten
+            _toggles.remove(toggle);
+            _toggles.add(toggle);
           }
-          if(_num.isEmpty){
+
+          if (_toggles.isEmpty) {
+            //wenn nichts ausgewählt: setze Zeit auf null
             _time = null;
             widget.onTimeChanged(_time);
             _height = 0;
           }
         }
       } else {
-        if(_height == 0){
+        //wenn item noch nicht ausgewählt
+        if (_height == 0) {
+          //expande, falls noch nicht
           _height = 150;
         }
-        _num.add(num);
+
+        //wähle aus
+        _toggles.add(toggle);
+        if (toggle == Toggle.date) {
+          DateTime currentDate = DateTime.now();
+          DateTime dateWithZeroTime = DateTime(
+              currentDate.year, currentDate.month, currentDate.day, 0, 0, 0, 0);
+          //updateDate(dateWithZeroTime);
+          updateTime(dateWithZeroTime);
+        } else if (toggle == Toggle.time) {
+          DateTime currentDate = DateTime.now()
+              .add(Duration(minutes: 5 - (DateTime.now().minute % 5)));
+          updateTime(currentDate);
+        }
       }
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
+  updateTime(DateTime time) {
+    log("update time");
+    _time ??= DateTime.now();
+    _time = DateTime.utc(
+        _time!.year, _time!.month, _time!.day, time.hour, time.minute);
 
-    int showNum = _num.isEmpty ? 1 : _num.last;
-
-    DateTime initialDateTime = DateTime.now().add(Duration(minutes: 5 - (DateTime.now().minute % 5)));
-
-    return Column(
-      children: [
-        Row(
-          children: [
-            
-            Expanded(
-              child: CaputSecondaryButton(
-                label: "Datum",
-                icon: Icons.calendar_month, 
-                onPressed: (){
-                  _toggle(1);
-                }, 
-                isHighlighted: _num.contains(1), 
-                highlightColor: CaputColors.colorBlue
-              ),
-            ),
-            const SizedBox(width: 8),
-            
-            Expanded(
-              child: CaputSecondaryButton(
-                label: "Uhrzeit",
-                icon: Icons.timer, 
-                onPressed: (){
-                  _toggle(2);
-                }, 
-                isHighlighted: _num.contains(2), 
-                highlightColor: CaputColors.colorBlue
-              ),
-            ),
-          ],
-        ),
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeInOutSine,
-          constraints: BoxConstraints(maxHeight: _height),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                AnimatedCrossFade(
-                  duration:  const Duration(milliseconds: 200),
-                  firstChild: SizedBox(
-                    height: 150,
-                    child: CupertinoDatePicker(
-                      mode: CupertinoDatePickerMode.date,
-                      initialDateTime: DateTime.now(),
-                      use24hFormat: true,
-                      onDateTimeChanged: (time){
-                        _time ??= DateTime.now();
-                        _time = DateTime.utc(time.year, time.month, time.day, _time!.hour, _time!.minute);
-                        widget.onTimeChanged(_time!);
-                      }
-                    ),
-                  ),
-                  secondChild: SizedBox(
-                    height: 150,
-                    child: CupertinoDatePicker(
-                      mode: CupertinoDatePickerMode.time,
-                      minuteInterval: 5,
-                      initialDateTime: initialDateTime,
-                      use24hFormat: true,
-                      onDateTimeChanged: (time){
-                        _time ??= DateTime.now();
-                        _time = DateTime.utc(_time!.year, _time!.month, _time!.day, time.hour, time.minute);
-                        widget.onTimeChanged(_time!);
-                      }
-                    ),
-                  ),
-                  crossFadeState: showNum == 1 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );   
+    if (_time != _previousTime) {
+      _previousTime = _time; // Aktualisiere das vorherige Datum
+      widget.onTimeChanged(_time!);
+    }
   }
 
-}
+  updateDate(DateTime date) {
+    log("update date");
+    _time ??= DateTime.now();
+    _time = DateTime.utc(
+        date.year, date.month, date.day, _time!.hour, _time!.minute);
+    widget.onTimeChanged(_time!);
 
-class PayloadDateTimeSelector extends StatelessWidget{
-
-  final IconData icon;
-  final Function(String) onPressed;
-  final String label;
-  final bool isHighlighted;
-
-  const PayloadDateTimeSelector(this.label, this.icon, this.onPressed, this.isHighlighted, {super.key});
+    if (_time != _previousTime) {
+      // Überprüfe, ob sich das Datum geändert hat
+      _previousTime = _time; // Aktualisiere das vorherige Datum
+      widget.onTimeChanged(_time!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    int showNum = 0;
+    if (_toggles.isNotEmpty) {
+      showNum = _toggles.last == Toggle.date ? 1 : 0;
+    }
 
-    var borderTheme = Theme.of(context).inputDecorationTheme;
+    DateTime initialDateTime =
+        DateTime.now().add(Duration(minutes: 5 - (DateTime.now().minute % 5)));
 
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-    
-            image: const DecorationImage(
-              image: AssetImage("assets/images/static_noise.jpeg"),
-              fit: BoxFit.cover,
-              opacity: 0.1
-            ),
-            
-            border: Border.all(
-                color: isHighlighted ? CaputColors.colorBlue : borderTheme.border!.borderSide.color,
-                width: borderTheme.border!.borderSide.width,
-            ),
-    
+    return BlocListener<NeuronInputBloc, NeuronInputState>(
+      listener: (context, state) {
+        if (state is NeuronInputClean) {
+          setState(() {
+            _toggles.removeRange(0, _toggles.length);
+            _height = 0;
+          });
+        }
+      },
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: CaputSecondaryButton(
+                  isSelected: _toggles.contains(Toggle.date),
+                  buttonKey: "date",
+                  label: "Datum",
+                  icon: Icons.calendar_month,
+                  onPressed: () {
+                    toggle(Toggle.date);
+                  },
+                  highlightColor: CaputColors.colorBlue),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: CaputSecondaryButton(
+                  isSelected: _toggles.contains(Toggle.time),
+                  buttonKey: "time",
+                  label: "Uhrzeit",
+                  icon: Icons.timer,
+                  onPressed: () {
+                    toggle(Toggle.time);
+                  },
+                  highlightColor: CaputColors.colorBlue),
+              ),
+            ],
           ),
-          child: InkWell(
-              splashColor: Colors.grey[600],
-              highlightColor: Colors.grey[400],
-              onTap: () {
-                onPressed(label);
-              },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeInOutSine,
+            constraints: BoxConstraints(maxHeight: _height),
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
-                  Icon(
-                    icon,
-                    size: 24.0,
-                    color: CaputColors.colorBlue,
+                  AnimatedCrossFade(
+                    duration: const Duration(milliseconds: 200),
+                    firstChild: SizedBox(
+                      height: 150,
+                      child: CupertinoDatePicker(
+                          mode: CupertinoDatePickerMode.date,
+                          initialDateTime: DateTime.now(),
+                          use24hFormat: true,
+                          onDateTimeChanged: (time) {
+                            updateDate(time);
+                          }),
+                    ),
+                    secondChild: SizedBox(
+                      height: 150,
+                      child: CupertinoDatePicker(
+                          mode: CupertinoDatePickerMode.time,
+                          minuteInterval: 5,
+                          initialDateTime: initialDateTime,
+                          use24hFormat: true,
+                          onDateTimeChanged: (time) {
+                            updateTime(time);
+                          }),
+                    ),
+                    crossFadeState: showNum == 1
+                        ? CrossFadeState.showFirst
+                        : CrossFadeState.showSecond,
                   ),
-                  const SizedBox(width: 8,),
-                  Text(label, style: const TextStyle(color: CaputColors.colorBlue),)
                 ],
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
-

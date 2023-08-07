@@ -1,4 +1,4 @@
-import 'package:Caput/infrastructure/v1%20(hive)/theme_repository_sp.dart';
+import 'package:Caput/infrastructure/repositories/theme_repository_sp.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

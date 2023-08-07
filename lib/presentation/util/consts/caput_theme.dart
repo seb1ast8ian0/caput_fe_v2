@@ -67,7 +67,7 @@ class CaputTheme{
     //für Tag Widget!
     chipTheme: ChipThemeData(
       backgroundColor: CaputColors.colorLightGrey.withOpacity(0.2),
-      labelStyle: TextStyle(
+      labelStyle: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w400,
         color: Colors.black45,
@@ -103,9 +103,9 @@ class CaputTheme{
     ),
 
     //für Tag Widget!
-    chipTheme: ChipThemeData(
+    chipTheme: const ChipThemeData(
       backgroundColor: Colors.white10,
-      labelStyle: TextStyle(
+      labelStyle:  TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w400,
         color: Colors.white70,
@@ -138,7 +138,7 @@ class CaputTheme{
     appBarTheme: AppBarTheme(
       backgroundColor: dark,
     ),
-    scaffoldBackgroundColor:dark,
+    scaffoldBackgroundColor: dark,
     inputDecorationTheme: InputDecorationTheme(
       fillColor:Colors.white10,
       hintStyle: const TextStyle(
