@@ -48,6 +48,7 @@ class CaputSecondaryButton extends StatelessWidget implements CaputSelectableBut
       borderRadius: BorderRadius.circular(8),
       child: InkWell(
         onTap: (){
+          this.onPressed();
           onPressed();
         },
         borderRadius: BorderRadius.circular(8),

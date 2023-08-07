@@ -1,10 +1,12 @@
 part of 'neuron_input_bloc.dart';
 
 abstract class NeuronInputEvent extends Equatable {
+
   const NeuronInputEvent();
 
   @override
   List<Object> get props => [];
+  
 }
 
 class NeuronInputAddNeuronEvent extends NeuronInputEvent{

@@ -61,7 +61,6 @@ class NeuronInputBloc extends Bloc<NeuronInputEvent, NeuronInputState> {
 
     on<NeuronInputAddNeuronEvent>((event, emit) async {
 
-
       emit(NeuronInputLoading());
 
       String userId = "e70b1b88-0b56-4ddf-9319-82480e3c5db7";

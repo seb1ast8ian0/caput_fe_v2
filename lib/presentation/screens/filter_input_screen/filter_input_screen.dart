@@ -1,11 +1,11 @@
 import 'dart:developer';
 
+import 'package:Caput/domain/bloc/filter_input/filter_input_bloc.dart';
 import 'package:Caput/domain/bloc/tags/tags_bloc.dart';
 import 'package:Caput/domain/bloc/tags_search/tags_search_bloc.dart';
+import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
-import 'package:Caput/presentation/screens/test_screen.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
-import 'package:Caput/presentation/widgets/features/neuron/tag/tag_search_bar.dart';
 import 'package:Caput/presentation/widgets/util/input/buttons/caput_secondary_button.dart';
 import 'package:Caput/presentation/widgets/util/input/caput_input_wrapper.dart';
 import 'package:Caput/presentation/widgets/util/input/caput_select.dart';
@@ -15,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 void showFilterInput(BuildContext context) {
+
   showModalBottomSheet(
       enableDrag: true,
       isScrollControlled: true,
@@ -36,9 +37,11 @@ void showFilterInput(BuildContext context) {
       builder: (BuildContext context) {
         return const FilterInputScreen();
       });
+
 }
 
 class FilterInputScreen extends StatefulWidget {
+
   const FilterInputScreen({super.key});
 
   @override
@@ -51,10 +54,14 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
   ValueNotifier<String> filterSearchText = ValueNotifier<String>("");
 
   Widget buildSubmitButton() {
+
+    FilterInputBloc filterInputBloc = context.read<FilterInputBloc>();
+
     return Expanded(
       child: RawMaterialButton(
         onPressed: () {
-          showZeitNotifier.value = !showZeitNotifier.value;
+          filterInputBloc.add(FilterInputAddFilterEvent());
+          Navigator.pop(context);
         },
         elevation: 0,
         highlightElevation: 0,
@@ -70,9 +77,17 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
         ),
       ),
     );
+  
   }
 
   Widget buildHeaderRow() {
+
+    FilterInputBloc filterInputBloc = context.read<FilterInputBloc>();
+
+    String filterCaption = "Neuer Filter";
+    
+    filterInputBloc.add(FilterInputSetTextEvent(filterCaption));
+
     return Row(
       children: [
         Expanded(
@@ -100,7 +115,12 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
               ),
               Expanded(
                 child: TextField(
-                  controller: TextEditingController(text: "Neuer Filter"),
+                  onChanged: (text) {
+                    filterInputBloc.add(FilterInputSetTextEvent(text));
+                  },
+                  controller: TextEditingController(
+                    text: filterCaption,
+                  ),
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 0),
                     focusedBorder: InputBorder.none,
@@ -135,6 +155,7 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
   Widget buildTagInput() {
 
     TagsSearchBloc tagsSearchBloc = context.read<TagsSearchBloc>();
+    FilterInputBloc filterInputBloc = context.read<FilterInputBloc>();
 
     return CaputInputWrapper(
 
@@ -159,7 +180,7 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
               builder: (context, value, child) {
                 return FilterBarTagInput(
                   onTagSelected: (tags) {
-                    log(tags.toString());
+                    filterInputBloc.add(FilterInputSetTagsEvent(tags));
                   },
                   searchString: value,
                 );
@@ -171,8 +192,7 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
               gap: 8,
               isSingleSelect: true,
               onSelectionChanged: (buttons) {
-                log(buttons.toString());
-
+                //log(buttons.toString());
               },
               buttons: [
                 CaputSecondaryButton(
@@ -181,7 +201,9 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
                   label: "oder",
                   icon: CupertinoIcons.arrow_up_left_arrow_down_right,
                   onPressed: () {
-                    log("eins");
+                    filterInputBloc.add(
+                      FilterInputSetTagsOperatorEvent(LogicalOperator.or)
+                    );
                   },
                   highlightColor: CaputColors.colorBlue),
                 CaputSecondaryButton(
@@ -190,7 +212,9 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
                   label: "und",
                   icon: CupertinoIcons.arrow_down_right_arrow_up_left,
                   onPressed: () {
-                    log("zwei");
+                    filterInputBloc.add(
+                      FilterInputSetTagsOperatorEvent(LogicalOperator.and)
+                    );
                   },
                   highlightColor: CaputColors.colorBlue),
               ],
@@ -200,6 +224,9 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
   }
 
   Widget buildTypeInput() {
+
+    FilterInputBloc filterInputBloc = context.read<FilterInputBloc>();
+
     return CaputInputWrapper(
       isEnabled: true,
       label: "Types",
@@ -212,9 +239,25 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
             gap: 8,
             isSingleSelect: false,
             onSelectionChanged: (buttons) {
+
               bool containsTaskOrDate = buttons.any((button) =>
                   button.buttonKey == "task" || button.buttonKey == "date");
               showZeitNotifier.value = containsTaskOrDate;
+
+              List<NeuronType> types = [];
+
+              types = buttons.map((button){
+                if(button.buttonKey == "note"){
+                  return NeuronType.note;
+                } else if(button.buttonKey == "task"){
+                  return NeuronType.task;
+                } else {
+                  return NeuronType.date;
+                }
+              }).toList();
+
+              filterInputBloc.add(FilterInputSetTypesEvent(types));
+
             },
             buttons: [
               CaputSecondaryButton(
@@ -249,6 +292,9 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
   }
 
   Widget buildTimeInput() {
+
+    FilterInputBloc filterInputBloc = context.read<FilterInputBloc>();
+
     return ValueListenableBuilder<bool>(
       valueListenable: showZeitNotifier,
       builder: (context, value, child) {
@@ -263,7 +309,24 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: CaputSelectableButtonWidget(
-                    onSelectionChanged: (value) => log("message"),
+                    onSelectionChanged: (buttons) {
+
+                      String buttonKey = buttons[0].buttonKey;
+                      DateOption option = DateOption.all;
+
+                      if(buttonKey == "today"){
+                        option = DateOption.today;
+                      } else if(buttonKey == "tomorrow"){
+                        option = DateOption.tomorrow;
+                      } else if(buttonKey == "week"){
+                        option = DateOption.oneWeek;
+                      } else if(buttonKey == "month") {
+                        option = DateOption.oneMonth;
+                      }
+                    
+                      filterInputBloc.add(FilterInputSetTimeEvent(option));
+
+                    },
                     isSingleSelect: true,
                     gap: 8,
                     buttons: [
@@ -370,24 +433,28 @@ class FilterBarTagInput extends StatefulWidget {
 
   @override
   State<FilterBarTagInput> createState() => _FilterBarTagInputState();
+
 }
 
 class _FilterBarTagInputState extends State<FilterBarTagInput> {
 
-  TagsList tagsList = Get.find();
-
   late Set<Tag> selectedTags;
   late List<Tag> tags;
-
   late List<Tag> filteredTags;
 
   @override
   void initState() {
 
+    log("init");
+
+    TagsList tagsList = Get.find();
+    tags = List.of(tagsList.getTags());
+
     selectedTags = Set();
     filteredTags = [];
-    tags = tagsList.getTags();
 
+    log(tags.toString());
+    
     super.initState();
 
   }
@@ -398,8 +465,6 @@ class _FilterBarTagInputState extends State<FilterBarTagInput> {
     return BlocListener<TagsSearchBloc, TagsSearchState>(
       listener: (context, state) {
         if(state is TagsSearchShowState){
-
-          log(state.query);
 
           List<Tag> cleanTags = List.of(state.rankedTags);
           cleanTags.removeWhere((tag) => selectedTags.contains(tag));

@@ -1,3 +1,4 @@
+import 'package:Caput/domain/bloc/filter_input/filter_input_bloc.dart';
 import 'package:Caput/domain/bloc/neuron_input/neuron_input_bloc.dart';
 import 'package:Caput/domain/bloc/neurons/neurons_bloc.dart';
 import 'package:Caput/domain/bloc/tags/tags_bloc.dart';
@@ -24,6 +25,7 @@ class _CaputState extends State<Caput> {
   late TagsBloc tagsBloc;
   late TagsSearchBloc tagsSearchBloc;
   late NeuronInputBloc neuronsInputBloc;
+  late FilterInputBloc filterInputBloc;
 
 
   @override
@@ -38,6 +40,8 @@ class _CaputState extends State<Caput> {
     neuronsInputBloc = NeuronInputBloc(
       neuronsBloc: neuronsBloc
     );
+
+    filterInputBloc = FilterInputBloc();
     
     super.initState();
 
@@ -64,6 +68,7 @@ class _CaputState extends State<Caput> {
         BlocProvider<TagsBloc>.value(value: tagsBloc),
         BlocProvider<TagsSearchBloc>.value(value: tagsSearchBloc),
         BlocProvider<NeuronInputBloc>.value(value: neuronsInputBloc),
+        BlocProvider<FilterInputBloc>.value(value: filterInputBloc)
       ],
       child: MaterialApp(
         title: 'Caput',
