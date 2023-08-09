@@ -2,12 +2,12 @@
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/material.dart';
 
-class CaputButtonSecondary extends StatelessWidget{
+class CaputIconButton extends StatelessWidget{
 
   final IconData icon;
   final Function()? onPressed;
 
-  const CaputButtonSecondary({super.key, required this.icon, required this.onPressed});
+  const CaputIconButton({super.key, required this.icon, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-import 'package:Caput/presentation/widgets/features/textfield/caput_text_field.dart';
+import 'package:Caput/presentation/widgets/util/input/textfield/caput_text_editing_controller.dart';
 import 'package:flutter/cupertino.dart';
 
 class NeuronText extends StatefulWidget {
@@ -15,11 +15,19 @@ class NeuronText extends StatefulWidget {
 
 class _NeuronTextState extends State<NeuronText> {
 
+  late List<Word> words;
+  late List<TextSpan> textSpans;
+
+  @override
+  void initState() {
+
+    words = CaputTextEditingController.parseText(widget.text);
+    textSpans = CaputTextEditingController.getTextSpans(words);
+    
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    final words = CaputTextFieldController.parseText(widget.text);
-    final textSpans = CaputTextFieldController.getTextSpans(words);
 
     return RichText(
       overflow: widget.overflow,

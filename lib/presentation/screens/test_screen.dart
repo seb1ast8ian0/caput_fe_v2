@@ -1,14 +1,9 @@
 import 'dart:developer';
 
-import 'package:Caput/presentation/screens/filter_input_screen/filter_input_screen.dart';
-import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
-import 'package:Caput/presentation/widgets/features/textfield/caput_text_field.dart';
-import 'package:Caput/presentation/widgets/util/input/buttons/caput_button_secondary.dart';
 import 'package:Caput/presentation/widgets/util/input/buttons/caput_secondary_button.dart';
 import 'package:Caput/presentation/widgets/util/input/caput_select.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 
 class TestScreen extends StatefulWidget {

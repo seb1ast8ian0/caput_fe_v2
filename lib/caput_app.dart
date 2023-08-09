@@ -1,10 +1,9 @@
-import 'package:Caput/domain/bloc/filter_input/filter_input_bloc.dart';
-import 'package:Caput/domain/bloc/neuron_input/neuron_input_bloc.dart';
-import 'package:Caput/domain/bloc/neurons/neurons_bloc.dart';
-import 'package:Caput/domain/bloc/tags/tags_bloc.dart';
-import 'package:Caput/domain/bloc/tags_search/tags_search_bloc.dart';
+import 'package:Caput/domain/bloc/input_blocs/filter_input/filter_input_bloc.dart';
+import 'package:Caput/domain/bloc/input_blocs/neuron_input/neuron_input_bloc.dart';
+import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_bloc.dart';
+import 'package:Caput/domain/bloc/data_blocs/tags/tags_bloc.dart';
+import 'package:Caput/domain/bloc/search_blocs/tags_search/tags_search_bloc.dart';
 import 'package:Caput/presentation/screens/main_screen/main_screen.dart';
-import 'package:Caput/presentation/screens/test_screen.dart';
 import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:Caput/presentation/util/consts/caput_theme.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +23,8 @@ class _CaputState extends State<Caput> {
   late NeuronsBloc neuronsBloc;
   late TagsBloc tagsBloc;
   late TagsSearchBloc tagsSearchBloc;
-  late NeuronInputBloc neuronsInputBloc;
+  late NeuronInputBloc neuronInputBloc;
   late FilterInputBloc filterInputBloc;
-
 
   @override
   void initState() {
@@ -37,7 +35,7 @@ class _CaputState extends State<Caput> {
     tagsBloc.add(InitTagsEvent());
 
     tagsSearchBloc = TagsSearchBloc();
-    neuronsInputBloc = NeuronInputBloc(
+    neuronInputBloc = NeuronInputBloc(
       neuronsBloc: neuronsBloc
     );
 
@@ -53,6 +51,8 @@ class _CaputState extends State<Caput> {
     neuronsBloc.close();
     tagsBloc.close();
     neuronsBloc.close();
+    neuronInputBloc.close();
+    filterInputBloc.close();
 
     super.dispose();
   }
@@ -67,7 +67,7 @@ class _CaputState extends State<Caput> {
         BlocProvider<NeuronsBloc>.value(value: neuronsBloc),
         BlocProvider<TagsBloc>.value(value: tagsBloc),
         BlocProvider<TagsSearchBloc>.value(value: tagsSearchBloc),
-        BlocProvider<NeuronInputBloc>.value(value: neuronsInputBloc),
+        BlocProvider<NeuronInputBloc>.value(value: neuronInputBloc),
         BlocProvider<FilterInputBloc>.value(value: filterInputBloc)
       ],
       child: MaterialApp(

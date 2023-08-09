@@ -1,5 +1,4 @@
 import 'package:Caput/domain/entities/neuron/payload.dart';
-import 'package:flutter/material.dart';
 
 class Date extends Payload {
 

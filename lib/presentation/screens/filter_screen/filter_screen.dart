@@ -1,15 +1,13 @@
 import 'dart:developer';
 import 'dart:ui';
 
-import 'package:Caput/domain/bloc/neuron_input/neuron_input_bloc.dart';
-import 'package:Caput/domain/bloc/neurons/neurons_bloc.dart';
-import 'package:Caput/domain/bloc/neurons/neurons_event.dart';
-import 'package:Caput/domain/bloc/neurons/neurons_state.dart';
-import 'package:Caput/domain/bloc/tags/tags_bloc.dart';
+import 'package:Caput/domain/bloc/input_blocs/neuron_input/neuron_input_bloc.dart';
+import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_bloc.dart';
+import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_event.dart';
+import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_state.dart';
 import 'package:Caput/domain/entities/filter/filter.dart';
-import 'package:Caput/domain/entities/neuron/payloads/note.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
-import 'package:Caput/main.dart';
+import 'package:Caput/domain/get_models/tags_list.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen_footer.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen_header.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
@@ -47,8 +45,8 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
     neuronsBloc = context.read<NeuronsBloc>();
     neuronInputBloc = context.read<NeuronInputBloc>();
     
-    TagsList tl = Get.find();
-    List<Tag> tags = tl.getTags();
+    TagsList tagsList = Get.find();
+    List<Tag> tags = tagsList.getTags();
 
     log(tags.toString());
 

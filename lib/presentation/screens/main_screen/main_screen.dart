@@ -6,7 +6,6 @@ import 'package:Caput/presentation/screens/filter_screen/filter_screen.dart';
 import 'package:Caput/presentation/screens/main_screen/main_screen_footer.dart';
 import 'package:Caput/presentation/screens/main_screen/main_screen_header.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget{

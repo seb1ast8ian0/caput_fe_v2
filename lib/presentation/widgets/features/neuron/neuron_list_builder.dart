@@ -1,5 +1,5 @@
-import 'package:Caput/domain/bloc/neurons/neurons_bloc.dart';
-import 'package:Caput/domain/bloc/neurons/neurons_event.dart';
+import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_bloc.dart';
+import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_event.dart';
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:Caput/presentation/widgets/features/neuron/neuron_widget.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +52,8 @@ class _NeuronBuilderState extends State<NeuronBuilder> {
               },
               background: Container(
                   color: Colors.red,
-                  child: Align(
+                  child: const Align(
+                    alignment: Alignment.centerRight,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children:[
@@ -73,7 +74,6 @@ class _NeuronBuilderState extends State<NeuronBuilder> {
                         ),
                       ],
                     ),
-                    alignment: Alignment.centerRight,
                   ),
                 ),
               child: NeuronWidget(

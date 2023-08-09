@@ -1,7 +1,6 @@
 import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:flutter/foundation.dart';
-import 'package:uuid/uuid.dart';
 
 @immutable
 abstract class NeuronEvent {}

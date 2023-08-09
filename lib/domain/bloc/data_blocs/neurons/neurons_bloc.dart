@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:Caput/domain/bloc/neurons/neurons_event.dart';
-import 'package:Caput/domain/bloc/neurons/neurons_state.dart';
-import 'package:Caput/domain/bloc/tags/tags_bloc.dart';
+import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_event.dart';
+import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_state.dart';
+import 'package:Caput/domain/bloc/data_blocs/tags/tags_bloc.dart';
 import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:Caput/domain/entities/neuron/payload.dart';
@@ -10,16 +10,13 @@ import 'package:Caput/domain/entities/neuron/payloads/date.dart';
 import 'package:Caput/domain/entities/neuron/payloads/note.dart';
 import 'package:Caput/domain/entities/neuron/payloads/task.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
-import 'package:Caput/domain/get/database_controller.dart';
+import 'package:Caput/domain/get_models/database_controller.dart';
 import 'package:Caput/domain/util/query_builder.dart';
 import 'package:Caput/infrastructure/database/neuron_database.dart';
 import 'package:bloc/bloc.dart';
 import 'package:drift/drift.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:uuid/uuid.dart';
-import 'package:path/path.dart' as p;
 
 class NeuronsBloc extends Bloc<NeuronEvent, NeuronState> {
 
@@ -102,7 +99,7 @@ class NeuronsBloc extends Bloc<NeuronEvent, NeuronState> {
       
       try {
 
-        final neurons;
+        final List<Neuron> neurons;
 
         if (event.filter == null) {
           neurons = await getNeurons();

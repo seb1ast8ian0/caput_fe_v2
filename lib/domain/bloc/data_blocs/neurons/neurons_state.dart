@@ -1,6 +1,5 @@
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 enum NeuronStateStatus{ loading, success, failure }
 

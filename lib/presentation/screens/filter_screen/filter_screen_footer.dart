@@ -1,9 +1,7 @@
-import 'dart:developer';
 import 'dart:math';
-import 'dart:ui';
 
-import 'package:Caput/domain/bloc/neuron_input/neuron_input_bloc.dart';
-import 'package:Caput/domain/bloc/neurons/neurons_bloc.dart';
+import 'package:Caput/domain/bloc/input_blocs/neuron_input/neuron_input_bloc.dart';
+import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_bloc.dart';
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:Caput/domain/entities/neuron/payload.dart';
 import 'package:Caput/domain/entities/neuron/payloads/date.dart';
@@ -11,8 +9,9 @@ import 'package:Caput/domain/entities/neuron/payloads/note.dart';
 import 'package:Caput/domain/entities/neuron/payloads/task.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
-import 'package:Caput/presentation/widgets/features/textfield/caput_text_field.dart';
-import 'package:Caput/presentation/widgets/util/input/buttons/caput_button_secondary.dart';
+import 'package:Caput/presentation/widgets/util/input/textfield/caput_text_editing_controller.dart';
+import 'package:Caput/presentation/widgets/util/input/textfield/caput_text_field.dart';
+import 'package:Caput/presentation/widgets/util/input/buttons/caput_icon_button.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,16 +27,17 @@ class FilterBottomInput extends StatefulWidget {
 }
 
 class _FilterBottomInputState extends State<FilterBottomInput> {
+
   late Animation<double> rotationAnimation;
   late Animation<Color?> borderColorAnimation;
-  late CaputTextFieldController textController;
+  late CaputTextEditingController textController;
   late NeuronsBloc neuronsBloc;
   late NeuronInputBloc neuronInputBloc;
 
   @override
   void initState() {
     super.initState();
-    textController = CaputTextFieldController();
+    textController = CaputTextEditingController();
     neuronsBloc = context.read<NeuronsBloc>();
     neuronInputBloc = context.read<NeuronInputBloc>();
   }
@@ -78,8 +78,10 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
 
     final buttonUp = RotationTransition(
       turns: rotationAnimation,
-      child: CaputButtonSecondary(
-          icon: Icons.keyboard_arrow_up, onPressed: handleButtonUp),
+      child: CaputIconButton(
+        icon: Icons.keyboard_arrow_up, 
+        onPressed: handleButtonUp
+      ),
     );
 
     final textField = Expanded(
@@ -98,7 +100,7 @@ class _FilterBottomInputState extends State<FilterBottomInput> {
     );
 
     void handleButtonAdd() {}
-    final buttonAdd = CaputButtonSecondary(
+    final buttonAdd = CaputIconButton(
         icon: Icons.add, onPressed: () => handleButtonAdd());
 
     void handleButtonGo() {

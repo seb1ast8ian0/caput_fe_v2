@@ -2,9 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-abstract class CaputSelectableButton {
+abstract class CaputSelectableButton<E> {
   bool isSelected = false;
-  String get buttonKey;
+  E get buttonKey;
   Widget buildButton(BuildContext context, VoidCallback onPressed);
 }
 
@@ -18,7 +18,7 @@ class CaputSelectableButtonWidget extends StatefulWidget {
   final double? gap;
   final bool? expanded;
 
-  CaputSelectableButtonWidget({
+  const CaputSelectableButtonWidget({super.key, 
     this.expanded = false,
     this.gap,
     required this.buttons,
@@ -50,7 +50,9 @@ class _CaputSelectableButtonWidgetState extends State<CaputSelectableButtonWidge
                   setState(() {
                     if (widget.isSingleSelect) {
                       // Single Select
-                      widget.buttons.forEach((btn) => btn.isSelected = false); // Alle Buttons zurücksetzen
+                      for (var btn in widget.buttons) {
+                        btn.isSelected = false;
+                      } // Alle Buttons zurücksetzen
                     }
                     button.isSelected = !button.isSelected;
                     widget.onSelectionChanged(getSelectedItems());

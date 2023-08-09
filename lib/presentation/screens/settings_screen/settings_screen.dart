@@ -1,4 +1,3 @@
-import 'package:Caput/main.dart';
 import 'package:Caput/presentation/screens/settings_screen/settings_screen_header.dart';
 import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';

@@ -1,4 +1,5 @@
-import 'package:Caput/infrastructure/repositories/theme_repository_sp.dart';
+import 'package:Caput/domain/repositories/theme_repository.dart';
+import 'package:Caput/infrastructure/repositories/shared_preferences/theme_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class ThemeState extends ChangeNotifier with DiagnosticableTreeMixin{
   get themeMode => _themeMode;
 
   ThemeState(){
-    ThemeRepository repo = ThemeRepository();
+    ThemeRepository repo = ThemeRepositoryImpl();
     repo.getTheme().then((value) {
       _themeMode = value;
       notifyListeners();
@@ -18,7 +19,7 @@ class ThemeState extends ChangeNotifier with DiagnosticableTreeMixin{
 
 
   setTheme(ThemeMode themeMode) async{
-    ThemeRepository repo = ThemeRepository();
+    ThemeRepository repo = ThemeRepositoryImpl();
     repo.setTheme(themeMode);
     _themeMode = themeMode;
     notifyListeners();
@@ -29,7 +30,5 @@ class ThemeState extends ChangeNotifier with DiagnosticableTreeMixin{
     super.debugFillProperties(properties);
     properties.add(StringProperty("themeMode", _themeMode.toString()));
   }
-
-
 
 }

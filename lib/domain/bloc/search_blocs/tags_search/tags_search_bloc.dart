@@ -1,7 +1,6 @@
-import 'dart:developer';
 
-import 'package:Caput/domain/bloc/tags/tags_bloc.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
+import 'package:Caput/domain/get_models/tags_list.dart';
 import 'package:bloc/bloc.dart';
 import 'package:get/instance_manager.dart';
 import 'package:meta/meta.dart';
@@ -102,7 +101,7 @@ class TagRank{
 
   @override
   String toString() {
-    return tag.caption + '' + rank.toString();
+    return '${tag.caption}$rank';
   }
 
 }

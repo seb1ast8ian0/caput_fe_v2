@@ -1,7 +1,6 @@
-import 'dart:developer';
 import 'dart:ui';
 
-import 'package:Caput/domain/bloc/tags_search/tags_search_bloc.dart';
+import 'package:Caput/domain/bloc/search_blocs/tags_search/tags_search_bloc.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/material.dart';

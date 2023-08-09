@@ -1,13 +1,14 @@
+
 import 'package:Caput/presentation/widgets/util/input/caput_select.dart';
 import 'package:flutter/material.dart';
 
-class CaputSecondaryButton extends StatelessWidget implements CaputSelectableButton {
+class CaputSecondaryButton<E> extends StatelessWidget implements CaputSelectableButton<E> {
 
   @override
   bool isSelected;
 
   @override
-  String buttonKey;
+  E buttonKey;
 
   IconData? icon;
   Function() onPressed;
@@ -48,8 +49,8 @@ class CaputSecondaryButton extends StatelessWidget implements CaputSelectableBut
       borderRadius: BorderRadius.circular(8),
       child: InkWell(
         onTap: (){
-          this.onPressed();
           onPressed();
+          //this.onPressed();
         },
         borderRadius: BorderRadius.circular(8),
         highlightColor: Colors.transparent,
@@ -81,7 +82,6 @@ class CaputSecondaryButton extends StatelessWidget implements CaputSelectableBut
     return buildButton(context, onPressed);
 
   }
-
 
   Widget _buildLabel(Color color){
 

@@ -5,7 +5,6 @@ import 'package:Caput/presentation/util/time/time_formats.dart';
 import 'package:Caput/presentation/widgets/features/neuron/neuron_button.dart';
 import 'package:Caput/presentation/widgets/features/neuron/neuron_text.dart';
 import 'package:Caput/presentation/widgets/features/neuron/status/status_widget.dart';
-import 'package:Caput/presentation/widgets/features/neuron/tag/tag_list_widget.dart';
 import 'package:flutter/material.dart';
 
 class TaskWidget extends StatefulWidget{

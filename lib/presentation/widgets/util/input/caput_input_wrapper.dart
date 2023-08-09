@@ -1,5 +1,4 @@
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CaputInputWrapper extends StatelessWidget {

@@ -1,10 +1,8 @@
-import 'dart:developer';
 
 import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
 
 class QueryBuilder{
-
 
   static String buildQuery(Filter filter) {
 
@@ -115,7 +113,5 @@ class QueryBuilder{
     return result;
 
   }
-
-
 
 }

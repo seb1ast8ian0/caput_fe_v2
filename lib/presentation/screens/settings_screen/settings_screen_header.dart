@@ -81,7 +81,7 @@ class _SettingsAppBarState extends State<SettingsAppBar> {
     Widget appBarContent = Container(
       decoration: BoxDecoration(
         color: appBarBackgroundColor,
-        border: Border(
+        border: const Border(
           /*
           bottom: BorderSide(
             color: theme.border!.borderSide.color,

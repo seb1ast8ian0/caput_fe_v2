@@ -11,16 +11,22 @@ abstract class FilterEvent extends Equatable {
 
 class AddFilterEvent extends FilterEvent{
 
-  Filter filter;
+  final Filter filter;
 
-  AddFilterEvent(this.filter);
+  const AddFilterEvent(this.filter);
 
 }
 
 class DeleteFilterEvent extends FilterEvent{
 
-  String filterId;
+  final String filterId;
 
-  DeleteFilterEvent(this.filterId);
+  const DeleteFilterEvent(this.filterId);
+
+}
+
+class GetFiltersEvent extends FilterEvent{
+
+  const GetFiltersEvent();
 
 }

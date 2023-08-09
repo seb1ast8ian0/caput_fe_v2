@@ -1,6 +1,5 @@
 import 'package:Caput/domain/entities/neuron/payload.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
-import 'package:uuid/uuid.dart';
 
 class Neuron{
 

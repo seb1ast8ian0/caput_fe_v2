@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
+import 'package:Caput/presentation/widgets/util/input/buttons/caput_primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,9 @@ class MainNavBar extends StatelessWidget{
           ),
           const SizedBox(width: 4),
           Expanded(
-            child: RawMaterialButton(
+            child: CaputPrimaryButton(
+              label: "Alle Neuronen", 
+              color: CaputColors.colorBlue, 
               onPressed: (){
                 Filter emptyFilter = Filter(
                   filterId: "filterId", 
@@ -50,26 +53,8 @@ class MainNavBar extends StatelessWidget{
                 );
                 log("navigate to filter: ${emptyFilter.caption}");
                 Navigator.push(context, MaterialPageRoute(builder: (_) => FilterScreen(emptyFilter)));
-
-              },
-              elevation: 0,
-              highlightElevation: 0,
-              constraints: const BoxConstraints(maxHeight: 40),
-              shape:  RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12)
-              ),
-              fillColor: CaputColors.colorBlue,
-              child: const Center(
-                child: Text(
-                  "Alle Neuronen",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16
-                  ),
-                ),
-              ),
-            ),
+              }
+            )
           ),
         ],
       );

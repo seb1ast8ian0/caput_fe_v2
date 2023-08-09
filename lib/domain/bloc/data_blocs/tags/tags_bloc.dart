@@ -2,7 +2,8 @@ import 'dart:developer';
 
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
-import 'package:Caput/domain/get/database_controller.dart';
+import 'package:Caput/domain/get_models/database_controller.dart';
+import 'package:Caput/domain/get_models/tags_list.dart';
 import 'package:Caput/infrastructure/database/neuron_database.dart';
 import 'package:bloc/bloc.dart';
 import 'package:drift/drift.dart';
@@ -161,30 +162,6 @@ class TagsBloc extends Bloc<TagsEvent, TagsState> {
 
     return Tag(tagId: dbo.tagId, caption: dbo.caption, body: dbo.body, updateTs: dbo.updateTs, creationTs: dbo.creationTs, userId: dbo.userId);
 
-  }
-
-}
-
-class TagsList{
-
-  List<Tag> tags;
-
-  TagsList(this.tags);
-
-  void addTag(Tag tag){
-    tags.add(tag);
-  }
-
-  void addTags(List<Tag> t){
-    tags.addAll(t);
-  }
-
-  void deleteTag(String tagId){
-    tags.removeWhere((tag) => tag.tagId == tagId);
-  }
-
-  List<Tag> getTags(){
-    return tags;
   }
 
 }

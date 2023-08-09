@@ -1,14 +1,13 @@
-import 'dart:developer';
 
-import 'package:Caput/domain/bloc/neurons/neurons_bloc.dart';
-import 'package:Caput/domain/bloc/neurons/neurons_event.dart';
+import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_bloc.dart';
+import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_event.dart';
 import 'package:Caput/domain/entities/neuron/Neuron.dart';
 import 'package:Caput/domain/entities/neuron/payload.dart';
 import 'package:Caput/domain/entities/neuron/payloads/date.dart';
 import 'package:Caput/domain/entities/neuron/payloads/note.dart';
 import 'package:Caput/domain/entities/neuron/payloads/task.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
-import 'package:Caput/presentation/widgets/features/textfield/caput_text_field.dart';
+import 'package:Caput/presentation/widgets/util/input/textfield/caput_text_editing_controller.dart';
 import 'package:equatable/equatable.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +19,7 @@ part 'neuron_input_state.dart';
 class NeuronInputBloc extends Bloc<NeuronInputEvent, NeuronInputState> {
 
   NeuronsBloc neuronsBloc;
+  
   DateTime? date;
   String text = "";
   String type = "note";
@@ -33,8 +33,8 @@ class NeuronInputBloc extends Bloc<NeuronInputEvent, NeuronInputState> {
 
     on<NeuronInputSetTextEvent>((event, emit) {
 
-      final words = CaputTextFieldController.parseText(event.text);
-      final tags = CaputTextFieldController.getTagNames(words);
+      final words = CaputTextEditingController.parseText(event.text);
+      final tags = CaputTextEditingController.getTagNames(words);
 
       text = event.text;
       tagNames = tags;

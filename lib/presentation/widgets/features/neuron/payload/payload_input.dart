@@ -1,8 +1,6 @@
 import 'dart:developer';
-import 'dart:ui';
 
-import 'package:Caput/domain/bloc/neuron_input/neuron_input_bloc.dart';
-import 'package:Caput/presentation/screens/test_screen.dart';
+import 'package:Caput/domain/bloc/input_blocs/neuron_input/neuron_input_bloc.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/util/input/buttons/caput_secondary_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -79,6 +77,7 @@ class PayloadInputState extends State<PayloadInput>
 
   @override
   Widget build(BuildContext context) {
+
     NeuronInputBloc neuronInputBloc = context.read<NeuronInputBloc>();
 
     return BlocListener<NeuronInputBloc, NeuronInputState>(
@@ -130,15 +129,14 @@ class PayloadInputState extends State<PayloadInput>
                             icon: Icons.check,
                             onPressed: () {
                               neuronInputBloc.add(
-                                  const NeuronInputSetTypeEvent("task"));
+                                const NeuronInputSetTypeEvent("task")
+                              );
                               toggle(1);
                               setState(() {
                                 payloadBody = buildTaskInput();
                               });
                             },
                             highlightColor: CaputColors.colorBlue,
-                            //showLabelWhenNotHighlighted: false,
-                            //label: "Task",
                           ),
                           const SizedBox(width: 8),
                           CaputSecondaryButton(
@@ -146,16 +144,16 @@ class PayloadInputState extends State<PayloadInput>
                             buttonKey: "date",
                             icon: Icons.calendar_today_rounded,
                             onPressed: () {
+                              log("date");
                               neuronInputBloc.add(
-                                  const NeuronInputSetTypeEvent("date"));
+                                const NeuronInputSetTypeEvent("date")
+                              );
                               toggle(2);
                               setState(() {
                                 payloadBody = buildDateInput();
                               });
                             },
                             highlightColor: CaputColors.colorBlue,
-                            //showLabelWhenNotHighlighted: false,
-                            //label: "Date",
                           ),
                         ],
                       ),
@@ -183,15 +181,19 @@ class PayloadInputState extends State<PayloadInput>
   }
 
   void toggle(int column) {
+
     NeuronInputBloc neuronInputBloc = context.read<NeuronInputBloc>();
 
     double newHeight = 0;
     int newColumn = 0;
 
     if (_col == 0) {
+
       newHeight = 300;
       newColumn = column;
+
     } else {
+
       if (_col == column) {
         neuronInputBloc.add(const NeuronInputSetTypeEvent("note"));
 
@@ -201,16 +203,25 @@ class PayloadInputState extends State<PayloadInput>
           newHeight = 0;
           newColumn = 0;
         }
+
       } else {
         newHeight = 300;
         newColumn = column;
       }
+
     }
+
+    log("height before: $_height");
+    log("col before: $_col");
 
     setState(() {
       _height = newHeight;
       _col = newColumn;
     });
+
+    log("height after: $_height");
+    log("col after: $_col");
+
   }
 
   Widget buildTaskInput() {
@@ -248,9 +259,11 @@ class PayloadInputState extends State<PayloadInput>
       ],
     );
   }
+
 }
 
 class PayloadInputButton extends StatelessWidget {
+
   final IconData icon;
   final Function()? onPressed;
   final bool isHighlighted;

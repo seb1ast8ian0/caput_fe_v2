@@ -1,11 +1,12 @@
 import 'dart:developer';
 
-import 'package:Caput/domain/bloc/filter_input/filter_input_bloc.dart';
-import 'package:Caput/domain/bloc/tags/tags_bloc.dart';
-import 'package:Caput/domain/bloc/tags_search/tags_search_bloc.dart';
+import 'package:Caput/domain/bloc/input_blocs/filter_input/filter_input_bloc.dart';
+import 'package:Caput/domain/bloc/search_blocs/tags_search/tags_search_bloc.dart';
 import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
+import 'package:Caput/domain/get_models/tags_list.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
+import 'package:Caput/presentation/widgets/util/input/buttons/caput_primary_button.dart';
 import 'package:Caput/presentation/widgets/util/input/buttons/caput_secondary_button.dart';
 import 'package:Caput/presentation/widgets/util/input/caput_input_wrapper.dart';
 import 'package:Caput/presentation/widgets/util/input/caput_select.dart';
@@ -58,23 +59,13 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
     FilterInputBloc filterInputBloc = context.read<FilterInputBloc>();
 
     return Expanded(
-      child: RawMaterialButton(
+      child: CaputPrimaryButton(
         onPressed: () {
           filterInputBloc.add(FilterInputAddFilterEvent());
           Navigator.pop(context);
         },
-        elevation: 0,
-        highlightElevation: 0,
-        constraints: const BoxConstraints(minHeight: 40),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        fillColor: CaputColors.colorBlue,
-        child: const Center(
-          child: Text(
-            "Hinzufügen",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
-          ),
-        ),
+        color: CaputColors.colorBlue,
+        label: "Hinzufügen",
       ),
     );
   
@@ -197,7 +188,7 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
               buttons: [
                 CaputSecondaryButton(
                   isSelected: true,
-                  buttonKey: "or",
+                  buttonKey: LogicalOperator.or,
                   label: "oder",
                   icon: CupertinoIcons.arrow_up_left_arrow_down_right,
                   onPressed: () {
@@ -208,7 +199,7 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
                   highlightColor: CaputColors.colorBlue),
                 CaputSecondaryButton(
                   isSelected: false,
-                  buttonKey: "and",
+                  buttonKey: LogicalOperator.and,
                   label: "und",
                   icon: CupertinoIcons.arrow_down_right_arrow_up_left,
                   onPressed: () {
@@ -240,20 +231,14 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
             isSingleSelect: false,
             onSelectionChanged: (buttons) {
 
-              bool containsTaskOrDate = buttons.any((button) =>
-                  button.buttonKey == "task" || button.buttonKey == "date");
+              bool containsTaskOrDate = buttons.any((button) {
+                return button.buttonKey == NeuronType.task || button.buttonKey == NeuronType.date;
+              });
+
               showZeitNotifier.value = containsTaskOrDate;
 
-              List<NeuronType> types = [];
-
-              types = buttons.map((button){
-                if(button.buttonKey == "note"){
-                  return NeuronType.note;
-                } else if(button.buttonKey == "task"){
-                  return NeuronType.task;
-                } else {
-                  return NeuronType.date;
-                }
+              List<NeuronType> types = buttons.map((button){
+                return button.buttonKey as NeuronType;
               }).toList();
 
               filterInputBloc.add(FilterInputSetTypesEvent(types));
@@ -262,7 +247,7 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
             buttons: [
               CaputSecondaryButton(
                 isSelected: true,
-                buttonKey: "note",
+                buttonKey: NeuronType.note,
                 label: "Notiz",
                 icon: CupertinoIcons.doc,
                 onPressed: () {},
@@ -270,7 +255,7 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
               ),
               CaputSecondaryButton(
                 isSelected: false,
-                buttonKey: "task",
+                buttonKey: NeuronType.task,
                 label: "Aufgabe",
                 icon: Icons.check,
                 onPressed: () {},
@@ -279,7 +264,7 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
               CaputSecondaryButton(
                 isSelected: false,
                 label: "Termin",
-                buttonKey: "date",
+                buttonKey: NeuronType.date,
                 icon: Icons.calendar_today_rounded,
                 onPressed: () {},
                 highlightColor: CaputColors.colorBlue,
@@ -310,57 +295,43 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
                   scrollDirection: Axis.horizontal,
                   child: CaputSelectableButtonWidget(
                     onSelectionChanged: (buttons) {
-
-                      String buttonKey = buttons[0].buttonKey;
-                      DateOption option = DateOption.all;
-
-                      if(buttonKey == "today"){
-                        option = DateOption.today;
-                      } else if(buttonKey == "tomorrow"){
-                        option = DateOption.tomorrow;
-                      } else if(buttonKey == "week"){
-                        option = DateOption.oneWeek;
-                      } else if(buttonKey == "month") {
-                        option = DateOption.oneMonth;
-                      }
-                    
+                      DateOption option = buttons[0].buttonKey;
                       filterInputBloc.add(FilterInputSetTimeEvent(option));
-
                     },
                     isSingleSelect: true,
                     gap: 8,
                     buttons: [
                       CaputSecondaryButton(
                         isSelected: true,
-                        buttonKey: "all",
+                        buttonKey: DateOption.all,
                         label: "Alle",
                         onPressed: () {},
                         highlightColor: CaputColors.colorBlue,
                       ),
                       CaputSecondaryButton(
                         isSelected: false,
-                        buttonKey: "today",
+                        buttonKey: DateOption.today,
                         label: "Heute",
                         onPressed: () {},
                         highlightColor: CaputColors.colorBlue,
                       ),
                       CaputSecondaryButton(
                         isSelected: false,
-                        buttonKey: "tomorrow",
+                        buttonKey: DateOption.tomorrow,
                         label: "Morgen",
                         onPressed: () {},
                         highlightColor: CaputColors.colorBlue,
                       ),
                       CaputSecondaryButton(
                         isSelected: false,
-                        buttonKey: "week",
+                        buttonKey: DateOption.oneWeek,
                         label: "1 Woche",
                         onPressed: () {},
                         highlightColor: CaputColors.colorBlue,
                       ),
                       CaputSecondaryButton(
                         isSelected: false,
-                        buttonKey: "month",
+                        buttonKey: DateOption.oneMonth,
                         label: "1 Monat",
                         onPressed: () {},
                         highlightColor: CaputColors.colorBlue,
@@ -414,7 +385,6 @@ class _FilterInputScreenState extends State<FilterInputScreen> {
         ],
       ),
     );
-    ;
   }
 
 }
@@ -445,15 +415,11 @@ class _FilterBarTagInputState extends State<FilterBarTagInput> {
   @override
   void initState() {
 
-    log("init");
-
     TagsList tagsList = Get.find();
     tags = List.of(tagsList.getTags());
 
-    selectedTags = Set();
+    selectedTags = <Tag>{};
     filteredTags = [];
-
-    log(tags.toString());
     
     super.initState();
 
@@ -464,6 +430,7 @@ class _FilterBarTagInputState extends State<FilterBarTagInput> {
 
     return BlocListener<TagsSearchBloc, TagsSearchState>(
       listener: (context, state) {
+        
         if(state is TagsSearchShowState){
 
           List<Tag> cleanTags = List.of(state.rankedTags);
@@ -472,6 +439,7 @@ class _FilterBarTagInputState extends State<FilterBarTagInput> {
           setState(() {
             filteredTags = cleanTags;
           });
+          
         }
       },
       child: Container(
@@ -588,13 +556,11 @@ class FilterBarTag extends StatelessWidget implements CaputSelectableButton {
       required this.onPressed,
       super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return buildButton(context, onPressed);
-  }
+  
 
   @override
   Widget buildButton(BuildContext context, VoidCallback onPressed) {
+    
     final inputTheme = Theme.of(context).inputDecorationTheme;
     var themeColor = inputTheme.hintStyle!.color!;
     var highlightColor = CaputColors.colorBlue;
@@ -625,6 +591,12 @@ class FilterBarTag extends StatelessWidget implements CaputSelectableButton {
           ),
         ));
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return buildButton(context, onPressed);
+  }
+
 }
 
 class FilterTextField extends StatefulWidget {
