@@ -1,6 +1,6 @@
 import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_bloc.dart';
 import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_event.dart';
-import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/neuron.dart';
 import 'package:Caput/presentation/widgets/features/neuron/neuron_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

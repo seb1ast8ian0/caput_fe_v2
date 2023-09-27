@@ -21,7 +21,6 @@ class _MainAppBarState extends State<MainAppBar> {
 
     var appBarBackgroundColor = Theme.of(context).appBarTheme.backgroundColor as Color;
     
-
     return SliverAppBar(
       backgroundColor: Colors.transparent,
       centerTitle: false,
@@ -42,7 +41,7 @@ class _MainAppBarState extends State<MainAppBar> {
           FlexibleSpaceBar(
             expandedTitleScale: 1.2,
             title:  Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,4 +1,4 @@
-import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/neuron.dart';
 import 'package:Caput/domain/entities/neuron/payloads/date.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/util/time/time_formats.dart';

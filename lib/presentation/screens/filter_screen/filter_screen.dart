@@ -21,9 +21,13 @@ import 'package:uuid/uuid.dart';
 
 class FilterScreen extends StatefulWidget {
 
-  final Filter filter;
+  final String caption;
+  final String? filterId;
 
-  const FilterScreen(this.filter, {super.key});
+  const FilterScreen({
+    this.filterId,
+    required this.caption, 
+    super.key});
 
   @override
   State<FilterScreen> createState() => _FilterScreenState();
@@ -52,15 +56,9 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
 
     neuronInputBloc.add(NeuronInputCleanEvent());
 
-    Filter filter = getFilter(
-      List.from({}), //tags.first, tags.last
-      LogicalOperator.or,
-      List.from({}), //NeuronType.date
-      DateOption.all
-    );
     
     neuronsBloc.add(GetNeuronsEvent(
-      filter: filter
+      filterId: widget.filterId
     ));
 
     _scrollController = ScrollController();
@@ -87,7 +85,11 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: FilterAppBar(widget.filter.caption, _animationController),
+      appBar: FilterAppBar(
+        filterId: widget.filterId,
+        title: widget.caption, 
+        animationController: _animationController
+      ),
       body: Stack(
         children: [
           Opacity(
@@ -217,7 +219,10 @@ class _FilterScreenState extends State<FilterScreen> with SingleTickerProviderSt
   
   buildNeuronBuilder(BuildContext context, NeuronState state) {
       
-    return NeuronBuilder(neurons: state.neurons, scrollController: _scrollController);
+    return NeuronBuilder(
+      neurons: state.neurons, 
+      scrollController: _scrollController
+    );
 
   }
 

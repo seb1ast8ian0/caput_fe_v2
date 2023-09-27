@@ -4,7 +4,6 @@ import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/util/input/buttons/caput_primary_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainNavBar extends StatelessWidget{
@@ -17,7 +16,8 @@ class MainNavBar extends StatelessWidget{
     Widget buildAllNeuronsButton(){
       return Row(
         children: [
-          RawMaterialButton(
+          const SizedBox(width: 4),
+          /*RawMaterialButton(
             onPressed: (){},
             constraints: const BoxConstraints(
               minHeight: 40,
@@ -34,28 +34,21 @@ class MainNavBar extends StatelessWidget{
               color: Colors.white,
             )
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 8),*/
           Expanded(
             child: CaputPrimaryButton(
               label: "Alle Neuronen", 
               color: CaputColors.colorBlue, 
               onPressed: (){
-                Filter emptyFilter = Filter(
-                  filterId: "filterId", 
-                  userId: "userId", 
-                  caption: "Alle Neuronen", 
-                  creationTs: DateTime.now(), 
-                  updateTs: DateTime.now(), 
-                  tags: [], 
-                  tagsOperator: LogicalOperator.or,
-                  neuronTypes: [], 
-                  dateOption: DateOption.all
-                );
-                log("navigate to filter: ${emptyFilter.caption}");
-                Navigator.push(context, MaterialPageRoute(builder: (_) => FilterScreen(emptyFilter)));
+                log("navigate to filter: Alle Neuronen");
+                Navigator.push(context, MaterialPageRoute(builder: (_) => 
+                const FilterScreen(
+                  caption: "Alle Neuronen",
+                )));
               }
             )
           ),
+          const SizedBox(width: 4)
         ],
       );
     }

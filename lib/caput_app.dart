@@ -1,8 +1,12 @@
+import 'dart:developer';
+
+import 'package:Caput/domain/bloc/data_blocs/filter/filters_bloc.dart';
 import 'package:Caput/domain/bloc/input_blocs/filter_input/filter_input_bloc.dart';
 import 'package:Caput/domain/bloc/input_blocs/neuron_input/neuron_input_bloc.dart';
 import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_bloc.dart';
 import 'package:Caput/domain/bloc/data_blocs/tags/tags_bloc.dart';
 import 'package:Caput/domain/bloc/search_blocs/tags_search/tags_search_bloc.dart';
+import 'package:Caput/infrastructure/repositories/drift/filter_repository.dart';
 import 'package:Caput/presentation/screens/main_screen/main_screen.dart';
 import 'package:Caput/presentation/states/theme_state.dart';
 import 'package:Caput/presentation/util/consts/caput_theme.dart';
@@ -21,6 +25,7 @@ class Caput extends StatefulWidget{
 class _CaputState extends State<Caput> {
 
   late NeuronsBloc neuronsBloc;
+  late FiltersBloc filtersBloc;
   late TagsBloc tagsBloc;
   late TagsSearchBloc tagsSearchBloc;
   late NeuronInputBloc neuronInputBloc;
@@ -30,6 +35,7 @@ class _CaputState extends State<Caput> {
   void initState() {
 
     neuronsBloc = NeuronsBloc();
+    filtersBloc = FiltersBloc();
 
     tagsBloc = TagsBloc();
     tagsBloc.add(InitTagsEvent());
@@ -39,9 +45,25 @@ class _CaputState extends State<Caput> {
       neuronsBloc: neuronsBloc
     );
 
-    filterInputBloc = FilterInputBloc();
-    
+    filterInputBloc = FilterInputBloc(
+      filtersBloc: filtersBloc
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      testFilterRepo();
+    });
+
     super.initState();
+
+  }
+
+  void testFilterRepo() async {
+
+    final filterRepo = FilterRepositoryDrift();
+
+    final result = await filterRepo.getFilters();
+
+    log("${result.length} filter length");
 
   }
 
@@ -49,10 +71,12 @@ class _CaputState extends State<Caput> {
   void dispose() {
     
     neuronsBloc.close();
+    filtersBloc.close();
     tagsBloc.close();
     neuronsBloc.close();
     neuronInputBloc.close();
     filterInputBloc.close();
+
 
     super.dispose();
   }
@@ -61,10 +85,10 @@ class _CaputState extends State<Caput> {
   @override
   Widget build(BuildContext context){
 
-
     return MultiBlocProvider(
       providers: [
         BlocProvider<NeuronsBloc>.value(value: neuronsBloc),
+        BlocProvider<FiltersBloc>.value(value: filtersBloc),
         BlocProvider<TagsBloc>.value(value: tagsBloc),
         BlocProvider<TagsSearchBloc>.value(value: tagsSearchBloc),
         BlocProvider<NeuronInputBloc>.value(value: neuronInputBloc),

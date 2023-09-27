@@ -787,6 +787,379 @@ class NeuronTagRelationsCompanion extends UpdateCompanion<NeuronTagRelation> {
   }
 }
 
+class $FilterTagRelationsTable extends FilterTagRelations
+    with TableInfo<$FilterTagRelationsTable, FilterTagRelation> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FilterTagRelationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _filterIdMeta =
+      const VerificationMeta('filterId');
+  @override
+  late final GeneratedColumn<String> filterId = GeneratedColumn<String>(
+      'filter_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
+  @override
+  late final GeneratedColumn<String> tagId = GeneratedColumn<String>(
+      'tag_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [filterId, tagId];
+  @override
+  String get aliasedName => _alias ?? 'filter_tag_relations';
+  @override
+  String get actualTableName => 'filter_tag_relations';
+  @override
+  VerificationContext validateIntegrity(Insertable<FilterTagRelation> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('filter_id')) {
+      context.handle(_filterIdMeta,
+          filterId.isAcceptableOrUnknown(data['filter_id']!, _filterIdMeta));
+    } else if (isInserting) {
+      context.missing(_filterIdMeta);
+    }
+    if (data.containsKey('tag_id')) {
+      context.handle(
+          _tagIdMeta, tagId.isAcceptableOrUnknown(data['tag_id']!, _tagIdMeta));
+    } else if (isInserting) {
+      context.missing(_tagIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  FilterTagRelation map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FilterTagRelation(
+      filterId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}filter_id'])!,
+      tagId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tag_id'])!,
+    );
+  }
+
+  @override
+  $FilterTagRelationsTable createAlias(String alias) {
+    return $FilterTagRelationsTable(attachedDatabase, alias);
+  }
+}
+
+class FilterTagRelation extends DataClass
+    implements Insertable<FilterTagRelation> {
+  final String filterId;
+  final String tagId;
+  const FilterTagRelation({required this.filterId, required this.tagId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['filter_id'] = Variable<String>(filterId);
+    map['tag_id'] = Variable<String>(tagId);
+    return map;
+  }
+
+  FilterTagRelationsCompanion toCompanion(bool nullToAbsent) {
+    return FilterTagRelationsCompanion(
+      filterId: Value(filterId),
+      tagId: Value(tagId),
+    );
+  }
+
+  factory FilterTagRelation.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FilterTagRelation(
+      filterId: serializer.fromJson<String>(json['filterId']),
+      tagId: serializer.fromJson<String>(json['tagId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'filterId': serializer.toJson<String>(filterId),
+      'tagId': serializer.toJson<String>(tagId),
+    };
+  }
+
+  FilterTagRelation copyWith({String? filterId, String? tagId}) =>
+      FilterTagRelation(
+        filterId: filterId ?? this.filterId,
+        tagId: tagId ?? this.tagId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('FilterTagRelation(')
+          ..write('filterId: $filterId, ')
+          ..write('tagId: $tagId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(filterId, tagId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FilterTagRelation &&
+          other.filterId == this.filterId &&
+          other.tagId == this.tagId);
+}
+
+class FilterTagRelationsCompanion extends UpdateCompanion<FilterTagRelation> {
+  final Value<String> filterId;
+  final Value<String> tagId;
+  final Value<int> rowid;
+  const FilterTagRelationsCompanion({
+    this.filterId = const Value.absent(),
+    this.tagId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FilterTagRelationsCompanion.insert({
+    required String filterId,
+    required String tagId,
+    this.rowid = const Value.absent(),
+  })  : filterId = Value(filterId),
+        tagId = Value(tagId);
+  static Insertable<FilterTagRelation> custom({
+    Expression<String>? filterId,
+    Expression<String>? tagId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (filterId != null) 'filter_id': filterId,
+      if (tagId != null) 'tag_id': tagId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FilterTagRelationsCompanion copyWith(
+      {Value<String>? filterId, Value<String>? tagId, Value<int>? rowid}) {
+    return FilterTagRelationsCompanion(
+      filterId: filterId ?? this.filterId,
+      tagId: tagId ?? this.tagId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (filterId.present) {
+      map['filter_id'] = Variable<String>(filterId.value);
+    }
+    if (tagId.present) {
+      map['tag_id'] = Variable<String>(tagId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FilterTagRelationsCompanion(')
+          ..write('filterId: $filterId, ')
+          ..write('tagId: $tagId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $FilterNeuronRelationsTable extends FilterNeuronRelations
+    with TableInfo<$FilterNeuronRelationsTable, FilterNeuronRelation> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FilterNeuronRelationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _filterIdMeta =
+      const VerificationMeta('filterId');
+  @override
+  late final GeneratedColumn<String> filterId = GeneratedColumn<String>(
+      'filter_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _neuronIdMeta =
+      const VerificationMeta('neuronId');
+  @override
+  late final GeneratedColumn<String> neuronId = GeneratedColumn<String>(
+      'neuron_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [filterId, neuronId];
+  @override
+  String get aliasedName => _alias ?? 'filter_neuron_relations';
+  @override
+  String get actualTableName => 'filter_neuron_relations';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<FilterNeuronRelation> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('filter_id')) {
+      context.handle(_filterIdMeta,
+          filterId.isAcceptableOrUnknown(data['filter_id']!, _filterIdMeta));
+    } else if (isInserting) {
+      context.missing(_filterIdMeta);
+    }
+    if (data.containsKey('neuron_id')) {
+      context.handle(_neuronIdMeta,
+          neuronId.isAcceptableOrUnknown(data['neuron_id']!, _neuronIdMeta));
+    } else if (isInserting) {
+      context.missing(_neuronIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  FilterNeuronRelation map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FilterNeuronRelation(
+      filterId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}filter_id'])!,
+      neuronId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}neuron_id'])!,
+    );
+  }
+
+  @override
+  $FilterNeuronRelationsTable createAlias(String alias) {
+    return $FilterNeuronRelationsTable(attachedDatabase, alias);
+  }
+}
+
+class FilterNeuronRelation extends DataClass
+    implements Insertable<FilterNeuronRelation> {
+  final String filterId;
+  final String neuronId;
+  const FilterNeuronRelation({required this.filterId, required this.neuronId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['filter_id'] = Variable<String>(filterId);
+    map['neuron_id'] = Variable<String>(neuronId);
+    return map;
+  }
+
+  FilterNeuronRelationsCompanion toCompanion(bool nullToAbsent) {
+    return FilterNeuronRelationsCompanion(
+      filterId: Value(filterId),
+      neuronId: Value(neuronId),
+    );
+  }
+
+  factory FilterNeuronRelation.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FilterNeuronRelation(
+      filterId: serializer.fromJson<String>(json['filterId']),
+      neuronId: serializer.fromJson<String>(json['neuronId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'filterId': serializer.toJson<String>(filterId),
+      'neuronId': serializer.toJson<String>(neuronId),
+    };
+  }
+
+  FilterNeuronRelation copyWith({String? filterId, String? neuronId}) =>
+      FilterNeuronRelation(
+        filterId: filterId ?? this.filterId,
+        neuronId: neuronId ?? this.neuronId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('FilterNeuronRelation(')
+          ..write('filterId: $filterId, ')
+          ..write('neuronId: $neuronId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(filterId, neuronId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FilterNeuronRelation &&
+          other.filterId == this.filterId &&
+          other.neuronId == this.neuronId);
+}
+
+class FilterNeuronRelationsCompanion
+    extends UpdateCompanion<FilterNeuronRelation> {
+  final Value<String> filterId;
+  final Value<String> neuronId;
+  final Value<int> rowid;
+  const FilterNeuronRelationsCompanion({
+    this.filterId = const Value.absent(),
+    this.neuronId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FilterNeuronRelationsCompanion.insert({
+    required String filterId,
+    required String neuronId,
+    this.rowid = const Value.absent(),
+  })  : filterId = Value(filterId),
+        neuronId = Value(neuronId);
+  static Insertable<FilterNeuronRelation> custom({
+    Expression<String>? filterId,
+    Expression<String>? neuronId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (filterId != null) 'filter_id': filterId,
+      if (neuronId != null) 'neuron_id': neuronId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FilterNeuronRelationsCompanion copyWith(
+      {Value<String>? filterId, Value<String>? neuronId, Value<int>? rowid}) {
+    return FilterNeuronRelationsCompanion(
+      filterId: filterId ?? this.filterId,
+      neuronId: neuronId ?? this.neuronId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (filterId.present) {
+      map['filter_id'] = Variable<String>(filterId.value);
+    }
+    if (neuronId.present) {
+      map['neuron_id'] = Variable<String>(neuronId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FilterNeuronRelationsCompanion(')
+          ..write('filterId: $filterId, ')
+          ..write('neuronId: $neuronId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $PayloadsTable extends Payloads
     with TableInfo<$PayloadsTable, PayloadDBO> {
   @override
@@ -1606,20 +1979,470 @@ class DatesCompanion extends UpdateCompanion<DateDBO> {
   }
 }
 
+class $FiltersTable extends Filters with TableInfo<$FiltersTable, FilterDBO> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FiltersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _filterIdMeta =
+      const VerificationMeta('filterId');
+  @override
+  late final GeneratedColumn<String> filterId = GeneratedColumn<String>(
+      'filter_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _captionMeta =
+      const VerificationMeta('caption');
+  @override
+  late final GeneratedColumn<String> caption = GeneratedColumn<String>(
+      'caption', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _creationTsMeta =
+      const VerificationMeta('creationTs');
+  @override
+  late final GeneratedColumn<DateTime> creationTs = GeneratedColumn<DateTime>(
+      'creation_ts', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updateTsMeta =
+      const VerificationMeta('updateTs');
+  @override
+  late final GeneratedColumn<DateTime> updateTs = GeneratedColumn<DateTime>(
+      'update_ts', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _tagsOperatorMeta =
+      const VerificationMeta('tagsOperator');
+  @override
+  late final GeneratedColumnWithTypeConverter<LogicalOperator, String>
+      tagsOperator = GeneratedColumn<String>(
+              'tags_operator', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<LogicalOperator>($FiltersTable.$convertertagsOperator);
+  static const VerificationMeta _dateOptionMeta =
+      const VerificationMeta('dateOption');
+  @override
+  late final GeneratedColumnWithTypeConverter<DateOption, String> dateOption =
+      GeneratedColumn<String>('date_option', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<DateOption>($FiltersTable.$converterdateOption);
+  static const VerificationMeta _neuronTypesMeta =
+      const VerificationMeta('neuronTypes');
+  @override
+  late final GeneratedColumnWithTypeConverter<List<NeuronType>, String>
+      neuronTypes = GeneratedColumn<String>('neuron_types', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<List<NeuronType>>($FiltersTable.$converterneuronTypes);
+  @override
+  List<GeneratedColumn> get $columns => [
+        filterId,
+        userId,
+        caption,
+        creationTs,
+        updateTs,
+        tagsOperator,
+        dateOption,
+        neuronTypes
+      ];
+  @override
+  String get aliasedName => _alias ?? 'filters';
+  @override
+  String get actualTableName => 'filters';
+  @override
+  VerificationContext validateIntegrity(Insertable<FilterDBO> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('filter_id')) {
+      context.handle(_filterIdMeta,
+          filterId.isAcceptableOrUnknown(data['filter_id']!, _filterIdMeta));
+    } else if (isInserting) {
+      context.missing(_filterIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('caption')) {
+      context.handle(_captionMeta,
+          caption.isAcceptableOrUnknown(data['caption']!, _captionMeta));
+    } else if (isInserting) {
+      context.missing(_captionMeta);
+    }
+    if (data.containsKey('creation_ts')) {
+      context.handle(
+          _creationTsMeta,
+          creationTs.isAcceptableOrUnknown(
+              data['creation_ts']!, _creationTsMeta));
+    } else if (isInserting) {
+      context.missing(_creationTsMeta);
+    }
+    if (data.containsKey('update_ts')) {
+      context.handle(_updateTsMeta,
+          updateTs.isAcceptableOrUnknown(data['update_ts']!, _updateTsMeta));
+    } else if (isInserting) {
+      context.missing(_updateTsMeta);
+    }
+    context.handle(_tagsOperatorMeta, const VerificationResult.success());
+    context.handle(_dateOptionMeta, const VerificationResult.success());
+    context.handle(_neuronTypesMeta, const VerificationResult.success());
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {filterId};
+  @override
+  FilterDBO map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FilterDBO(
+      filterId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}filter_id'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id'])!,
+      caption: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}caption'])!,
+      creationTs: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}creation_ts'])!,
+      updateTs: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}update_ts'])!,
+      tagsOperator: $FiltersTable.$convertertagsOperator.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}tags_operator'])!),
+      dateOption: $FiltersTable.$converterdateOption.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}date_option'])!),
+      neuronTypes: $FiltersTable.$converterneuronTypes.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}neuron_types'])!),
+    );
+  }
+
+  @override
+  $FiltersTable createAlias(String alias) {
+    return $FiltersTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<LogicalOperator, String, String>
+      $convertertagsOperator =
+      const EnumNameConverter<LogicalOperator>(LogicalOperator.values);
+  static JsonTypeConverter2<DateOption, String, String> $converterdateOption =
+      const EnumNameConverter<DateOption>(DateOption.values);
+  static TypeConverter<List<NeuronType>, String> $converterneuronTypes =
+      NeuronTypesConverter();
+}
+
+class FilterDBO extends DataClass implements Insertable<FilterDBO> {
+  final String filterId;
+  final String userId;
+  final String caption;
+  final DateTime creationTs;
+  final DateTime updateTs;
+  final LogicalOperator tagsOperator;
+  final DateOption dateOption;
+  final List<NeuronType> neuronTypes;
+  const FilterDBO(
+      {required this.filterId,
+      required this.userId,
+      required this.caption,
+      required this.creationTs,
+      required this.updateTs,
+      required this.tagsOperator,
+      required this.dateOption,
+      required this.neuronTypes});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['filter_id'] = Variable<String>(filterId);
+    map['user_id'] = Variable<String>(userId);
+    map['caption'] = Variable<String>(caption);
+    map['creation_ts'] = Variable<DateTime>(creationTs);
+    map['update_ts'] = Variable<DateTime>(updateTs);
+    {
+      final converter = $FiltersTable.$convertertagsOperator;
+      map['tags_operator'] = Variable<String>(converter.toSql(tagsOperator));
+    }
+    {
+      final converter = $FiltersTable.$converterdateOption;
+      map['date_option'] = Variable<String>(converter.toSql(dateOption));
+    }
+    {
+      final converter = $FiltersTable.$converterneuronTypes;
+      map['neuron_types'] = Variable<String>(converter.toSql(neuronTypes));
+    }
+    return map;
+  }
+
+  FiltersCompanion toCompanion(bool nullToAbsent) {
+    return FiltersCompanion(
+      filterId: Value(filterId),
+      userId: Value(userId),
+      caption: Value(caption),
+      creationTs: Value(creationTs),
+      updateTs: Value(updateTs),
+      tagsOperator: Value(tagsOperator),
+      dateOption: Value(dateOption),
+      neuronTypes: Value(neuronTypes),
+    );
+  }
+
+  factory FilterDBO.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FilterDBO(
+      filterId: serializer.fromJson<String>(json['filterId']),
+      userId: serializer.fromJson<String>(json['userId']),
+      caption: serializer.fromJson<String>(json['caption']),
+      creationTs: serializer.fromJson<DateTime>(json['creationTs']),
+      updateTs: serializer.fromJson<DateTime>(json['updateTs']),
+      tagsOperator: $FiltersTable.$convertertagsOperator
+          .fromJson(serializer.fromJson<String>(json['tagsOperator'])),
+      dateOption: $FiltersTable.$converterdateOption
+          .fromJson(serializer.fromJson<String>(json['dateOption'])),
+      neuronTypes: serializer.fromJson<List<NeuronType>>(json['neuronTypes']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'filterId': serializer.toJson<String>(filterId),
+      'userId': serializer.toJson<String>(userId),
+      'caption': serializer.toJson<String>(caption),
+      'creationTs': serializer.toJson<DateTime>(creationTs),
+      'updateTs': serializer.toJson<DateTime>(updateTs),
+      'tagsOperator': serializer.toJson<String>(
+          $FiltersTable.$convertertagsOperator.toJson(tagsOperator)),
+      'dateOption': serializer.toJson<String>(
+          $FiltersTable.$converterdateOption.toJson(dateOption)),
+      'neuronTypes': serializer.toJson<List<NeuronType>>(neuronTypes),
+    };
+  }
+
+  FilterDBO copyWith(
+          {String? filterId,
+          String? userId,
+          String? caption,
+          DateTime? creationTs,
+          DateTime? updateTs,
+          LogicalOperator? tagsOperator,
+          DateOption? dateOption,
+          List<NeuronType>? neuronTypes}) =>
+      FilterDBO(
+        filterId: filterId ?? this.filterId,
+        userId: userId ?? this.userId,
+        caption: caption ?? this.caption,
+        creationTs: creationTs ?? this.creationTs,
+        updateTs: updateTs ?? this.updateTs,
+        tagsOperator: tagsOperator ?? this.tagsOperator,
+        dateOption: dateOption ?? this.dateOption,
+        neuronTypes: neuronTypes ?? this.neuronTypes,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('FilterDBO(')
+          ..write('filterId: $filterId, ')
+          ..write('userId: $userId, ')
+          ..write('caption: $caption, ')
+          ..write('creationTs: $creationTs, ')
+          ..write('updateTs: $updateTs, ')
+          ..write('tagsOperator: $tagsOperator, ')
+          ..write('dateOption: $dateOption, ')
+          ..write('neuronTypes: $neuronTypes')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(filterId, userId, caption, creationTs,
+      updateTs, tagsOperator, dateOption, neuronTypes);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FilterDBO &&
+          other.filterId == this.filterId &&
+          other.userId == this.userId &&
+          other.caption == this.caption &&
+          other.creationTs == this.creationTs &&
+          other.updateTs == this.updateTs &&
+          other.tagsOperator == this.tagsOperator &&
+          other.dateOption == this.dateOption &&
+          other.neuronTypes == this.neuronTypes);
+}
+
+class FiltersCompanion extends UpdateCompanion<FilterDBO> {
+  final Value<String> filterId;
+  final Value<String> userId;
+  final Value<String> caption;
+  final Value<DateTime> creationTs;
+  final Value<DateTime> updateTs;
+  final Value<LogicalOperator> tagsOperator;
+  final Value<DateOption> dateOption;
+  final Value<List<NeuronType>> neuronTypes;
+  final Value<int> rowid;
+  const FiltersCompanion({
+    this.filterId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.caption = const Value.absent(),
+    this.creationTs = const Value.absent(),
+    this.updateTs = const Value.absent(),
+    this.tagsOperator = const Value.absent(),
+    this.dateOption = const Value.absent(),
+    this.neuronTypes = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FiltersCompanion.insert({
+    required String filterId,
+    required String userId,
+    required String caption,
+    required DateTime creationTs,
+    required DateTime updateTs,
+    required LogicalOperator tagsOperator,
+    required DateOption dateOption,
+    required List<NeuronType> neuronTypes,
+    this.rowid = const Value.absent(),
+  })  : filterId = Value(filterId),
+        userId = Value(userId),
+        caption = Value(caption),
+        creationTs = Value(creationTs),
+        updateTs = Value(updateTs),
+        tagsOperator = Value(tagsOperator),
+        dateOption = Value(dateOption),
+        neuronTypes = Value(neuronTypes);
+  static Insertable<FilterDBO> custom({
+    Expression<String>? filterId,
+    Expression<String>? userId,
+    Expression<String>? caption,
+    Expression<DateTime>? creationTs,
+    Expression<DateTime>? updateTs,
+    Expression<String>? tagsOperator,
+    Expression<String>? dateOption,
+    Expression<String>? neuronTypes,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (filterId != null) 'filter_id': filterId,
+      if (userId != null) 'user_id': userId,
+      if (caption != null) 'caption': caption,
+      if (creationTs != null) 'creation_ts': creationTs,
+      if (updateTs != null) 'update_ts': updateTs,
+      if (tagsOperator != null) 'tags_operator': tagsOperator,
+      if (dateOption != null) 'date_option': dateOption,
+      if (neuronTypes != null) 'neuron_types': neuronTypes,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FiltersCompanion copyWith(
+      {Value<String>? filterId,
+      Value<String>? userId,
+      Value<String>? caption,
+      Value<DateTime>? creationTs,
+      Value<DateTime>? updateTs,
+      Value<LogicalOperator>? tagsOperator,
+      Value<DateOption>? dateOption,
+      Value<List<NeuronType>>? neuronTypes,
+      Value<int>? rowid}) {
+    return FiltersCompanion(
+      filterId: filterId ?? this.filterId,
+      userId: userId ?? this.userId,
+      caption: caption ?? this.caption,
+      creationTs: creationTs ?? this.creationTs,
+      updateTs: updateTs ?? this.updateTs,
+      tagsOperator: tagsOperator ?? this.tagsOperator,
+      dateOption: dateOption ?? this.dateOption,
+      neuronTypes: neuronTypes ?? this.neuronTypes,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (filterId.present) {
+      map['filter_id'] = Variable<String>(filterId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (caption.present) {
+      map['caption'] = Variable<String>(caption.value);
+    }
+    if (creationTs.present) {
+      map['creation_ts'] = Variable<DateTime>(creationTs.value);
+    }
+    if (updateTs.present) {
+      map['update_ts'] = Variable<DateTime>(updateTs.value);
+    }
+    if (tagsOperator.present) {
+      final converter = $FiltersTable.$convertertagsOperator;
+      map['tags_operator'] =
+          Variable<String>(converter.toSql(tagsOperator.value));
+    }
+    if (dateOption.present) {
+      final converter = $FiltersTable.$converterdateOption;
+      map['date_option'] = Variable<String>(converter.toSql(dateOption.value));
+    }
+    if (neuronTypes.present) {
+      final converter = $FiltersTable.$converterneuronTypes;
+      map['neuron_types'] =
+          Variable<String>(converter.toSql(neuronTypes.value));
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FiltersCompanion(')
+          ..write('filterId: $filterId, ')
+          ..write('userId: $userId, ')
+          ..write('caption: $caption, ')
+          ..write('creationTs: $creationTs, ')
+          ..write('updateTs: $updateTs, ')
+          ..write('tagsOperator: $tagsOperator, ')
+          ..write('dateOption: $dateOption, ')
+          ..write('neuronTypes: $neuronTypes, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$CaputDatabase extends GeneratedDatabase {
   _$CaputDatabase(QueryExecutor e) : super(e);
   late final $NeuronsTable neurons = $NeuronsTable(this);
   late final $TagsTable tags = $TagsTable(this);
   late final $NeuronTagRelationsTable neuronTagRelations =
       $NeuronTagRelationsTable(this);
+  late final $FilterTagRelationsTable filterTagRelations =
+      $FilterTagRelationsTable(this);
+  late final $FilterNeuronRelationsTable filterNeuronRelations =
+      $FilterNeuronRelationsTable(this);
   late final $PayloadsTable payloads = $PayloadsTable(this);
   late final $TasksTable tasks = $TasksTable(this);
   late final $NotesTable notes = $NotesTable(this);
   late final $DatesTable dates = $DatesTable(this);
+  late final $FiltersTable filters = $FiltersTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [neurons, tags, neuronTagRelations, payloads, tasks, notes, dates];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        neurons,
+        tags,
+        neuronTagRelations,
+        filterTagRelations,
+        filterNeuronRelations,
+        payloads,
+        tasks,
+        notes,
+        dates,
+        filters
+      ];
 }

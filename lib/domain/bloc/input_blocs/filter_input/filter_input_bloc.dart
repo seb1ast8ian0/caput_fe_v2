@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:Caput/domain/bloc/data_blocs/filter/filters_bloc.dart';
 import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
 import 'package:bloc/bloc.dart';
@@ -11,13 +12,15 @@ part 'filter_input_state.dart';
 
 class FilterInputBloc extends Bloc<FilterInputEvent, FilterInputState> {
 
+  late FiltersBloc filtersBloc;
+
   String caption = "New Filter";
   List<Tag> tags = [];
   LogicalOperator tagsOperator = LogicalOperator.or;
   List<NeuronType> neuronTypes = [];
   DateOption dateOption = DateOption.all;
 
-  FilterInputBloc() : super(FilterInputInitial()) {
+  FilterInputBloc({required this.filtersBloc}) : super(FilterInputInitial()) {
     
     on<FilterInputEvent>((event, emit) {
 
@@ -67,7 +70,7 @@ class FilterInputBloc extends Bloc<FilterInputEvent, FilterInputState> {
 
       DateTime now = DateTime.now();
       
-      Filter emptyFilter = Filter(
+      Filter filter = Filter(
         filterId: const Uuid().v4(), 
         userId: "e70b1b88-0b56-4ddf-9319-82480e3c5db7", 
         caption: caption, 
@@ -79,12 +82,14 @@ class FilterInputBloc extends Bloc<FilterInputEvent, FilterInputState> {
         dateOption: dateOption
       );
 
-      log("${emptyFilter.caption} \n" 
-          "${emptyFilter.tags} \n"
-          "${emptyFilter.tagsOperator} \n"
-          "${emptyFilter.neuronTypes} \n"
-          "${emptyFilter.dateOption} "
+      log("${filter.caption} \n" 
+          "${filter.tags} \n"
+          "${filter.tagsOperator} \n"
+          "${filter.neuronTypes} \n"
+          "${filter.dateOption} "
         );
+
+      filtersBloc.add(AddFilterEvent(filter));
 
     });
     

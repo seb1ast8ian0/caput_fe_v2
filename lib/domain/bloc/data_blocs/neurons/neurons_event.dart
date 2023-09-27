@@ -1,5 +1,5 @@
 import 'package:Caput/domain/entities/filter/filter.dart';
-import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/neuron.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
@@ -24,10 +24,10 @@ class DeleteNeuronEvent extends NeuronEvent {
 
 class GetNeuronsEvent extends NeuronEvent {
 
-  final Filter? filter;
+  final String? filterId;
 
   GetNeuronsEvent({
-    required this.filter
+    required this.filterId
   });
 
 }

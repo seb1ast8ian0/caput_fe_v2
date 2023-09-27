@@ -1,7 +1,9 @@
 
+import 'dart:developer';
+
 import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_bloc.dart';
 import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_event.dart';
-import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/neuron.dart';
 import 'package:Caput/domain/entities/neuron/payload.dart';
 import 'package:Caput/domain/entities/neuron/payloads/date.dart';
 import 'package:Caput/domain/entities/neuron/payloads/note.dart';
@@ -88,6 +90,8 @@ class NeuronInputBloc extends Bloc<NeuronInputEvent, NeuronInputState> {
 
       try{
 
+        log(neuron.payload.toString());
+
         neuronsBloc.add(AddNeuronEvent(neuron, tagNames));
         emit(NeuronInputSuccess(neuron));
 
@@ -96,7 +100,6 @@ class NeuronInputBloc extends Bloc<NeuronInputEvent, NeuronInputState> {
         emit(NeuronInputError(error.toString()));
 
       }
-
 
     });
 

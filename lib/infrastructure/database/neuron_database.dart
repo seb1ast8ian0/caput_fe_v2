@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:Caput/domain/entities/filter/filter.dart';
+import 'package:Caput/infrastructure/database/converters/neuron_types_converter.dart';
+import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
@@ -12,30 +15,36 @@ part 'neuron_database.g.dart';
   Neurons, 
   Tags, 
   NeuronTagRelations, 
+  FilterTagRelations,
+  FilterNeuronRelations,
   Payloads,
   Tasks,
   Notes,
-  Dates
+  Dates,
+  Filters
 ])
 class CaputDatabase extends _$CaputDatabase {
-  CaputDatabase() : super(_openConnection());
+
+  CaputDatabase(QueryExecutor e) : super(e);
 
   @override
   int get schemaVersion => 1;
 
+  static LazyDatabase openConnection() {
+  // the LazyDatabase util lets us find the right location for the file async.
+    return LazyDatabase(() async {
+      // put the database file, called db.sqlite here, into the documents folder
+      // for your app.
+      
+      final dbFolder = await getApplicationDocumentsDirectory();
+      final file = File(p.join(dbFolder.path, 'db.sqlite'));
+      return NativeDatabase.createInBackground(file);
+    });
+    }
+
 }
 
-LazyDatabase _openConnection() {
-  // the LazyDatabase util lets us find the right location for the file async.
-  return LazyDatabase(() async {
-    // put the database file, called db.sqlite here, into the documents folder
-    // for your app.
-    
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db.sqlite'));
-    return NativeDatabase.createInBackground(file);
-  });
-}
+
 
 @DataClassName('NeuronDBO')
 class Neurons extends Table {
@@ -117,3 +126,35 @@ class NeuronTagRelations extends Table {
   TextColumn get tagId => text()();
 
 }
+
+class FilterTagRelations extends Table {
+
+  TextColumn get filterId => text()();
+  TextColumn get tagId => text()();
+
+}
+
+class FilterNeuronRelations extends Table {
+
+  TextColumn get filterId => text()();
+  TextColumn get neuronId => text()();
+
+}
+
+@DataClassName('FilterDBO')
+class Filters extends Table {
+
+  TextColumn get filterId => text()();
+  TextColumn get userId => text()();
+  TextColumn get caption => text()();
+  DateTimeColumn get creationTs => dateTime()();
+  DateTimeColumn get updateTs => dateTime()();
+  TextColumn get tagsOperator => textEnum<LogicalOperator>()();
+  TextColumn get dateOption => textEnum<DateOption>()();
+  TextColumn get neuronTypes => text().map(NeuronTypesConverter())();
+
+  @override
+  Set<Column> get primaryKey => {filterId};
+
+}
+

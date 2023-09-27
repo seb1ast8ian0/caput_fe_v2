@@ -1,4 +1,4 @@
-import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/neuron.dart';
 import 'package:Caput/domain/entities/neuron/payloads/date.dart';
 import 'package:Caput/domain/entities/neuron/payloads/note.dart';
 import 'package:Caput/domain/entities/neuron/payloads/task.dart';
@@ -20,7 +20,7 @@ class NeuronWidget extends StatelessWidget{
   
   Widget neuronWrapper = Padding(
   
-    padding: const EdgeInsets.symmetric(vertical:0, horizontal: 0), //h: 16
+    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 6), //h: 16
     child: Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(topRight: Radius.circular(0), bottomRight: Radius.circular(0)),
@@ -32,8 +32,6 @@ class NeuronWidget extends StatelessWidget{
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          
-          
           
           if(last)
             const Center(
@@ -64,11 +62,20 @@ class NeuronWidget extends StatelessWidget{
     var payload = neuron.payload;
 
     if (payload is Task) {
-      return TaskWidget(index: index, neuron: neuron);
+      return TaskWidget(
+        index: index, 
+        neuron: neuron
+      );
     } else if (payload is Note) {
-      return NoteWidget(index: index, neuron: neuron);
+      return NoteWidget(
+        index: index, 
+        neuron: neuron
+      );
     } else if (payload is Date) {
-      return DateWidget(index: index, neuron: neuron);
+      return DateWidget(
+        index: index, 
+        neuron: neuron
+      );
     } else {
       return const Text("error");
     }

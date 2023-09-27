@@ -1,4 +1,4 @@
-import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/neuron.dart';
 import 'package:Caput/domain/entities/neuron/payloads/note.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/util/time/time_formats.dart';
@@ -37,10 +37,12 @@ class NoteWidget extends StatelessWidget{
       children: [
         
         StaticStatusWidget(highlightColor),
+        
+        const SizedBox(width: 4),
 
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 18),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -55,6 +57,13 @@ class NoteWidget extends StatelessWidget{
                         overflow: TextOverflow.clip,
                       ),
                     ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 4
+                ),
+                Row(
+                  children: [
                     Text(
                       displayTime,
                       style: const TextStyle(
@@ -63,36 +72,8 @@ class NoteWidget extends StatelessWidget{
                         color: CaputColors.colorTextSecondaryLight
                       ),
                     ),
-                    
                   ],
                 ),
-                
-                /*
-                if(note.body != "")
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                    child: Text(
-                      note.body,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  
-                Padding(
-                  padding: const EdgeInsets.only(top: 1),
-                  child: Text(
-                    note.body,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: CaputColors.colorTextSecondaryLight
-                    ),
-                  ),
-                ),
-                if(neuron.tags.isNotEmpty)
-                  const SizedBox(height: 6),
-                  //TagListWidget(tags: neuron.tags)
-                  */
-                
               ],
             )
           ),

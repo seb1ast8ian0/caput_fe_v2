@@ -21,4 +21,6 @@ class Tag{
     return caption;
   }
 
+  List<Object?> get props => [tagId, userId, caption, body];
+
 }

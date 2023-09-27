@@ -1,5 +1,4 @@
 
-import 'dart:developer';
 
 import 'package:Caput/domain/bloc/input_blocs/neuron_input/neuron_input_bloc.dart';
 import 'package:Caput/domain/bloc/search_blocs/tags_search/tags_search_bloc.dart';

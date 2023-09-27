@@ -55,86 +55,83 @@ class _DynamicStatusWidgetState extends State<DynamicStatusWidget> with TickerPr
   @override
   Widget build(BuildContext context) {
 
-    return Material(
-      borderRadius: BorderRadius.circular(0),//3
-      //color: Theme.of(context).progressIndicatorTheme.color,
-      color: highlightColor.withOpacity(0.2),
-      elevation: 0,
-      child: Column(
-        verticalDirection: VerticalDirection.up,
-        children: [
-          Flexible(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(0),//3
-              child: Container(
-                color: highlightColor,
-                width: 4,
-                child: FractionalTranslation(
-                  translation: Offset(0, 1 - _timeRatio),
-                  child: FractionallySizedBox(
-                    heightFactor: _timeRatio,
-                    child: Container(
-                      color: highlightColor,
-                      width: 4,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(2),
+      child: Material(
+        color: highlightColor.withOpacity(0.2),
+        elevation: 0,
+        child: Column(
+          verticalDirection: VerticalDirection.up,
+          children: [
+            Flexible(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(2),//3
+                child: Container(
+                  color: highlightColor,
+                  width: 4,
+                  child: FractionalTranslation(
+                    translation: Offset(0, 1 - _timeRatio),
+                    child: FractionallySizedBox(
+                      heightFactor: _timeRatio,
+                      child: Container(
+                        color: highlightColor,
+                        width: 4,
+                      ),
                     ),
                   ),
                 ),
-              ),
+              )
             )
-          )
-        ],
-      )
+          ],
+        )
+      ),
     );
     
   }
 
   void _calculate() {
 
-  setState(() {
+    setState(() {
 
-    if(widget.end == null){
+      if(widget.end == null){
 
-      _timeRatio = 1;
-      highlightColor = widget.defaultColor;
+        _timeRatio = 1;
+        highlightColor = widget.defaultColor;
 
-    } else {
+      } else {
 
-    _distanceWhole = widget.end!.difference(widget.start);
-    _distanceLeft = widget.end!.difference(DateTime.now());
-    
-    _timeRatio =  (_distanceWhole - _distanceLeft).inSeconds / _distanceWhole.inSeconds;
-    
-    if(_timeRatio <= 0.1){
-      _timeRatio = 0.1;
-    }
+        _distanceWhole = widget.end!.difference(widget.start);
+        _distanceLeft = widget.end!.difference(DateTime.now());
+        
+        _timeRatio =  (_distanceWhole - _distanceLeft).inSeconds / _distanceWhole.inSeconds;
+        
+        if(_timeRatio <= 0.1){
+          _timeRatio = 0.1;
+        }
 
-    if( _distanceLeft.inMinutes < 0){
-      _timeRatio = 1;
-    }
+        if( _distanceLeft.inMinutes < 0){
+          _timeRatio = 1;
+        }
 
+        if(widget.color == null){
 
+          if(_timeRatio <= 0.5 && _timeRatio >= 0){
+            highlightColor = CaputColors.colorGreen;
+          } else if(_timeRatio < 0.85 && _timeRatio >= 0.5){
+            highlightColor = CaputColors.colorOrange;
+          } else if(_timeRatio >= 0.85){
+            highlightColor = CaputColors.colorRed;
+          }
 
-    if(widget.color == null){
+        } else {
 
-      if(_timeRatio <= 0.5 && _timeRatio >= 0){
-        highlightColor = CaputColors.colorGreen;
-      } else if(_timeRatio < 0.85 && _timeRatio >= 0.5){
-        highlightColor = CaputColors.colorOrange;
-      } else if(_timeRatio >= 0.85){
-        highlightColor = CaputColors.colorRed;
+          highlightColor = widget.color as Color;
+
+        }
+
       }
 
-    } else {
-
-      highlightColor = widget.color as Color;
-
-    }
-
-    }
-
-    
-
-  } 
+    } 
   );
 
   }
@@ -152,27 +149,29 @@ class StaticStatusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    return Material(
-      borderRadius: BorderRadius.circular(0),//3
-      color: color,
-      elevation: 0,
-      child: Column(
-        verticalDirection: VerticalDirection.up,
-        children: [
-          Flexible(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(0),//3
-              child: Container(
-                color: color,
-                width: 4,
-                child: const FractionallySizedBox(
-                  heightFactor: 1,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(2),
+      child: Material(
+        color: color,
+        elevation: 0,
+        child: Column(
+          verticalDirection: VerticalDirection.up,
+          children: [
+            Flexible(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0),//3
+                child: Container(
+                  color: color,
+                  width: 4,
+                  child: const FractionallySizedBox(
+                    heightFactor: 1,
+                  ),
                 ),
-              ),
+              )
             )
-          )
-        ],
-      )
+          ],
+        )
+      ),
     );
   }   
 

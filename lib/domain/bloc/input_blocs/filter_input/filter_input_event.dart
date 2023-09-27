@@ -17,7 +17,6 @@ class FilterInputAddFilterEvent extends FilterInputEvent{
   
 }
 
-
 class FilterInputSetTagsEvent extends FilterInputEvent{
 
   List<Tag> tags;

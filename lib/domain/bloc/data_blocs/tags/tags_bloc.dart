@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:Caput/domain/entities/neuron/Neuron.dart';
+import 'package:Caput/domain/entities/neuron/neuron.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
 import 'package:Caput/domain/get_models/database_controller.dart';
 import 'package:Caput/domain/get_models/tags_list.dart';
@@ -30,8 +30,10 @@ class TagsBloc extends Bloc<TagsEvent, TagsState> {
       try{
 
         await insertTagsForNeuron(tags, neuron);
-        
+
+        add(InitTagsEvent());
         emit(TagsState.success());
+        
 
       } catch (error, stackTrace){
 
@@ -114,16 +116,15 @@ class TagsBloc extends Bloc<TagsEvent, TagsState> {
             mode: InsertMode.insertOrIgnore
           );
 
-        insertNeuronTagRelation(neuron.neuronId, tagDBO.tagId);
+        Tag tag = getTagFromDBO(tagDBO);
 
-        result.add(getTagFromDBO(tagDBO));
+        insertNeuronTagRelation(neuron.neuronId, tag.tagId);
+        result.add(tag);
+        tagsList.addTag(tag);
 
       }
 
     }
-
-    tagsList.addTags(result);
-
     return result;
 
   }

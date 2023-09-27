@@ -41,23 +41,26 @@ class TagsSearchBloc extends Bloc<TagsSearchEvent, TagsSearchState> {
 
   static List<Tag> rankTags(List<Tag> tags, String query) {
   
+    //rank
     var rankedTags = tags
       .map((e) => rankTag(e, query))
       .toList();
 
+    //cut of < 50
     rankedTags = rankedTags
-      .where((tag) => tag.rank > 50)
+      .where((tag) => tag.rank >= 50)
       .toList();
 
+    //sort
     rankedTags
       .sort((a, b) => a.rank.compareTo(b.rank));
 
-    //log(rankedTags.toString());
-
+    //get tag
     final sortedTags = rankedTags
       .map((e) => e.tag)
       .toList();
 
+    //reverse
     return sortedTags.reversed.toList();
 
   }
