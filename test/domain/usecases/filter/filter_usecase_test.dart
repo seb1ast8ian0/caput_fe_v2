@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/domain/entities/neuron/tag.dart';
@@ -48,7 +47,7 @@ void main(){
         updateTs: DateTime.now(), 
         tags: tags, 
         tagsOperator: LogicalOperator.or, 
-        neuronTypes: [NeuronType.note], 
+        neuronTypes: const [NeuronType.note], 
         dateOption: DateOption.all
       );
 
@@ -78,7 +77,7 @@ void main(){
         updateTs: DateTime.now(), 
         tags: tags, 
         tagsOperator: LogicalOperator.or, 
-        neuronTypes: [NeuronType.note], 
+        neuronTypes: const [NeuronType.note], 
         dateOption: DateOption.all
       );
 

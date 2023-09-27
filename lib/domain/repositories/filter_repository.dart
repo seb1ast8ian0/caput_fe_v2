@@ -1,6 +1,4 @@
 import 'package:Caput/domain/entities/filter/filter.dart';
-import 'package:Caput/domain/error/failure.dart';
-import 'package:dartz/dartz.dart';
 
 abstract class FilterRepository {
 

@@ -1,4 +1,3 @@
-import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/domain/entities/neuron/neuron.dart';
 import 'package:flutter/foundation.dart';
 

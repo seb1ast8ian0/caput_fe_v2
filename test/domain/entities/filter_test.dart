@@ -22,7 +22,7 @@ void main() {
         updateTs: DateTime.now(), 
         tags: tags, 
         tagsOperator: LogicalOperator.or, 
-        neuronTypes: [NeuronType.note], 
+        neuronTypes: const [NeuronType.note], 
         dateOption: DateOption.all
       );
 
@@ -51,7 +51,7 @@ void main() {
         updateTs: DateTime.now(), 
         tags: tags, 
         tagsOperator: LogicalOperator.or, 
-        neuronTypes: [NeuronType.note], 
+        neuronTypes: const [NeuronType.note], 
         dateOption: DateOption.all
       );
 
@@ -80,7 +80,7 @@ void main() {
         updateTs: DateTime.now(), 
         tags: tags, 
         tagsOperator: LogicalOperator.and, 
-        neuronTypes: [NeuronType.note], 
+        neuronTypes: const [NeuronType.note], 
         dateOption: DateOption.all
       );
 
@@ -106,9 +106,9 @@ void main() {
         caption: "test filter", 
         creationTs: DateTime.now(), 
         updateTs: DateTime.now(), 
-        tags: [], 
+        tags: const [], 
         tagsOperator: LogicalOperator.and, 
-        neuronTypes: [NeuronType.task], 
+        neuronTypes: const [NeuronType.task], 
         dateOption: DateOption.all
       );
 
@@ -133,9 +133,9 @@ void main() {
         caption: "test filter", 
         creationTs: DateTime.now(), 
         updateTs: DateTime.now(), 
-        tags: [], 
+        tags: const [], 
         tagsOperator: LogicalOperator.and, 
-        neuronTypes: [NeuronType.task], 
+        neuronTypes: const [NeuronType.task], 
         dateOption: DateOption.today
       );
 
@@ -168,9 +168,9 @@ void main() {
         caption: "test filter", 
         creationTs: DateTime.now(), 
         updateTs: DateTime.now(), 
-        tags: [], 
+        tags: const [], 
         tagsOperator: LogicalOperator.and, 
-        neuronTypes: [NeuronType.task], 
+        neuronTypes: const [NeuronType.task], 
         dateOption: DateOption.tomorrow
       );
 

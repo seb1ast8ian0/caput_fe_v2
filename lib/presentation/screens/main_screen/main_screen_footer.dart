@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/presentation/screens/filter_screen/filter_screen.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:Caput/presentation/widgets/util/input/buttons/caput_primary_button.dart';

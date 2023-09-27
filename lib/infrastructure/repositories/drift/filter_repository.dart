@@ -66,7 +66,7 @@ class FilterRepositoryDrift extends FilterRepository{
       caption: result.caption, 
       creationTs: result.creationTs, 
       updateTs: result.updateTs, 
-      tags: [], 
+      tags: const [], 
       tagsOperator: result.tagsOperator, 
       neuronTypes: result.neuronTypes, 
       dateOption: result.dateOption
@@ -124,7 +124,7 @@ class FilterRepositoryDrift extends FilterRepository{
       caption: filter.caption, 
       creationTs: filter.creationTs, 
       updateTs: filter.updateTs, 
-      tags: [], 
+      tags: const [], 
       tagsOperator: filter.tagsOperator, 
       neuronTypes: filter.neuronTypes, 
       dateOption: filter.dateOption

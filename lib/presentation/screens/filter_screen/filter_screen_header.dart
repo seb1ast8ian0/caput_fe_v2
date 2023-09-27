@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:Caput/domain/bloc/data_blocs/filter/filters_bloc.dart';
-import 'package:Caput/infrastructure/database/neuron_database.dart';
 import 'package:Caput/presentation/util/consts/caput_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

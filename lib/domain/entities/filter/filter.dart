@@ -1,6 +1,5 @@
 
 
-import 'dart:developer';
 
 import 'package:Caput/domain/entities/neuron/neuron.dart';
 import 'package:Caput/domain/entities/neuron/payload.dart';

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/infrastructure/database/converters/neuron_types_converter.dart';
-import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;

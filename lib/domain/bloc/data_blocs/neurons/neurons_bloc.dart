@@ -1,28 +1,16 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_event.dart';
 import 'package:Caput/domain/bloc/data_blocs/neurons/neurons_state.dart';
-import 'package:Caput/domain/bloc/data_blocs/tags/tags_bloc.dart';
-import 'package:Caput/domain/entities/filter/filter.dart';
 import 'package:Caput/domain/entities/neuron/neuron.dart';
-import 'package:Caput/domain/entities/neuron/payload.dart';
-import 'package:Caput/domain/entities/neuron/payloads/date.dart';
-import 'package:Caput/domain/entities/neuron/payloads/note.dart';
-import 'package:Caput/domain/entities/neuron/payloads/task.dart';
-import 'package:Caput/domain/entities/neuron/tag.dart';
 import 'package:Caput/domain/get_models/database_controller.dart';
 import 'package:Caput/domain/usecases/neuron/add_neuron_usecase.dart';
 import 'package:Caput/domain/usecases/neuron/delete_neuron_usecase.dart';
 import 'package:Caput/domain/usecases/neuron/get_neurons_for_filterId_usecase.dart';
 import 'package:Caput/domain/usecases/neuron/get_neurons_usecase.dart';
-import 'package:Caput/domain/util/query_builder.dart';
-import 'package:Caput/infrastructure/database/neuron_database.dart';
 import 'package:bloc/bloc.dart';
-import 'package:drift/drift.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:path_provider/path_provider.dart';
 
 class NeuronsBloc extends Bloc<NeuronEvent, NeuronState> {
 
